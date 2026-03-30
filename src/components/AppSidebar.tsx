@@ -41,7 +41,7 @@ export function AppSidebar() {
           )}
         </div>
 
-        <SidebarGroup defaultOpen>
+        <SidebarGroup>
           <SidebarGroupLabel className="text-sidebar-foreground/50">Menu Utama</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
