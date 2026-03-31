@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Calculator, PiggyBank, BookOpen, Bell, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { animalOptions, formatCurrency, getNextIdulAdha } from "@/lib/qurban-data";
 import { useEffect, useState } from "react";
 
@@ -27,58 +25,56 @@ const Index = () => {
   }, []);
 
   const quickLinks = [
-    { title: "Kalkulator Qurban", desc: "Hitung biaya qurban Anda", icon: Calculator, to: "/kalkulator" },
-    { title: "Tabungan Qurban", desc: "Simulasi menabung", icon: PiggyBank, to: "/tabungan" },
-    { title: "Edukasi Qurban", desc: "Pelajari hukum & tata cara", icon: BookOpen, to: "/edukasi" },
-    { title: "Pengingat", desc: "Checklist & countdown", icon: Bell, to: "/pengingat" },
+    { title: "Kalkulator", desc: "Hitung biaya qurban", icon: Calculator, to: "/kalkulator" },
+    { title: "Tabungan", desc: "Simulasi menabung", icon: PiggyBank, to: "/tabungan" },
+    { title: "Edukasi", desc: "Hukum & tata cara", icon: BookOpen, to: "/edukasi" },
+    { title: "Pengingat", desc: "Checklist persiapan", icon: Bell, to: "/pengingat" },
   ];
 
   const pricePreview = animalOptions.filter((_, i) => [0, 2, 5, 7].includes(i));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Hero */}
-      <div className="rounded-2xl bg-primary p-6 md:p-10 text-primary-foreground">
-        <h1 className="text-2xl md:text-4xl font-bold mb-2">Assalamualaikum! 🕌</h1>
-        <p className="text-primary-foreground/80 mb-6 max-w-xl">
-          Selamat datang di Aplikasi Qurban — panduan lengkap untuk merencanakan ibadah qurban Anda dengan mudah dan tepat.
+      <div className="rounded-2xl bg-primary px-5 py-6 text-primary-foreground">
+        <p className="text-sm font-medium opacity-80">Assalamualaikum 👋</p>
+        <h1 className="mt-1 text-xl font-bold leading-tight">Rencanakan Qurban Anda</h1>
+        <p className="mt-2 text-sm leading-relaxed opacity-70">
+          Panduan lengkap untuk ibadah qurban — dari perhitungan biaya hingga edukasi syariat.
         </p>
 
         {/* Countdown */}
-        <div className="flex gap-3 md:gap-5 flex-wrap">
+        <div className="mt-5 flex gap-2">
           {[
             { label: "Hari", value: countdown.days },
             { label: "Jam", value: countdown.hours },
-            { label: "Menit", value: countdown.minutes },
-            { label: "Detik", value: countdown.seconds },
+            { label: "Mnt", value: countdown.minutes },
+            { label: "Dtk", value: countdown.seconds },
           ].map((item) => (
-            <div key={item.label} className="flex flex-col items-center rounded-xl bg-primary-foreground/10 px-4 py-3 min-w-[70px]">
-              <span className="text-2xl md:text-3xl font-bold">{String(item.value).padStart(2, "0")}</span>
-              <span className="text-xs text-primary-foreground/70">{item.label}</span>
+            <div key={item.label} className="flex flex-1 flex-col items-center rounded-xl bg-white/10 py-2.5">
+              <span className="text-lg font-bold">{String(item.value).padStart(2, "0")}</span>
+              <span className="text-[10px] opacity-60">{item.label}</span>
             </div>
           ))}
         </div>
-        <p className="mt-3 text-sm text-primary-foreground/60">Menuju Idul Adha 1447 H</p>
+        <p className="mt-2 text-[11px] opacity-50">Menuju Idul Adha 1447 H</p>
       </div>
 
       {/* Quick Links */}
       <div>
-        <h2 className="text-xl font-bold text-foreground mb-4">Fitur Utama</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <h2 className="mb-3 text-sm font-semibold text-foreground">Fitur Utama</h2>
+        <div className="grid grid-cols-2 gap-3">
           {quickLinks.map((link) => (
             <Link key={link.to} to={link.to}>
-              <Card className="h-full transition-all hover:shadow-md hover:border-primary/30 group cursor-pointer">
-                <CardContent className="flex items-start gap-3 p-5">
-                  <div className="rounded-lg bg-primary/10 p-2.5 text-primary">
-                    <link.icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-sm">{link.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">{link.desc}</p>
-                  </div>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity mt-1" />
-                </CardContent>
-              </Card>
+              <div className="group flex flex-col items-center gap-2 rounded-xl border bg-card p-4 text-center transition-all active:scale-[0.98] hover:border-primary/30">
+                <div className="rounded-full bg-primary/8 p-2.5 text-primary">
+                  <link.icon className="h-5 w-5" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{link.title}</p>
+                  <p className="text-[11px] text-muted-foreground">{link.desc}</p>
+                </div>
+              </div>
             </Link>
           ))}
         </div>
@@ -86,26 +82,22 @@ const Index = () => {
 
       {/* Price Preview */}
       <div>
-        <h2 className="text-xl font-bold text-foreground mb-4">Kisaran Harga Hewan Qurban</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {pricePreview.map((animal) => (
-            <Card key={animal.id}>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold">{animal.label}</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-lg font-bold text-primary">{formatCurrency(animal.price)}</p>
-                <p className="text-xs text-muted-foreground">{animal.weight} · {animal.maxPersons === 1 ? "1 orang" : `maks ${animal.maxPersons} orang`}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <div className="mt-3">
-          <Link to="/kalkulator">
-            <Button variant="outline" size="sm">
-              Lihat semua harga & hitung biaya <ArrowRight className="ml-1 h-3 w-3" />
-            </Button>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-foreground">Kisaran Harga</h2>
+          <Link to="/kalkulator" className="flex items-center gap-1 text-xs font-medium text-primary">
+            Lihat semua <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
           </Link>
+        </div>
+        <div className="space-y-2">
+          {pricePreview.map((animal) => (
+            <div key={animal.id} className="flex items-center justify-between rounded-xl border bg-card px-4 py-3">
+              <div>
+                <p className="text-sm font-medium">{animal.label}</p>
+                <p className="text-[11px] text-muted-foreground">{animal.weight}</p>
+              </div>
+              <p className="text-sm font-semibold text-primary">{formatCurrency(animal.price)}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -9,10 +9,10 @@ const FloatingWhatsApp = () => {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[hsl(142,70%,35%)] px-5 py-3 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+      className="fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[hsl(var(--wa-green))] text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+      aria-label="Konsultasi via WhatsApp"
     >
-      <MessageCircle className="h-5 w-5" />
-      <span className="hidden text-sm font-semibold sm:inline">Konsultasi Qurban</span>
+      <MessageCircle className="h-5 w-5" strokeWidth={1.5} />
     </a>
   );
 };
