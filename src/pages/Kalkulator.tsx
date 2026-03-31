@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, Calculator } from "lucide-react";
+import { MessageCircle, Calculator, ChevronRight } from "lucide-react";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 
-const typeLabels: Record<AnimalType, string> = {
-  kambing: "🐐 Kambing",
-  domba: "🐑 Domba",
-  sapi: "🐄 Sapi",
-  unta: "🐪 Unta",
-};
+const types: { key: AnimalType; label: string; icon: string }[] = [
+  { key: "kambing", label: "Kambing", icon: "🐐" },
+  { key: "domba", label: "Domba", icon: "🐑" },
+  { key: "sapi", label: "Sapi", icon: "🐄" },
+  { key: "unta", label: "Unta", icon: "🐪" },
+];
 
 const Kalkulator = () => {
   const [selectedType, setSelectedType] = useState<AnimalType | null>(null);
@@ -29,123 +28,103 @@ const Kalkulator = () => {
   };
 
   return (
-    <div className="max-w-3xl space-y-6">
+    <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Kalkulator Qurban</h1>
-        <p className="text-muted-foreground mt-1">Pilih hewan dan hitung biaya qurban Anda</p>
+        <h1 className="text-xl font-bold text-foreground">Kalkulator Qurban</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">Pilih hewan dan hitung biaya</p>
       </div>
 
-      {/* Step 1: Pilih Jenis */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2"><Calculator className="h-4 w-4" /> Pilih Jenis Hewan</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {(Object.keys(typeLabels) as AnimalType[]).map((type) => (
-              <button
-                key={type}
-                onClick={() => { setSelectedType(type); setSelectedAnimal(null); setPersons(1); }}
-                className={`rounded-lg border-2 p-4 text-center transition-all ${selectedType === type ? "border-primary bg-primary/5 text-primary" : "border-border hover:border-primary/30"}`}
-              >
-                <span className="text-2xl block mb-1">{typeLabels[type].split(" ")[0]}</span>
-                <span className="text-sm font-medium">{typeLabels[type].split(" ")[1]}</span>
-              </button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Step 1 */}
+      <div>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</p>
+        <div className="grid grid-cols-4 gap-2">
+          {types.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); }}
+              className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-all active:scale-95 ${selectedType === t.key ? "border-primary bg-primary/5" : "border-border"}`}
+            >
+              <span className="text-xl">{t.icon}</span>
+              <span className="text-[11px] font-medium">{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
 
-      {/* Step 2: Pilih Hewan */}
+      {/* Step 2 */}
       {selectedType && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Pilih Hewan</CardTitle>
-            <CardDescription>Pilih kualitas dan berat hewan yang diinginkan</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</p>
+          <div className="space-y-2">
             {filteredAnimals.map((a) => (
               <button
                 key={a.id}
                 onClick={() => { setSelectedAnimal(a.id); setPersons(1); }}
-                className={`w-full rounded-lg border-2 p-4 text-left transition-all ${selectedAnimal === a.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"}`}
+                className={`w-full flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all active:scale-[0.98] ${selectedAnimal === a.id ? "border-primary bg-primary/5" : "border-border"}`}
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-semibold">{a.label}</p>
-                    <p className="text-sm text-muted-foreground">{a.description}</p>
-                    <p className="text-xs text-muted-foreground mt-1">Berat: {a.weight}</p>
-                  </div>
-                  <p className="text-lg font-bold text-primary whitespace-nowrap ml-4">{formatCurrency(a.price)}</p>
+                <div>
+                  <p className="text-sm font-medium">{a.label}</p>
+                  <p className="text-[11px] text-muted-foreground">{a.weight} · {a.description}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-primary">{formatCurrency(a.price)}</span>
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
                 </div>
               </button>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       )}
 
-      {/* Step 3: Jumlah Orang */}
+      {/* Step 3 */}
       {animal && animal.maxPersons > 1 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Jumlah Peserta Patungan</CardTitle>
-            <CardDescription>Maksimal {animal.maxPersons} orang untuk {animal.type}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-3">
-              <Label>Jumlah Orang:</Label>
-              <Input
-                type="number"
-                min={1}
-                max={animal.maxPersons}
-                value={persons}
-                onChange={(e) => setPersons(Math.min(animal.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))}
-                className="w-24"
-              />
-              <span className="text-sm text-muted-foreground">orang</span>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border bg-card p-4">
+          <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Jumlah Peserta (maks {animal.maxPersons})
+          </Label>
+          <div className="mt-2 flex items-center gap-3">
+            <Input
+              type="number"
+              min={1}
+              max={animal.maxPersons}
+              value={persons}
+              onChange={(e) => setPersons(Math.min(animal.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))}
+              className="w-20"
+            />
+            <span className="text-sm text-muted-foreground">orang</span>
+          </div>
+        </div>
       )}
 
       {/* Result */}
       {animal && (
-        <Card className="border-primary/30 bg-primary/5">
-          <CardHeader>
-            <CardTitle className="text-base">Ringkasan Perhitungan</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-y-2 text-sm">
-              <span className="text-muted-foreground">Hewan:</span>
-              <span className="font-medium">{animal.label}</span>
-              <span className="text-muted-foreground">Berat:</span>
-              <span className="font-medium">{animal.weight}</span>
-              <span className="text-muted-foreground">Harga Total:</span>
-              <span className="font-bold text-primary">{formatCurrency(animal.price)}</span>
-              {animal.maxPersons > 1 && (
-                <>
-                  <span className="text-muted-foreground">Jumlah Peserta:</span>
-                  <span className="font-medium">{persons} orang</span>
-                  <span className="text-muted-foreground">Biaya per Orang:</span>
-                  <span className="font-bold text-primary text-lg">{formatCurrency(costPerPerson)}</span>
-                </>
-              )}
-            </div>
+        <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Berat</span><span className="font-medium">{animal.weight}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Harga Total</span><span className="font-semibold text-primary">{formatCurrency(animal.price)}</span></div>
+            {animal.maxPersons > 1 && (
+              <>
+                <div className="flex justify-between"><span className="text-muted-foreground">Peserta</span><span className="font-medium">{persons} orang</span></div>
+                <div className="flex justify-between border-t pt-2"><span className="text-muted-foreground">Per Orang</span><span className="text-lg font-bold text-primary">{formatCurrency(costPerPerson)}</span></div>
+              </>
+            )}
+          </div>
 
-            <div className="pt-3 flex flex-col sm:flex-row gap-3">
-              <Button onClick={handleOrder} className="bg-[hsl(142,70%,35%)] hover:bg-[hsl(142,70%,30%)] text-white">
-                <MessageCircle className="mr-2 h-4 w-4" /> Pesan via WhatsApp
-              </Button>
-              <Button variant="outline" onClick={() => { setSelectedType(null); setSelectedAnimal(null); }}>
-                Hitung Ulang
-              </Button>
-            </div>
+          <div className="flex flex-col gap-2">
+            <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
+              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => { setSelectedType(null); setSelectedAnimal(null); }}>
+              Hitung Ulang
+            </Button>
+          </div>
 
-            <p className="text-xs text-muted-foreground pt-2">
-              * Harga bersifat estimasi. Hubungi kami untuk mendapatkan penawaran terbaik sesuai ketersediaan.
-            </p>
-          </CardContent>
-        </Card>
+          <p className="text-[11px] text-muted-foreground text-center">
+            * Harga estimasi. Hubungi kami untuk penawaran terbaik.
+          </p>
+        </div>
       )}
     </div>
   );

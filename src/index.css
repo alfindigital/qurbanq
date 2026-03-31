@@ -2,86 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 120 10% 97%;
-    --foreground: 120 30% 10%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 120 30% 10%;
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 120 30% 10%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 120 56% 18%;
-    --primary-foreground: 45 60% 95%;
+    --primary: 152 60% 28%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 65% 44%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 120 10% 93%;
-    --muted-foreground: 120 10% 40%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 45 65% 44%;
+    --accent: 40 70% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 120 10% 88%;
-    --input: 120 10% 88%;
-    --ring: 120 56% 18%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 152 60% 28%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 120 30% 12%;
-    --sidebar-foreground: 45 20% 90%;
-    --sidebar-primary: 45 65% 44%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 152 60% 28%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 120 30% 18%;
-    --sidebar-accent-foreground: 45 20% 90%;
-    --sidebar-border: 120 20% 20%;
-    --sidebar-ring: 45 65% 44%;
+    --sidebar-accent: 0 0% 95%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 92%;
+    --sidebar-ring: 152 60% 28%;
+
+    --wa-green: 142 70% 35%;
   }
 
   .dark {
-    --background: 120 20% 6%;
-    --foreground: 45 20% 90%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
 
-    --card: 120 20% 10%;
-    --card-foreground: 45 20% 90%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 120 20% 10%;
-    --popover-foreground: 45 20% 90%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 45 65% 44%;
-    --primary-foreground: 120 30% 10%;
+    --primary: 152 55% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 120 30% 18%;
-    --secondary-foreground: 45 20% 90%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 120 15% 15%;
-    --muted-foreground: 120 10% 55%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 120 30% 18%;
-    --accent-foreground: 45 20% 90%;
+    --accent: 40 70% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 120 15% 18%;
-    --input: 120 15% 18%;
-    --ring: 45 65% 44%;
-    --sidebar-background: 120 30% 8%;
-    --sidebar-foreground: 45 20% 90%;
-    --sidebar-primary: 45 65% 44%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 152 55% 40%;
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 152 55% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 120 20% 14%;
-    --sidebar-accent-foreground: 45 20% 90%;
-    --sidebar-border: 120 15% 14%;
-    --sidebar-ring: 45 65% 44%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 152 55% 40%;
   }
 }
 
@@ -91,11 +94,19 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Source Sans 3', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Poppins', sans-serif;
   }
 
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+}
+
+/* Bottom nav safe area */
+@layer utilities {
+  .pb-nav {
+    padding-bottom: 5rem;
   }
 }
