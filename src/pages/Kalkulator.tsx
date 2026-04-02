@@ -259,9 +259,18 @@ const Kalkulator = () => {
                 {patunganMode && validParticipants.length > 0 && (
                   <div className="border-t pt-2 space-y-1">
                     {validParticipants.map((name, i) => (
-                      <div key={i} className="flex justify-between text-xs">
+                      <div key={i} className="flex items-center justify-between text-xs">
                         <span className="text-muted-foreground">{i + 1}. {name}</span>
-                        <span className="font-medium">{formatCurrency(costPerPerson)}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{formatCurrency(costPerPerson)}</span>
+                          <button
+                            onClick={() => shareToParticipant(name)}
+                            className="text-muted-foreground hover:text-primary transition-colors"
+                            title={`Kirim ke ${name}`}
+                          >
+                            <Share2 className="h-3 w-3" strokeWidth={1.5} />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
