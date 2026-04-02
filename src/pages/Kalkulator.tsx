@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users } from "lucide-react";
-import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2 } from "lucide-react";
+import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
   { key: "kambing", label: "Kambing", icon: "🐐" },
