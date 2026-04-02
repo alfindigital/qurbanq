@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users } from "lucide-react";
-import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2 } from "lucide-react";
+import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
   { key: "kambing", label: "Kambing", icon: "🐐" },
@@ -50,6 +50,22 @@ const Kalkulator = () => {
       : "";
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
     window.open(generateWhatsAppLink(msg), "_blank");
+  };
+
+  const shareToParticipant = (name: string) => {
+    if (!animal) return;
+    const names = validParticipants;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail patungan qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  };
+
+  const shareToAll = () => {
+    if (!animal) return;
+    const names = validParticipants;
+    const msg = `📢 *Ringkasan Patungan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`; 
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
   };
 
   const resetAll = () => {
@@ -243,9 +259,18 @@ const Kalkulator = () => {
                 {patunganMode && validParticipants.length > 0 && (
                   <div className="border-t pt-2 space-y-1">
                     {validParticipants.map((name, i) => (
-                      <div key={i} className="flex justify-between text-xs">
+                      <div key={i} className="flex items-center justify-between text-xs">
                         <span className="text-muted-foreground">{i + 1}. {name}</span>
-                        <span className="font-medium">{formatCurrency(costPerPerson)}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{formatCurrency(costPerPerson)}</span>
+                          <button
+                            onClick={() => shareToParticipant(name)}
+                            className="text-muted-foreground hover:text-primary transition-colors"
+                            title={`Kirim ke ${name}`}
+                          >
+                            <Share2 className="h-3 w-3" strokeWidth={1.5} />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -262,6 +287,11 @@ const Kalkulator = () => {
             <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
               <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
             </Button>
+            {patunganMode && validParticipants.length > 1 && (
+              <Button variant="outline" size="sm" onClick={shareToAll}>
+                <Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta
+              </Button>
+            )}
             <Button variant="ghost" size="sm" onClick={resetAll}>
               Hitung Ulang
             </Button>
