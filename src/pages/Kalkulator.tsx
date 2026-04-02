@@ -168,9 +168,17 @@ const Kalkulator = () => {
 
               {/* Participant list */}
               {validParticipants.length > 0 && (
-                <div className="space-y-1.5">
+                <AnimatePresence mode="popLayout">
                   {validParticipants.map((name, i) => (
-                    <div key={i} className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+                    <motion.div
+                      key={name}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9, y: -8 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, x: 40 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2"
+                    >
                       <div className="flex items-center gap-2">
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
                           {i + 1}
@@ -180,9 +188,9 @@ const Kalkulator = () => {
                       <button onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive transition-colors">
                         <X className="h-3.5 w-3.5" strokeWidth={1.5} />
                       </button>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </AnimatePresence>
               )}
 
               {/* Add participant input */}
