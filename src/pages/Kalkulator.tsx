@@ -52,6 +52,21 @@ const Kalkulator = () => {
     window.open(generateWhatsAppLink(msg), "_blank");
   };
 
+  const shareToParticipant = (name: string) => {
+    if (!animal) return;
+    const names = validParticipants;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail patungan qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  };
+
+  const shareToAll = () => {
+    if (!animal) return;
+    const names = validParticipants;
+    const msg = `📢 *Ringkasan Patungan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`; 
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+
   const resetAll = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
