@@ -287,6 +287,11 @@ const Kalkulator = () => {
             <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
               <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
             </Button>
+            {patunganMode && validParticipants.length > 1 && (
+              <Button variant="outline" size="sm" onClick={shareToAll}>
+                <Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta
+              </Button>
+            )}
             <Button variant="ghost" size="sm" onClick={resetAll}>
               Hitung Ulang
             </Button>
