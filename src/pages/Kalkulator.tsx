@@ -91,6 +91,25 @@ const Kalkulator = () => {
     window.open(url, "_blank");
   };
 
+  const exportAsImage = useCallback(async () => {
+    if (!summaryRef.current || !animal) return;
+    try {
+      toast.loading("Membuat gambar...", { id: "export" });
+      const canvas = await html2canvas(summaryRef.current, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+      });
+      const link = document.createElement("a");
+      link.download = `patungan-qurban-${animal.label.toLowerCase().replace(/\s+/g, "-")}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      toast.success("Gambar berhasil diunduh!", { id: "export" });
+    } catch {
+      toast.error("Gagal membuat gambar", { id: "export" });
+    }
+  }, [animal]);
+
   const resetAll = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
