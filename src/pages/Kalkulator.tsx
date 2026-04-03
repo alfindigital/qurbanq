@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
+import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2 } from "lucide-react";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
 import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
