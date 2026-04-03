@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,7 +33,10 @@ const Kalkulator = () => {
     const name = newName.trim();
     if (!name || !animal) return;
     if (participants.filter((n) => n.trim()).length >= animal.maxPersons) return;
-    if (participants.some((n) => n.trim().toLowerCase() === name.toLowerCase())) return;
+    if (participants.some((n) => n.trim().toLowerCase() === name.toLowerCase())) {
+      toast.error("Nama sudah ada", { description: `"${name}" sudah terdaftar sebagai peserta.` });
+      return;
+    }
     const updated = [...participants.filter((n) => n.trim()), name];
     setParticipants(updated);
     setNewName("");
