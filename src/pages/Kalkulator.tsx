@@ -33,6 +33,7 @@ const Kalkulator = () => {
   const [patunganMode, setPatunganMode] = useState(saved?.patungan ?? false);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [newName, setNewName] = useState("");
+  const summaryRef = useRef<HTMLDivElement>(null);
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
