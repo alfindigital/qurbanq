@@ -335,6 +335,11 @@ const Kalkulator = () => {
                 <Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta
               </Button>
             )}
+            {patunganMode && validParticipants.length > 0 && (
+              <Button variant="outline" size="sm" onClick={exportAsImage}>
+                <Download className="mr-2 h-4 w-4" strokeWidth={1.5} /> Unduh Gambar Ringkasan
+              </Button>
+            )}
             <Button variant="ghost" size="sm" onClick={resetAll}>
               Hitung Ulang
             </Button>
