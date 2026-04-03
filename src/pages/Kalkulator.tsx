@@ -38,6 +38,12 @@ const Kalkulator = () => {
   const activePersons = patunganMode ? participants.filter((n) => n.trim()).length || 1 : persons;
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
 
+  // Persist patungan data to localStorage
+  useEffect(() => {
+    const data = { type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: participants.filter((n) => n.trim()) };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }, [selectedType, selectedAnimal, patunganMode, participants]);
+
   const canPatungan = animal && animal.maxPersons > 1;
 
   const addParticipant = () => {
