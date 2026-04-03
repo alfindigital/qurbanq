@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -14,18 +14,35 @@ const types: { key: AnimalType; label: string; icon: string }[] = [
   { key: "unta", label: "Unta", icon: "🐪" },
 ];
 
+const STORAGE_KEY = "qurbanku-patungan";
+
+const loadSaved = () => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw) as { type?: AnimalType; animal?: string; patungan?: boolean; participants?: string[] };
+  } catch {}
+  return null;
+};
+
 const Kalkulator = () => {
-  const [selectedType, setSelectedType] = useState<AnimalType | null>(null);
-  const [selectedAnimal, setSelectedAnimal] = useState<string | null>(null);
+  const saved = loadSaved();
+  const [selectedType, setSelectedType] = useState<AnimalType | null>(saved?.type ?? null);
+  const [selectedAnimal, setSelectedAnimal] = useState<string | null>(saved?.animal ?? null);
   const [persons, setPersons] = useState(1);
-  const [patunganMode, setPatunganMode] = useState(false);
-  const [participants, setParticipants] = useState<string[]>([""]);
+  const [patunganMode, setPatunganMode] = useState(saved?.patungan ?? false);
+  const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [newName, setNewName] = useState("");
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const activePersons = patunganMode ? participants.filter((n) => n.trim()).length || 1 : persons;
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
+
+  // Persist patungan data to localStorage
+  useEffect(() => {
+    const data = { type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: participants.filter((n) => n.trim()) };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }, [selectedType, selectedAnimal, patunganMode, participants]);
 
   const canPatungan = animal && animal.maxPersons > 1;
 
@@ -79,6 +96,7 @@ const Kalkulator = () => {
     setPatunganMode(false);
     setParticipants([""]);
     setNewName("");
+    localStorage.removeItem(STORAGE_KEY);
   };
 
   const validParticipants = participants.filter((n) => n.trim());
