@@ -96,6 +96,7 @@ const Kalkulator = () => {
     setPatunganMode(false);
     setParticipants([""]);
     setNewName("");
+    localStorage.removeItem(STORAGE_KEY);
   };
 
   const validParticipants = participants.filter((n) => n.trim());
