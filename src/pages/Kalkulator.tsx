@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
+import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2 } from "lucide-react";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
 import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
@@ -32,6 +33,7 @@ const Kalkulator = () => {
   const [patunganMode, setPatunganMode] = useState(saved?.patungan ?? false);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [newName, setNewName] = useState("");
+  const summaryRef = useRef<HTMLDivElement>(null);
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
@@ -88,6 +90,25 @@ const Kalkulator = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   };
+
+  const exportAsImage = useCallback(async () => {
+    if (!summaryRef.current || !animal) return;
+    try {
+      toast.loading("Membuat gambar...", { id: "export" });
+      const canvas = await html2canvas(summaryRef.current, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+      });
+      const link = document.createElement("a");
+      link.download = `patungan-qurban-${animal.label.toLowerCase().replace(/\s+/g, "-")}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      toast.success("Gambar berhasil diunduh!", { id: "export" });
+    } catch {
+      toast.error("Gagal membuat gambar", { id: "export" });
+    }
+  }, [animal]);
 
   const resetAll = () => {
     setSelectedType(null);
@@ -266,7 +287,7 @@ const Kalkulator = () => {
 
       {/* Result */}
       {animal && (
-        <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
+        <div ref={summaryRef} className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
@@ -312,6 +333,11 @@ const Kalkulator = () => {
             {patunganMode && validParticipants.length > 1 && (
               <Button variant="outline" size="sm" onClick={shareToAll}>
                 <Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta
+              </Button>
+            )}
+            {patunganMode && validParticipants.length > 0 && (
+              <Button variant="outline" size="sm" onClick={exportAsImage}>
+                <Download className="mr-2 h-4 w-4" strokeWidth={1.5} /> Unduh Gambar Ringkasan
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={resetAll}>
