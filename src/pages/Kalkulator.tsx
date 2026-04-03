@@ -287,7 +287,7 @@ const Kalkulator = () => {
 
       {/* Result */}
       {animal && (
-        <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
+        <div ref={summaryRef} className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
