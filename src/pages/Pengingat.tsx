@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Clock, MessageCircle, CheckCircle2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Clock, MessageCircle, CheckCircle2, Bell, BellOff, BellRing } from "lucide-react";
 import { getNextIdulAdha, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
+import {
+  loadReminders,
+  saveReminders,
+  requestNotificationPermission,
+  getNotificationPermission,
+  sendBrowserNotification,
+  checkAndTriggerReminders,
+  type ReminderSetting,
+} from "@/lib/notifications";
 
 const Pengingat = () => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [reminders, setReminders] = useState<ReminderSetting[]>(loadReminders);
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">(getNotificationPermission);
 
   useEffect(() => {
     const target = getNextIdulAdha();
@@ -26,16 +40,53 @@ const Pengingat = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Check reminders on mount
+  useEffect(() => {
+    const triggered = checkAndTriggerReminders(reminders);
+    triggered.forEach((r) => {
+      sendBrowserNotification(
+        "🐾 Pengingat Qurban",
+        `Idul Adha tinggal ${r.daysBefore} hari lagi! Pastikan persiapan qurban sudah siap.`
+      );
+      toast.info(`Pengingat: Idul Adha ${r.daysBefore} hari lagi!`, {
+        description: "Pastikan persiapan qurban sudah siap.",
+        duration: 8000,
+      });
+    });
+  }, [reminders]);
+
+  const handleEnableNotifications = async () => {
+    const permission = await requestNotificationPermission();
+    setNotifPermission(permission);
+    if (permission === "granted") {
+      toast.success("Notifikasi diaktifkan!", { description: "Anda akan menerima pengingat qurban." });
+      sendBrowserNotification("🎉 Notifikasi Aktif", "Anda akan menerima pengingat menjelang Idul Adha.");
+    } else {
+      toast.error("Izin notifikasi ditolak", { description: "Aktifkan dari pengaturan browser untuk menerima pengingat." });
+    }
+  };
+
+  const toggleReminder = (id: string) => {
+    const updated = reminders.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r));
+    setReminders(updated);
+    saveReminders(updated);
+    const toggled = updated.find((r) => r.id === id);
+    if (toggled?.enabled) {
+      toast.success(`Pengingat "${toggled.label}" diaktifkan`);
+    }
+  };
+
   const toggleCheck = (id: string) => setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   const completedCount = Object.values(checked).filter(Boolean).length;
   const totalItems = preparationChecklist.length;
   const categories = [...new Set(preparationChecklist.map((c) => c.category))];
+  const activeReminders = reminders.filter((r) => r.enabled).length;
 
   return (
     <div className="space-y-5">
       <div>
         <h1 className="text-xl font-bold text-foreground">Pengingat</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">Countdown & checklist persiapan</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Countdown, notifikasi & checklist</p>
       </div>
 
       {/* Countdown */}
@@ -57,6 +108,85 @@ const Pengingat = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Notification Settings */}
+      <div className="rounded-xl border bg-card p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <BellRing className="h-4 w-4 text-primary" strokeWidth={1.5} />
+            <p className="text-sm font-semibold">Pengingat Notifikasi</p>
+          </div>
+          {activeReminders > 0 && (
+            <span className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+              {activeReminders} aktif
+            </span>
+          )}
+        </div>
+
+        {notifPermission === "unsupported" && (
+          <p className="text-xs text-muted-foreground bg-muted/50 rounded-lg p-2.5">
+            Browser Anda tidak mendukung notifikasi push.
+          </p>
+        )}
+
+        {notifPermission === "denied" && (
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-2.5">
+            <p className="text-xs text-destructive">
+              Izin notifikasi ditolak. Aktifkan dari pengaturan browser Anda.
+            </p>
+          </div>
+        )}
+
+        {notifPermission === "default" && (
+          <Button size="sm" variant="outline" className="w-full" onClick={handleEnableNotifications}>
+            <Bell className="mr-2 h-3.5 w-3.5" strokeWidth={1.5} />
+            Aktifkan Notifikasi Push
+          </Button>
+        )}
+
+        {notifPermission === "granted" && (
+          <p className="text-xs text-primary flex items-center gap-1.5">
+            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Notifikasi push aktif
+          </p>
+        )}
+
+        <div className="space-y-1.5">
+          <AnimatePresence>
+            {reminders.map((r) => (
+              <motion.div
+                key={r.id}
+                layout
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center justify-between rounded-lg bg-muted/30 px-3 py-2.5"
+              >
+                <div className="flex items-center gap-2.5">
+                  {r.enabled ? (
+                    <Bell className="h-3.5 w-3.5 text-primary" strokeWidth={1.5} />
+                  ) : (
+                    <BellOff className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={1.5} />
+                  )}
+                  <span className={`text-sm ${r.enabled ? "font-medium" : "text-muted-foreground"}`}>
+                    {r.label}
+                  </span>
+                </div>
+                <Switch
+                  checked={r.enabled}
+                  onCheckedChange={() => toggleReminder(r.id)}
+                  disabled={notifPermission !== "granted" && notifPermission !== "unsupported"}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {notifPermission !== "granted" && notifPermission !== "unsupported" && (
+          <p className="text-[10px] text-muted-foreground text-center">
+            Aktifkan notifikasi push terlebih dahulu untuk mengatur pengingat
+          </p>
+        )}
       </div>
 
       {/* Checklist */}
