@@ -40,6 +40,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </header>
 
+      <InAppReminder />
+
       <main className="mx-auto max-w-lg px-4 py-5 pb-nav">
         {children}
       </main>
