@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import InAppReminder from "@/components/InAppReminder";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [dark, setDark] = useState(() => {
