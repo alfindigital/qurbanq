@@ -36,28 +36,9 @@ const Index = () => {
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="rounded-2xl bg-primary px-5 py-6 text-primary-foreground">
-        <p className="text-sm font-medium opacity-80">Assalamualaikum 👋</p>
-        <h1 className="mt-1 text-xl font-bold leading-tight">Rencanakan Qurban Anda</h1>
-        <p className="mt-2 text-sm leading-relaxed opacity-70">
-          Panduan lengkap untuk ibadah qurban — dari perhitungan biaya hingga edukasi syariat.
-        </p>
-
-        {/* Countdown */}
-        <div className="mt-5 flex gap-2">
-          {[
-            { label: "Hari", value: countdown.days },
-            { label: "Jam", value: countdown.hours },
-            { label: "Mnt", value: countdown.minutes },
-            { label: "Dtk", value: countdown.seconds },
-          ].map((item) => (
-            <div key={item.label} className="flex flex-1 flex-col items-center rounded-xl bg-white/10 py-2.5">
-              <span className="text-lg font-bold">{String(item.value).padStart(2, "0")}</span>
-              <span className="text-[10px] opacity-60">{item.label}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-2 text-[11px] opacity-50">Menuju Idul Adha 1447 H</p>
+      <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
+        <h1 className="text-lg font-bold">🕌 {countdown.days} hari menuju Idul Adha</h1>
+        <p className="mt-1 text-sm opacity-70">Yuk persiapkan qurbanmu dari sekarang.</p>
       </div>
 
       {/* Quick Links */}
