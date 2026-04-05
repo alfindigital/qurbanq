@@ -18,7 +18,12 @@ import {
 
 const Pengingat = () => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem("qurbanku-checklist");
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
   const [reminders, setReminders] = useState<ReminderSetting[]>(loadReminders);
   const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">(getNotificationPermission);
 
@@ -76,7 +81,11 @@ const Pengingat = () => {
     }
   };
 
-  const toggleCheck = (id: string) => setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleCheck = (id: string) => setChecked((prev) => {
+    const updated = { ...prev, [id]: !prev[id] };
+    localStorage.setItem("qurbanku-checklist", JSON.stringify(updated));
+    return updated;
+  });
   const completedCount = Object.values(checked).filter(Boolean).length;
   const totalItems = preparationChecklist.length;
   const categories = [...new Set(preparationChecklist.map((c) => c.category))];
