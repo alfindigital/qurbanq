@@ -23,7 +23,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-lg items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-emerald-700 shadow-md shadow-primary/30">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-md shadow-primary/30">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
                 {/* Crescent moon */}
                 <path d="M15.5 4.5c-1.2 0-2.3.3-3.3.9A5.5 5.5 0 0 1 15 10a5.5 5.5 0 0 1-2.8 4.8c1 .5 2.1.7 3.3.7a5.5 5.5 0 1 0 0-11z" fill="currentColor" opacity="0.25"/>
