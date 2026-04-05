@@ -18,7 +18,12 @@ import {
 
 const Pengingat = () => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem("qurbanku-checklist");
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
   const [reminders, setReminders] = useState<ReminderSetting[]>(loadReminders);
   const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">(getNotificationPermission);
 
