@@ -81,7 +81,11 @@ const Pengingat = () => {
     }
   };
 
-  const toggleCheck = (id: string) => setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleCheck = (id: string) => setChecked((prev) => {
+    const updated = { ...prev, [id]: !prev[id] };
+    localStorage.setItem("qurbanku-checklist", JSON.stringify(updated));
+    return updated;
+  });
   const completedCount = Object.values(checked).filter(Boolean).length;
   const totalItems = preparationChecklist.length;
   const categories = [...new Set(preparationChecklist.map((c) => c.category))];
