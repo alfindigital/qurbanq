@@ -23,11 +23,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-lg items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-md shadow-primary/25">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
-                <path d="M12 2C7.58 2 4 5.58 4 10c0 3.07 1.72 5.74 4.25 7.08L12 22l3.75-4.92C18.28 15.74 20 13.07 20 10c0-4.42-3.58-8-8-8z" fill="currentColor" opacity="0.15"/>
-                <path d="M12 3C8.13 3 5 6.13 5 10c0 2.74 1.56 5.11 3.84 6.29L12 20.5l3.16-4.21C17.44 15.11 19 12.74 19 10c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                <path d="M9.5 12.5L11 14l4-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-emerald-700 shadow-md shadow-primary/30">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
+                {/* Crescent moon */}
+                <path d="M15.5 4.5c-1.2 0-2.3.3-3.3.9A5.5 5.5 0 0 1 15 10a5.5 5.5 0 0 1-2.8 4.8c1 .5 2.1.7 3.3.7a5.5 5.5 0 1 0 0-11z" fill="currentColor" opacity="0.25"/>
+                <path d="M15.5 5c-1 0-2 .25-2.85.7A5 5 0 0 1 15 10a5 5 0 0 1-2.35 4.3c.85.45 1.85.7 2.85.7a5 5 0 1 0 0-10z" stroke="currentColor" strokeWidth="1.2" fill="none"/>
+                {/* Goat/sheep silhouette */}
+                <path d="M4 17c0-1.5 1-2.5 2-3 .5-1.5 2-2.5 3.5-2.5.8 0 1.5.3 2 .7.5-.4 1.2-.7 2-.7.5 0 1 .1 1.4.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none"/>
+                <circle cx="7.5" cy="13" r="1" fill="currentColor" opacity="0.6"/>
+                <path d="M5 17h2M8 17h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                {/* Star */}
+                <path d="M19 3l.5 1.5H21l-1.2.9.5 1.6L19 6l-1.3 1 .5-1.6L17 4.5h1.5z" fill="currentColor" opacity="0.7"/>
               </svg>
             </div>
             <span className="text-base font-extrabold tracking-tight text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>Qurbanku</span>
