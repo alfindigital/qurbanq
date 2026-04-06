@@ -23,17 +23,18 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 border-b bg-card/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-lg items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-md shadow-primary/30">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
-                {/* Crescent moon */}
-                <path d="M15.5 4.5c-1.2 0-2.3.3-3.3.9A5.5 5.5 0 0 1 15 10a5.5 5.5 0 0 1-2.8 4.8c1 .5 2.1.7 3.3.7a5.5 5.5 0 1 0 0-11z" fill="currentColor" opacity="0.25"/>
-                <path d="M15.5 5c-1 0-2 .25-2.85.7A5 5 0 0 1 15 10a5 5 0 0 1-2.35 4.3c.85.45 1.85.7 2.85.7a5 5 0 1 0 0-10z" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-                {/* Goat/sheep silhouette */}
-                <path d="M4 17c0-1.5 1-2.5 2-3 .5-1.5 2-2.5 3.5-2.5.8 0 1.5.3 2 .7.5-.4 1.2-.7 2-.7.5 0 1 .1 1.4.4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none"/>
-                <circle cx="7.5" cy="13" r="1" fill="currentColor" opacity="0.6"/>
-                <path d="M5 17h2M8 17h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                {/* Star */}
-                <path d="M19 3l.5 1.5H21l-1.2.9.5 1.6L19 6l-1.3 1 .5-1.6L17 4.5h1.5z" fill="currentColor" opacity="0.7"/>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-md shadow-primary/30">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
+                {/* Cleaver/knife blade */}
+                <path d="M6 4c-.5 0-1 .2-1.3.6-.4.5-.4 1.1-.2 1.7L8 16h8l1-2.5c.3-.7.3-1.5 0-2.2L14.5 5c-.3-.6-.9-1-1.5-1H6z" fill="currentColor" opacity="0.9"/>
+                {/* Knife edge highlight */}
+                <path d="M8 16l-3.5-9.7c-.2-.6-.2-1.2.2-1.7C5 4.2 5.5 4 6 4h7c.6 0 1.2.4 1.5 1L17 11.3c.3.7.3 1.5 0 2.2L16 16" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                {/* Handle */}
+                <rect x="7.5" y="16" width="9" height="4" rx="1.2" fill="currentColor" opacity="0.7"/>
+                <path d="M7.5 16h9v4a1.2 1.2 0 0 1-1.2 1.2H8.7A1.2 1.2 0 0 1 7.5 20v-4z" stroke="currentColor" strokeWidth="1.2" fill="none"/>
+                {/* Handle rivets */}
+                <circle cx="10" cy="18" r="0.6" fill="currentColor" opacity="0.4"/>
+                <circle cx="14" cy="18" r="0.6" fill="currentColor" opacity="0.4"/>
               </svg>
             </div>
             <span className="text-base font-extrabold tracking-tight text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>Qurbanku</span>
