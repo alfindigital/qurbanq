@@ -79,6 +79,7 @@ export const faqItems = [
 
 export const preparationChecklist = [
   { id: "niat", label: "Niatkan qurban karena Allah SWT", category: "Spiritual" },
+  { id: "tidak-cukur", label: "Tidak memotong rambut & kuku sejak 1 Dzulhijjah", category: "Spiritual" },
   { id: "pilih-hewan", label: "Pilih jenis & kualitas hewan qurban", category: "Persiapan" },
   { id: "cek-syarat", label: "Pastikan hewan memenuhi syarat (usia, sehat, tidak cacat)", category: "Persiapan" },
   { id: "tabungan", label: "Siapkan dana/tabungan qurban", category: "Finansial" },
