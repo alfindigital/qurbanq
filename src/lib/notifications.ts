@@ -12,7 +12,6 @@ export interface ReminderSetting {
 
 export const defaultReminders: ReminderSetting[] = [
   { id: "30d", label: "30 hari sebelum", daysBefore: 30, enabled: false },
-  { id: "14d", label: "14 hari sebelum", daysBefore: 14, enabled: false },
   { id: "7d", label: "7 hari sebelum", daysBefore: 7, enabled: false },
   { id: "3d", label: "3 hari sebelum", daysBefore: 3, enabled: false },
   { id: "1d", label: "1 hari sebelum", daysBefore: 1, enabled: false },
