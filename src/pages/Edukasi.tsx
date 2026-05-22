@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft } from "lucide-react";
 import { educationArticles, faqItems, generateWhatsAppLink } from "@/lib/qurban-data";
+import SEO from "@/components/SEO";
 
 const iconMap: Record<string, React.ElementType> = { Scale, BookOpen, Users, Star };
 
@@ -12,6 +13,20 @@ const Edukasi = () => {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Edukasi Qurban — Hukum, Tata Cara & Tanya Jawab | Qurbanku"
+        description="Pelajari hukum, syarat, tata cara qurban, keutamaan Idul Adha, dan jawaban pertanyaan umum seputar ibadah qurban."
+        path="/edukasi"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }}
+      />
       <div>
         <h1 className="text-xl font-bold text-foreground">Edukasi Qurban</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Hukum, tata cara & keutamaan</p>

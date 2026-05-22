@@ -1,0 +1,11 @@
+# Qurbanku
+
+> Aplikasi perencanaan ibadah qurban Idul Adha: kalkulator patungan, tabungan, edukasi, dan pengingat hari raya.
+
+## Pages
+
+- [Beranda](/): Kalkulator qurban langsung — pilih hewan, hitung patungan, kirim pesanan via WhatsApp.
+- [Kalkulator](/kalkulator): Kalkulator harga & patungan hewan qurban.
+- [Tabungan](/tabungan): Rencana menabung untuk qurban dengan target dan estimasi setoran.
+- [Edukasi](/edukasi): Hukum, syarat, tata cara qurban, dan tanya jawab.
+- [Pengingat](/pengingat): Pengingat hari raya Idul Adha (30, 7, 3, dan 1 hari sebelum).

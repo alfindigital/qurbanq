@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
+import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
@@ -124,6 +125,11 @@ const Kalkulator = () => {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Kalkulator Qurban — Hitung Patungan Sapi & Kambing | Qurbanku"
+        description="Pilih jenis hewan qurban dan hitung biaya patungan per orang. Estimasi harga sapi, kambing, domba, dan unta untuk Idul Adha."
+        path="/kalkulator"
+      />
       <div>
         <h1 className="text-xl font-bold text-foreground">Kalkulator Qurban</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Pilih hewan dan hitung biaya</p>

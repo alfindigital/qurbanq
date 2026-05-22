@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Clock, MessageCircle, CheckCircle2, Bell, BellOff, BellRing } from "lucide-react";
+import SEO from "@/components/SEO";
 import { getNextIdulAdha, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
 import {
   loadReminders,
@@ -93,6 +94,11 @@ const Pengingat = () => {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Pengingat Qurban — Countdown Idul Adha & Checklist | Qurbanku"
+        description="Countdown menuju Idul Adha, notifikasi pengingat 30/7/3/1 hari, dan checklist persiapan qurban lengkap."
+        path="/pengingat"
+      />
       <div>
         <h1 className="text-xl font-bold text-foreground">Pengingat</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Countdown, notifikasi & checklist</p>
