@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle } from "lucide-react";
+import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
 
 const Tabungan = () => {
@@ -29,6 +30,11 @@ const Tabungan = () => {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Tabungan Qurban — Rencana Menabung Idul Adha | Qurbanku"
+        description="Susun rencana tabungan qurban dengan target harga hewan, estimasi setoran bulanan, mingguan, dan harian hingga Idul Adha."
+        path="/tabungan"
+      />
       <div>
         <h1 className="text-xl font-bold text-foreground">Tabungan Qurban</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Rencanakan tabungan Anda</p>

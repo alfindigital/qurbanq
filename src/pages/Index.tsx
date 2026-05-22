@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
 import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -133,6 +134,19 @@ const Index = () => {
 
   return (
     <div className="space-y-5">
+      <SEO
+        title="Qurbanku — Kalkulator Patungan & Tabungan Qurban"
+        description="Hitung biaya qurban Idul Adha, atur patungan sapi/kambing, dan kirim pesanan via WhatsApp langsung dari beranda Qurbanku."
+        path="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Qurbanku",
+          applicationCategory: "LifestyleApplication",
+          description: "Kalkulator patungan dan tabungan qurban Idul Adha.",
+          url: "https://qurban-q.lovable.app/",
+        }}
+      />
       {/* Hero */}
       <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
         <h1 className="text-lg font-bold">🕌 {countdown.days} hari menuju Idul Adha</h1>
