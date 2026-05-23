@@ -137,7 +137,7 @@ const Kalkulator = () => {
 
       {/* Step 1 */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</p>
+        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</h2>
         <div className="grid grid-cols-4 gap-2">
           {types.map((t) => (
             <button
