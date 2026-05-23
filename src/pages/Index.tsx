@@ -155,7 +155,7 @@ const Index = () => {
 
       {/* Calculator inline */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Jenis Hewan</p>
+        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Jenis Hewan</h2>
         <div className="grid grid-cols-4 gap-2">
           {types.map((t) => (
             <button
@@ -172,7 +172,7 @@ const Index = () => {
 
       {selectedType && (
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</p>
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</h2>
           <div className="space-y-2">
             {filteredAnimals.map((a) => (
               <button
@@ -228,7 +228,7 @@ const Index = () => {
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">{i + 1}</span>
                         <span className="text-sm font-medium">{name}</span>
                       </div>
-                      <button onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={1.5} /></button>
+                      <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={1.5} /></button>
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -236,7 +236,7 @@ const Index = () => {
               {validParticipants.length < animal!.maxPersons && (
                 <div className="flex gap-2">
                   <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 text-sm" />
-                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()}><UserPlus className="h-4 w-4" strokeWidth={1.5} /></Button>
+                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta"><UserPlus className="h-4 w-4" strokeWidth={1.5} /></Button>
                 </div>
               )}
               {validParticipants.length > 0 && (
@@ -270,7 +270,7 @@ const Index = () => {
                         <span className="text-muted-foreground">{i + 1}. {name}</span>
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{formatCurrency(costPerPerson)}</span>
-                          <button onClick={() => shareToParticipant(name)} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3 w-3" strokeWidth={1.5} /></button>
+                          <button onClick={() => shareToParticipant(name)} aria-label={`Kirim ringkasan ke ${name}`} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3 w-3" strokeWidth={1.5} /></button>
                         </div>
                       </div>
                     ))}
@@ -301,7 +301,7 @@ const Index = () => {
 
       {/* Quick Links */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fitur Lainnya</p>
+        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fitur Lainnya</h2>
         <div className="grid grid-cols-3 gap-2">
           {quickLinks.map((link) => (
             <Link key={link.to} to={link.to}>

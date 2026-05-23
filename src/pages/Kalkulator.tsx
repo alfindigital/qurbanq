@@ -137,7 +137,7 @@ const Kalkulator = () => {
 
       {/* Step 1 */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</p>
+        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</h2>
         <div className="grid grid-cols-4 gap-2">
           {types.map((t) => (
             <button
@@ -155,7 +155,7 @@ const Kalkulator = () => {
       {/* Step 2 */}
       {selectedType && (
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</p>
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</h2>
           <div className="space-y-2">
             {filteredAnimals.map((a) => (
               <button
@@ -250,7 +250,7 @@ const Kalkulator = () => {
                           </span>
                           <span className="text-sm font-medium">{name}</span>
                         </div>
-                        <button onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive transition-colors">
+                        <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors">
                           <X className="h-3.5 w-3.5" strokeWidth={1.5} />
                         </button>
                       </motion.div>
@@ -269,7 +269,7 @@ const Kalkulator = () => {
                     onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }}
                     className="flex-1 text-sm"
                   />
-                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()}>
+                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta">
                     <UserPlus className="h-4 w-4" strokeWidth={1.5} />
                   </Button>
                 </div>
@@ -314,6 +314,7 @@ const Kalkulator = () => {
                           <span className="font-medium">{formatCurrency(costPerPerson)}</span>
                           <button
                             onClick={() => shareToParticipant(name)}
+                            aria-label={`Kirim ringkasan ke ${name}`}
                             className="text-muted-foreground hover:text-primary transition-colors"
                             title={`Kirim ke ${name}`}
                           >

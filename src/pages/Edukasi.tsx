@@ -56,7 +56,7 @@ const Edukasi = () => {
           <div>
             <div className="mb-2 flex items-center gap-1.5">
               <HelpCircle className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tanya Jawab</p>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tanya Jawab</h2>
             </div>
             <Accordion type="single" collapsible className="w-full">
               {faqItems.map((faq, i) => (
