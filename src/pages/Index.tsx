@@ -172,7 +172,7 @@ const Index = () => {
 
       {selectedType && (
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</p>
+          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</h2>
           <div className="space-y-2">
             {filteredAnimals.map((a) => (
               <button
