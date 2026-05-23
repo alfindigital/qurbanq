@@ -301,7 +301,7 @@ const Index = () => {
 
       {/* Quick Links */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fitur Lainnya</p>
+        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fitur Lainnya</h2>
         <div className="grid grid-cols-3 gap-2">
           {quickLinks.map((link) => (
             <Link key={link.to} to={link.to}>
