@@ -269,7 +269,7 @@ const Kalkulator = () => {
                     onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }}
                     className="flex-1 text-sm"
                   />
-                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()}>
+                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta">
                     <UserPlus className="h-4 w-4" strokeWidth={1.5} />
                   </Button>
                 </div>
