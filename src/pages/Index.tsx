@@ -228,7 +228,7 @@ const Index = () => {
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">{i + 1}</span>
                         <span className="text-sm font-medium">{name}</span>
                       </div>
-                      <button onClick={() => removeParticipant(i)} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={1.5} /></button>
+                      <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={1.5} /></button>
                     </motion.div>
                   ))}
                 </AnimatePresence>
