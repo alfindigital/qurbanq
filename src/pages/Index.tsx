@@ -236,7 +236,7 @@ const Index = () => {
               {validParticipants.length < animal!.maxPersons && (
                 <div className="flex gap-2">
                   <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 text-sm" />
-                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()}><UserPlus className="h-4 w-4" strokeWidth={1.5} /></Button>
+                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta"><UserPlus className="h-4 w-4" strokeWidth={1.5} /></Button>
                 </div>
               )}
               {validParticipants.length > 0 && (
