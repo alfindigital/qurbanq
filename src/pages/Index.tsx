@@ -270,7 +270,7 @@ const Index = () => {
                         <span className="text-muted-foreground">{i + 1}. {name}</span>
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{formatCurrency(costPerPerson)}</span>
-                          <button onClick={() => shareToParticipant(name)} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3 w-3" strokeWidth={1.5} /></button>
+                          <button onClick={() => shareToParticipant(name)} aria-label={`Kirim ringkasan ke ${name}`} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3 w-3" strokeWidth={1.5} /></button>
                         </div>
                       </div>
                     ))}
