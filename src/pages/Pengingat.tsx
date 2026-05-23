@@ -207,7 +207,7 @@ const Pengingat = () => {
       {/* Checklist */}
       <div>
         <div className="mb-3 flex items-center justify-between">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Checklist Persiapan</p>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Checklist Persiapan</h2>
           <span className="text-xs text-muted-foreground">{completedCount}/{totalItems}</span>
         </div>
         <div className="space-y-4">
