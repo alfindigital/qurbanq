@@ -314,6 +314,7 @@ const Kalkulator = () => {
                           <span className="font-medium">{formatCurrency(costPerPerson)}</span>
                           <button
                             onClick={() => shareToParticipant(name)}
+                            aria-label={`Kirim ringkasan ke ${name}`}
                             className="text-muted-foreground hover:text-primary transition-colors"
                             title={`Kirim ke ${name}`}
                           >
