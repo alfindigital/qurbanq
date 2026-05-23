@@ -191,6 +191,7 @@ const Pengingat = () => {
                   checked={r.enabled}
                   onCheckedChange={() => toggleReminder(r.id)}
                   disabled={notifPermission !== "granted" && notifPermission !== "unsupported"}
+                  aria-label={`Pengingat ${r.label}`}
                 />
               </motion.div>
             ))}
