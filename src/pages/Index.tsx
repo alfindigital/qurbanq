@@ -133,7 +133,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <SEO
         title="Qurbanku — Kalkulator Patungan & Tabungan Qurban"
         description="Hitung biaya qurban Idul Adha, atur patungan sapi/kambing, dan kirim pesanan via WhatsApp langsung dari beranda Qurbanku."
@@ -147,175 +147,206 @@ const Index = () => {
           url: "https://qurban-q.lovable.app/",
         }}
       />
-      {/* Hero */}
-      <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
-        <h1 className="text-lg font-bold">🕌 {countdown.days} hari menuju Idul Adha</h1>
-        <p className="mt-1 text-sm opacity-70">Yuk persiapkan qurbanmu dari sekarang.</p>
-      </div>
 
-      {/* Calculator inline */}
-      <div>
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Jenis Hewan</h2>
-        <div className="grid grid-cols-4 gap-2">
-          {types.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
-              className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-all active:scale-95 ${selectedType === t.key ? "border-primary bg-primary/5" : "border-border"}`}
-            >
-              <span className="text-xl">{t.icon}</span>
-              <span className="text-[11px] font-medium">{t.label}</span>
-            </button>
-          ))}
+      {/* Hero countdown */}
+      <section className="relative overflow-hidden rounded-[2rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
+        <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-forest/25" aria-hidden />
+        <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
+        <div className="relative z-10">
+          <h1 className="font-display text-2xl font-bold leading-tight">
+            {countdown.days} Hari Menuju
+          </h1>
+          <p className="mt-1 text-sm font-medium opacity-90">Hari Raya Idul Adha 1447 H</p>
+          <span className="mt-4 inline-flex items-center rounded-full bg-forest/25 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
+            Mulai Persiapan Sekarang
+          </span>
         </div>
-      </div>
+      </section>
+
+      {/* Animal type picker */}
+      <section>
+        <h2 className="mb-3 font-display text-base font-bold text-forest">Pilih Jenis Hewan</h2>
+        <div className="grid grid-cols-4 gap-2.5">
+          {types.map((t) => {
+            const active = selectedType === t.key;
+            return (
+              <button
+                key={t.key}
+                onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
+                className={`flex flex-col items-center gap-2 rounded-2xl border-2 bg-card p-3 transition-all active:scale-95 ${active ? "border-primary shadow-soft" : "border-border"}`}
+              >
+                <span className={`flex h-12 w-12 items-center justify-center rounded-xl text-2xl ${active ? "bg-terracotta-soft" : "bg-muted"}`}>
+                  {t.icon}
+                </span>
+                <span className={`text-[11px] font-semibold ${active ? "text-primary" : "text-forest"}`}>{t.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
       {selectedType && (
-        <div>
-          <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pilih Hewan</h2>
+        <section>
+          <h2 className="mb-3 font-display text-base font-bold text-forest">Pilih Hewan</h2>
           <div className="space-y-2">
-            {filteredAnimals.map((a) => (
-              <button
-                key={a.id}
-                onClick={() => { setSelectedAnimal(a.id); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
-                className={`w-full flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all active:scale-[0.98] ${selectedAnimal === a.id ? "border-primary bg-primary/5" : "border-border"}`}
-              >
-                <div>
-                  <p className="text-sm font-medium">{a.label}</p>
-                  <p className="text-[11px] text-muted-foreground">{a.weight} · {a.description}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-primary">{formatCurrency(a.price)}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-                </div>
-              </button>
-            ))}
+            {filteredAnimals.map((a) => {
+              const active = selectedAnimal === a.id;
+              return (
+                <button
+                  key={a.id}
+                  onClick={() => { setSelectedAnimal(a.id); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
+                  className={`flex w-full items-center justify-between rounded-2xl border-2 bg-card px-4 py-3.5 text-left transition-all active:scale-[0.98] ${active ? "border-primary shadow-soft" : "border-border"}`}
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-forest">{a.label}</p>
+                    <p className="text-[11px] text-muted-foreground">{a.weight} · {a.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-primary">{formatCurrency(a.price)}</span>
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
+                  </div>
+                </button>
+              );
+            })}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* Patungan */}
+      {/* Calculator card */}
       {canPatungan && (
-        <div className="space-y-3">
+        <section className="rounded-[1.75rem] border border-accent/30 bg-peach-soft p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-display text-base font-bold text-primary">Simulasi Qurban</h2>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-secondary">
+              {animal!.label}
+            </span>
+          </div>
+
           <div className="flex gap-2">
-            <Button variant={!patunganMode ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setPatunganMode(false)}>Pribadi</Button>
-            <Button variant={patunganMode ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setPatunganMode(true)}>
-              <Users className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.5} /> Patungan
-            </Button>
+            <button
+              onClick={() => setPatunganMode(false)}
+              className={`flex-1 rounded-xl py-2 text-xs font-bold transition-all ${!patunganMode ? "bg-primary text-primary-foreground shadow-soft" : "bg-card text-forest"}`}
+            >
+              Mandiri
+            </button>
+            <button
+              onClick={() => setPatunganMode(true)}
+              className={`flex-1 rounded-xl py-2 text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${patunganMode ? "bg-primary text-primary-foreground shadow-soft" : "bg-card text-forest"}`}
+            >
+              <Users className="h-3.5 w-3.5" strokeWidth={2} /> Patungan
+            </button>
           </div>
 
           {!patunganMode && (
-            <div className="rounded-xl border bg-card p-4">
-              <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jumlah Peserta (maks {animal!.maxPersons})</Label>
+            <div className="rounded-2xl bg-card p-4">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+                Jumlah Peserta (maks {animal!.maxPersons})
+              </Label>
               <div className="mt-2 flex items-center gap-3">
-                <Input type="number" min={1} max={animal!.maxPersons} value={persons} onChange={(e) => setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))} className="w-20" />
+                <Input type="number" min={1} max={animal!.maxPersons} value={persons} onChange={(e) => setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))} className="w-20 bg-background" />
                 <span className="text-sm text-muted-foreground">orang</span>
               </div>
             </div>
           )}
 
           {patunganMode && (
-            <div className="rounded-xl border bg-card p-4 space-y-3">
+            <div className="rounded-2xl bg-card p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Peserta Patungan</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Peserta</Label>
                 <span className="text-xs text-muted-foreground">{validParticipants.length}/{animal!.maxPersons} orang</span>
               </div>
               <div className="space-y-1.5">
                 <AnimatePresence mode="popLayout">
                   {validParticipants.map((name, i) => (
-                    <motion.div key={name} layout initial={{ opacity: 0, scale: 0.9, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, x: 40 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+                    <motion.div key={name} layout initial={{ opacity: 0, scale: 0.9, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, x: 40 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className="flex items-center justify-between rounded-xl bg-muted px-3 py-2">
                       <div className="flex items-center gap-2">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">{i + 1}</span>
-                        <span className="text-sm font-medium">{name}</span>
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-[10px] font-bold text-primary">{i + 1}</span>
+                        <span className="text-sm font-medium text-forest">{name}</span>
                       </div>
-                      <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={1.5} /></button>
+                      <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors"><X className="h-3.5 w-3.5" strokeWidth={2} /></button>
                     </motion.div>
                   ))}
                 </AnimatePresence>
               </div>
               {validParticipants.length < animal!.maxPersons && (
                 <div className="flex gap-2">
-                  <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 text-sm" />
-                  <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta"><UserPlus className="h-4 w-4" strokeWidth={1.5} /></Button>
-                </div>
-              )}
-              {validParticipants.length > 0 && (
-                <div className="rounded-lg bg-primary/5 border border-primary/20 p-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Biaya per orang</span>
-                    <span className="font-bold text-primary">{formatCurrency(costPerPerson)}</span>
-                  </div>
+                  <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 bg-background text-sm" />
+                  <Button size="sm" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta" className="bg-primary text-primary-foreground hover:bg-primary/90"><UserPlus className="h-4 w-4" strokeWidth={2} /></Button>
                 </div>
               )}
             </div>
           )}
-        </div>
+
+          {animal && (
+            <div className="flex items-end justify-between border-t border-accent/30 pt-4">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+                  {patunganMode || persons > 1 ? "Per Orang" : "Estimasi Biaya"}
+                </p>
+                <p className="font-display text-2xl font-bold text-primary leading-tight">
+                  {formatCurrency(patunganMode || persons > 1 ? costPerPerson : animal.price)}
+                </p>
+              </div>
+              <Button onClick={handleOrder} size="sm" className="rounded-xl bg-primary text-primary-foreground shadow-warm hover:bg-primary/90">
+                <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={2} /> Pesan
+              </Button>
+            </div>
+          )}
+        </section>
       )}
 
-      {/* Result */}
-      {animal && (
-        <div ref={summaryRef} className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">Berat</span><span className="font-medium">{animal.weight}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">Harga Total</span><span className="font-semibold text-primary">{formatCurrency(animal.price)}</span></div>
-            {animal.maxPersons > 1 && (
-              <>
-                <div className="flex justify-between"><span className="text-muted-foreground">Peserta</span><span className="font-medium">{activePersons} orang</span></div>
-                {patunganMode && validParticipants.length > 0 && (
-                  <div className="border-t pt-2 space-y-1">
-                    {validParticipants.map((name, i) => (
-                      <div key={i} className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">{i + 1}. {name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{formatCurrency(costPerPerson)}</span>
-                          <button onClick={() => shareToParticipant(name)} aria-label={`Kirim ringkasan ke ${name}`} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3 w-3" strokeWidth={1.5} /></button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <div className="flex justify-between border-t pt-2">
-                  <span className="text-muted-foreground">Per Orang</span>
-                  <span className="text-lg font-bold text-primary">{formatCurrency(costPerPerson)}</span>
-                </div>
-              </>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
-              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
-            </Button>
-            {patunganMode && validParticipants.length > 1 && (
-              <Button variant="outline" size="sm" onClick={shareToAll}><Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta</Button>
-            )}
-            {patunganMode && validParticipants.length > 0 && (
-              <Button variant="outline" size="sm" onClick={exportAsImage}><Download className="mr-2 h-4 w-4" strokeWidth={1.5} /> Unduh Gambar Ringkasan</Button>
-            )}
-            <Button variant="ghost" size="sm" onClick={resetAll}>Hitung Ulang</Button>
-          </div>
-          <p className="text-[11px] text-muted-foreground text-center">* Harga estimasi. Hubungi kami untuk penawaran terbaik.</p>
-        </div>
-      )}
-
-      {/* Quick Links */}
-      <div>
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fitur Lainnya</h2>
-        <div className="grid grid-cols-3 gap-2">
-          {quickLinks.map((link) => (
-            <Link key={link.to} to={link.to}>
-              <div className="group flex flex-col items-center gap-2 rounded-xl border bg-card p-3 text-center transition-all active:scale-[0.98] hover:border-primary/30">
-                <div className="rounded-full bg-primary/8 p-2 text-primary"><link.icon className="h-4 w-4" strokeWidth={1.5} /></div>
-                <div>
-                  <p className="text-xs font-medium text-foreground">{link.title}</p>
-                  <p className="text-[10px] text-muted-foreground">{link.desc}</p>
+      {/* Result summary (patungan extras) */}
+      {animal && patunganMode && validParticipants.length > 0 && (
+        <section ref={summaryRef} className="rounded-2xl border border-border bg-card p-5 space-y-3">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</p>
+          <div className="space-y-1.5">
+            {validParticipants.map((name, i) => (
+              <div key={i} className="flex items-center justify-between text-sm">
+                <span className="text-forest">{i + 1}. {name}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-primary">{formatCurrency(costPerPerson)}</span>
+                  <button onClick={() => shareToParticipant(name)} aria-label={`Kirim ringkasan ke ${name}`} className="text-muted-foreground hover:text-primary transition-colors" title={`Kirim ke ${name}`}><Share2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
                 </div>
               </div>
-            </Link>
-          ))}
+            ))}
+          </div>
+          <div className="flex flex-col gap-2 pt-2">
+            {validParticipants.length > 1 && (
+              <Button variant="outline" size="sm" onClick={shareToAll}><Share2 className="mr-2 h-4 w-4" strokeWidth={2} /> Share ke Semua Peserta</Button>
+            )}
+            <Button variant="outline" size="sm" onClick={exportAsImage}><Download className="mr-2 h-4 w-4" strokeWidth={2} /> Unduh Gambar Ringkasan</Button>
+            <Button variant="ghost" size="sm" onClick={resetAll}>Hitung Ulang</Button>
+          </div>
+        </section>
+      )}
+
+      {/* Quick links */}
+      <section>
+        <h2 className="mb-3 font-display text-base font-bold text-forest">Layanan Kami</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {quickLinks.map((link, i) => {
+            const tones = [
+              { bg: "bg-terracotta-soft", fg: "text-primary" },
+              { bg: "bg-sage-soft", fg: "text-secondary" },
+              { bg: "bg-peach-soft", fg: "text-accent-foreground" },
+            ];
+            const tone = tones[i % tones.length];
+            return (
+              <Link key={link.to} to={link.to}>
+                <div className="group flex h-full flex-col items-center gap-2 rounded-2xl border border-border bg-card p-4 text-center transition-all active:scale-[0.96]">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-full ${tone.bg} ${tone.fg}`}>
+                    <link.icon className="h-5 w-5" strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-forest">{link.title}</p>
+                    <p className="text-[10px] text-muted-foreground leading-tight">{link.desc}</p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
