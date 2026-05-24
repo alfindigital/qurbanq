@@ -11,18 +11,21 @@ const items = [
 
 const BottomNav = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-card/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-lg items-center justify-around py-2">
+    <nav
+      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md rounded-full bg-forest px-3 py-2 shadow-warm"
+      style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+    >
+      <div className="flex items-center justify-around">
         {items.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === "/"}
-            className="flex flex-col items-center gap-0.5 px-3 py-1.5 text-muted-foreground transition-colors"
-            activeClassName="text-primary"
+            className="flex flex-col items-center justify-center gap-0.5 rounded-full px-3 py-2 text-background/60 transition-all"
+            activeClassName="text-background bg-background/15"
           >
-            <item.icon className="h-5 w-5" strokeWidth={1.5} />
-            <span className="text-[10px] font-medium">{item.label}</span>
+            <item.icon className="h-5 w-5" strokeWidth={1.8} />
+            <span className="text-[10px] font-semibold tracking-tight">{item.label}</span>
           </NavLink>
         ))}
       </div>
