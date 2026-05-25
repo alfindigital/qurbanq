@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600;1,9..144,700&display=swap');
 
 @layer base {
   :root {
@@ -125,6 +125,12 @@
   }
   .font-display {
     font-family: 'Outfit', system-ui, sans-serif;
+  }
+  .font-brand {
+    font-family: 'Fraunces', 'Outfit', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 120;
+    letter-spacing: -0.02em;
   }
   .shadow-warm {
     box-shadow: var(--shadow-warm);

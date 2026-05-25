@@ -23,13 +23,26 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-lg items-center justify-between px-5">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary shadow-warm">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-primary-foreground">
-                <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.2" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm">
+              {/* Stylized ram/qurban mark with crescent */}
+              <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                {/* crescent moon */}
+                <path d="M24.5 8.5a4.2 4.2 0 1 1-3.8-5.9 3.4 3.4 0 0 0 3.8 5.9z" fill="currentColor" stroke="none" opacity="0.95"/>
+                {/* ram horns */}
+                <path d="M9 13c-2.2-.4-3.5 1-3.2 2.8.3 1.7 2 2.2 3.2 1.5" />
+                <path d="M23 13c2.2-.4 3.5 1 3.2 2.8-.3 1.7-2 2.2-3.2 1.5" />
+                {/* head */}
+                <path d="M9 16.5c0-3.6 3.1-6 7-6s7 2.4 7 6c0 4-3 7.5-7 7.5s-7-3.5-7-7.5z" fill="currentColor" fillOpacity="0.18"/>
+                {/* eyes */}
+                <circle cx="13.2" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+                <circle cx="18.8" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+                {/* snout */}
+                <path d="M14.5 21.2c.7.6 2.3.6 3 0" />
               </svg>
             </div>
-            <span className="font-display text-xl font-bold text-forest">Qurbanku</span>
+            <span className="font-brand text-2xl font-bold tracking-tight text-forest">
+              Qurban<span className="italic text-primary">ku</span>
+            </span>
           </div>
           <button
             onClick={() => setDark(!dark)}
