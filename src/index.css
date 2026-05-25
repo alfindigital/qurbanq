@@ -126,6 +126,12 @@
   .font-display {
     font-family: 'Outfit', system-ui, sans-serif;
   }
+  .font-brand {
+    font-family: 'Fraunces', 'Outfit', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 120;
+    letter-spacing: -0.02em;
+  }
   .shadow-warm {
     box-shadow: var(--shadow-warm);
   }
