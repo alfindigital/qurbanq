@@ -99,6 +99,7 @@
     --sidebar-accent-foreground: 36 30% 92%;
     --sidebar-border: 20 12% 18%;
     --sidebar-ring: 14 60% 60%;
+    --shadow-warm: 0 12px 40px -12px hsl(14 60% 60% / 0.15);
   }
 }
 

@@ -25,7 +25,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex items-center gap-2.5">
             <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm">
               {/* Qurban mark: mosque dome + crescent */}
-              <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <svg viewBox="0 0 32 32" className="h-6 w-6 text-white" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 {/* crescent moon top-left */}
                 <path d="M9 7.5a2.8 2.8 0 1 0 2.6-3.9 2.3 2.3 0 0 1-2.6 3.9z" fill="currentColor" stroke="none" />
                 {/* finial */}
@@ -41,8 +41,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <path d="M5.5 26.5h21" />
               </svg>
             </div>
-            <span className="font-brand text-2xl font-bold tracking-tight text-forest">
-              Qurban<span className="italic text-primary">ku</span>
+            <span className="font-brand text-2xl font-bold tracking-tight text-forest transition-colors dark:text-white">
+              Qurban<span className="italic text-primary transition-colors dark:text-white/90">ku</span>
             </span>
           </div>
           <button
