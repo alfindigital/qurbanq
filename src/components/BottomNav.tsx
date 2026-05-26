@@ -24,7 +24,7 @@ const items = [
 const BottomNav = () => {
   return (
     <nav
-      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md rounded-full bg-forest px-3 py-2 shadow-warm"
+      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 py-2 shadow-warm"
       style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
     >
       <div className="flex items-center justify-around">
@@ -33,11 +33,11 @@ const BottomNav = () => {
             key={item.to}
             to={item.to}
             end={item.to === "/"}
-            className="flex flex-col items-center justify-center gap-0.5 rounded-full px-3 py-2 text-background/60 transition-all"
-            activeClassName="text-background bg-background/15"
+            className="flex flex-col items-center justify-center gap-1 rounded-full px-3 py-2 text-background/60 transition-all"
+            activeClassName="text-background bg-background/20"
           >
             <item.icon className="h-5 w-5" strokeWidth={1.8} />
-            <span className="text-[10px] font-semibold tracking-tight">{item.label}</span>
+            <span className="font-brand text-[10px] font-semibold tracking-tight">{item.label}</span>
           </NavLink>
         ))}
       </div>
