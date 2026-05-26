@@ -24,20 +24,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="mx-auto flex h-16 max-w-lg items-center justify-between px-5">
           <div className="flex items-center gap-2.5">
             <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm">
-              {/* Stylized ram/qurban mark with crescent */}
-              <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                {/* crescent moon */}
-                <path d="M24.5 8.5a4.2 4.2 0 1 1-3.8-5.9 3.4 3.4 0 0 0 3.8 5.9z" fill="currentColor" stroke="none" opacity="0.95"/>
-                {/* ram horns */}
-                <path d="M9 13c-2.2-.4-3.5 1-3.2 2.8.3 1.7 2 2.2 3.2 1.5" />
-                <path d="M23 13c2.2-.4 3.5 1 3.2 2.8-.3 1.7-2 2.2-3.2 1.5" />
-                {/* head */}
-                <path d="M9 16.5c0-3.6 3.1-6 7-6s7 2.4 7 6c0 4-3 7.5-7 7.5s-7-3.5-7-7.5z" fill="currentColor" fillOpacity="0.18"/>
-                {/* eyes */}
-                <circle cx="13.2" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
-                <circle cx="18.8" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
-                {/* snout */}
-                <path d="M14.5 21.2c.7.6 2.3.6 3 0" />
+              {/* Qurban mark: mosque dome + crescent */}
+              <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                {/* crescent moon top-left */}
+                <path d="M9 7.5a2.8 2.8 0 1 0 2.6-3.9 2.3 2.3 0 0 1-2.6 3.9z" fill="currentColor" stroke="none" />
+                {/* finial */}
+                <circle cx="22" cy="5.5" r="0.9" fill="currentColor" stroke="none" />
+                <path d="M22 7v2.5" />
+                {/* dome */}
+                <path d="M16 9.5c-3.6 0-6.5 3-6.5 6.7V18h13v-1.8c0-3.7-2.9-6.7-6.5-6.7z" fill="currentColor" fillOpacity="0.3" />
+                {/* base walls */}
+                <path d="M7.5 18h17v8h-17z" fill="currentColor" fillOpacity="0.15" />
+                {/* arched door */}
+                <path d="M13.5 26v-3.2a2.5 2.5 0 0 1 5 0V26" />
+                {/* ground */}
+                <path d="M5.5 26.5h21" />
               </svg>
             </div>
             <span className="font-brand text-2xl font-bold tracking-tight text-forest">
