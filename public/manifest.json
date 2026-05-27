@@ -1,0 +1,20 @@
+{
+  "name": "Qurbanku — Kalkulator Patungan & Tabungan Qurban",
+  "short_name": "Qurbanku",
+  "description": "Bantu rencanakan ibadah qurban Idul Adha: kalkulator patungan, tabungan, edukasi, dan pengingat hari raya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf8f5",
+  "theme_color": "#c4654a",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
