@@ -1,20 +1,23 @@
 {
-  "name": "Qurbanku — Kalkulator Patungan & Tabungan Qurban",
+  "name": "Qurbanku — Perencanaan Qurban Idul Adha",
   "short_name": "Qurbanku",
-  "description": "Bantu rencanakan ibadah qurban Idul Adha: kalkulator patungan, tabungan, edukasi, dan pengingat hari raya.",
+  "description": "Kalkulator patungan, tabungan, edukasi, dan pengingat qurban Idul Adha.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#faf8f5",
   "theme_color": "#c4654a",
-  "orientation": "portrait",
-  "scope": "/",
   "lang": "id",
   "icons": [
-    {
-      "src": "/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-48.png", "sizes": "48x48", "type": "image/png" },
+    { "src": "/icons/icon-96.png", "sizes": "96x96", "type": "image/png" },
+    { "src": "/icons/icon-144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-256.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/icons/icon-384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
