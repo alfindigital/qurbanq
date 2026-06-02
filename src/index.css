@@ -123,6 +123,17 @@
     font-weight: 700;
     letter-spacing: -0.02em;
   }
+
+  /* Brand-consistent focus ring across all interactives */
+  :where(button, a, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Stronger disabled affordance — keep brand legibility */
+  :where(button, [role="button"]):disabled,
+  :where(button, [role="button"])[aria-disabled="true"] {
+    @apply opacity-60 cursor-not-allowed;
+  }
 }
 
 @layer utilities {
