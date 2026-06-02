@@ -16,6 +16,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
+    // Sync iOS/Android status bar with Forest & Sand brand
+    const brandColor = dark ? "#0f1d14" : "#1a3c2a";
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((m) => m.setAttribute("content", brandColor));
   }, [dark]);
 
   return (
