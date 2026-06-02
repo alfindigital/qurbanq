@@ -58,48 +58,51 @@
   }
 
   .dark {
-    --background: 140 18% 7%;
-    --foreground: 40 25% 92%;
+    /* Forest & Sand — night: deep forest floor + warm sand glow */
+    --background: 140 22% 6%;           /* #0f1d14 matches PWA theme-color */
+    --foreground: 40 28% 94%;           /* warm cream text */
 
-    --card: 140 16% 11%;
-    --card-foreground: 40 25% 92%;
+    --card: 140 18% 10%;                /* slightly raised card */
+    --card-foreground: 40 28% 94%;
 
-    --popover: 140 16% 11%;
-    --popover-foreground: 40 25% 92%;
+    --popover: 140 18% 10%;
+    --popover-foreground: 40 28% 94%;
 
-    --primary: 140 30% 55%;
-    --primary-foreground: 140 18% 7%;
+    --primary: 140 35% 60%;             /* sage-lime glow, AA on dark bg */
+    --primary-foreground: 140 22% 6%;
 
-    --secondary: 140 22% 38%;
-    --secondary-foreground: 40 25% 92%;
+    --secondary: 140 25% 32%;           /* mid forest */
+    --secondary-foreground: 40 28% 94%;
 
-    --muted: 140 12% 15%;
-    --muted-foreground: 40 14% 68%;
+    --muted: 140 14% 14%;
+    --muted-foreground: 40 18% 72%;     /* readable secondary text */
 
-    --accent: 36 25% 60%;
-    --accent-foreground: 140 18% 7%;
+    --accent: 36 35% 65%;               /* warm sand glow */
+    --accent-foreground: 140 22% 6%;
 
-    --forest: 140 25% 70%;
-    --peach-soft: 36 18% 16%;
-    --terracotta-soft: 40 16% 16%;
-    --sage-soft: 140 14% 15%;
+    --forest: 140 28% 72%;              /* logo gradient pair */
+    --peach-soft: 36 18% 14%;           /* card tints stay subtle */
+    --terracotta-soft: 40 16% 14%;
+    --sage-soft: 140 16% 13%;
 
-    --destructive: 0 55% 42%;
+    --destructive: 0 55% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 140 12% 20%;
-    --input: 140 12% 20%;
-    --ring: 140 30% 55%;
+    --border: 140 14% 18%;
+    --input: 140 14% 18%;
+    --ring: 140 35% 60%;
 
-    --sidebar-background: 140 16% 9%;
-    --sidebar-foreground: 40 25% 92%;
-    --sidebar-primary: 140 30% 55%;
-    --sidebar-primary-foreground: 140 18% 7%;
-    --sidebar-accent: 140 12% 15%;
-    --sidebar-accent-foreground: 40 25% 92%;
-    --sidebar-border: 140 12% 18%;
-    --sidebar-ring: 140 30% 55%;
-    --shadow-warm: 0 12px 40px -12px hsl(140 30% 55% / 0.18);
+    --sidebar-background: 140 18% 8%;
+    --sidebar-foreground: 40 28% 94%;
+    --sidebar-primary: 140 35% 60%;
+    --sidebar-primary-foreground: 140 22% 6%;
+    --sidebar-accent: 140 14% 14%;
+    --sidebar-accent-foreground: 40 28% 94%;
+    --sidebar-border: 140 14% 16%;
+    --sidebar-ring: 140 35% 60%;
+
+    --shadow-warm: 0 12px 40px -12px hsl(140 35% 60% / 0.22);
+    --shadow-soft: 0 6px 24px -10px hsl(0 0% 0% / 0.5);
   }
 }
 
