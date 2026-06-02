@@ -1,35 +1,46 @@
 ## Tujuan
+Ganti palet "pelangi" (terracotta + peach + sage + warna hangat campur) menjadi identitas brand tunggal: **Forest & Sand** — hijau hutan dalam sebagai warna utama, krem pasir sebagai latar, dan clay/sand sebagai aksen halus. Cocok untuk app qurban: tenang, organik, terpercaya, premium.
 
-Mengganti tema gelap generik dengan identitas visual hangat khas Qurbanku: terracotta + sage, tipografi Outfit/Figtree, bentuk rounded organik, dan layout mobile-first yang nyaman untuk pengguna Indonesia.
+## Palet Final
 
-## Yang akan diubah
+| Token | HSL | Hex | Pakai untuk |
+|---|---|---|---|
+| `--background` | `40 33% 97%` | `#faf8f5` | Latar utama (krem pasir) |
+| `--foreground` | `140 25% 12%` | `#172a1f` | Teks utama (hampir hitam-hijau) |
+| `--primary` | `140 38% 17%` | `#1a3c2a` | Brand utama (forest deep) |
+| `--secondary` | `140 33% 26%` | `#2d5a3d` | Sekunder (forest mid) |
+| `--accent` | `36 30% 70%` | `#c9b99a` | Aksen pasir/clay |
+| `--muted` | `40 20% 93%` | `#efece6` | Surface lembut |
+| `--forest` | `140 22% 22%` | `#2b4733` | Logo gradient pair |
+| `--peach-soft` *(rename in-place, keep class name)* | `36 35% 94%` | `#f1ebe0` | Card lembut → jadi sand-soft |
+| `--terracotta-soft` *(rename in-place)* | `40 30% 93%` | `#efeae0` | Highlight halus |
+| `--sage-soft` | `140 18% 93%` | `#e8eee8` | Kartu segar hijau muda |
+| `--border` / `--input` | `40 18% 88%` | `#e3ddd0` | Garis halus pasir |
+| `--ring` | `140 38% 17%` | forest | Focus ring |
+| `--wa-green` | tetap `142 70% 35%` | — | Tombol WhatsApp (kontekstual, jangan diubah) |
+| `--destructive` | `0 55% 45%` | — | Sedikit lebih kalem |
 
-### 1. Design system (fondasi)
-- `src/index.css`: ganti seluruh token warna HSL untuk light & dark mode ke palet terracotta (#c4654a), peach (#e8a87c), sage (#87a878), forest (#4a6741), background krem (#fdfcfb), surface (#f4f1ed). Primary = terracotta, secondary = sage, accent = peach. Tambah radius lebih besar (rounded-2xl/3xl default) dan shadow lembut hangat.
-- `tailwind.config.ts`: import font Outfit (heading) + Figtree (body) via Google Fonts, daftarkan sebagai `font-display` & `font-sans`. Hapus Playfair sebagai default.
-- `index.html`: tambahkan preconnect + link Google Fonts Outfit/Figtree, set theme-color ke terracotta.
+**Dark mode**: latar `140 18% 7%`, primary jadi sage terang `140 30% 55%`, accent sand `36 25% 60%`. Konsisten dengan vibe forest.
 
-### 2. Layout & navigasi
-- `src/components/Layout.tsx`: header brand baru (logo terracotta rounded-xl, wordmark Outfit hijau forest), background krem, dark-mode toggle jadi pill sage halus.
-- `src/components/BottomNav.tsx`: bottom nav floating pill hijau forest dengan tombol tengah "+" terracotta menonjol (link ke /kalkulator) — mengikuti referensi prototipe.
+## Yang Diubah
 
-### 3. Halaman Beranda (`src/pages/Index.tsx`)
-- Hero countdown: card sage rounded-3xl dengan judul "{N} Hari Menuju Hari Raya Idul Adha 1447 H", chip "Mulai Persiapan Sekarang", aksen lingkaran dekoratif.
-- Pemilih hewan: 4 kartu putih border tipis, kartu aktif border terracotta + shadow.
-- Kalkulator terintegrasi: card peach lembut (`#fef7f1`) berisi toggle Mandiri/Patungan, jumlah peserta, estimasi biaya besar berwarna terracotta, tombol simpan terracotta. Tetap pakai logika kalkulator existing — hanya restyle.
-- Quick actions: 3 kartu putih (Tabungan, Edukasi, Pengingat) dengan ikon bulat berwarna khas masing-masing.
+1. **`src/index.css`** — overwrite seluruh blok `:root` dan `.dark` dengan token di atas. `--shadow-warm` dihitung ulang pakai forest hue agar bayangan jadi hijau lembut, bukan oranye.
+2. **`index.html`** — `<meta name="theme-color">` dari `#c4654a` → `#1a3c2a`.
+3. **`public/manifest.json`** — `theme_color` dari `#c4654a` → `#1a3c2a`. `background_color` disesuaikan ke `#faf8f5` (kalau saat ini cream lama).
 
-### 4. Halaman lain (konsistensi)
-- `Kalkulator.tsx`, `Tabungan.tsx`, `Edukasi.tsx`, `Pengingat.tsx`: ganti aksen warna ke token semantik baru (primary/secondary/accent) — tidak ada perubahan logic, hanya pemakaian kelas warna agar selaras dengan tema baru. Card countdown di Pengingat ikut jadi sage.
+## Yang TIDAK Diubah
+- Tidak menyentuh komponen `.tsx` apa pun — semua class (`bg-primary`, `bg-peach-soft`, `bg-terracotta-soft`, `text-accent-foreground`, dst.) tetap, hanya nilai tokennya yang berganti. Nama class `peach-soft` / `terracotta-soft` dipertahankan agar tidak rebuild ulang setiap pemakaian — sekarang merepresentasikan nuansa sand/clay.
+- `--wa-green` tetap hijau WhatsApp (warna fungsional brand pihak ketiga).
+- Tipografi (Fraunces + Figtree + Outfit) tidak berubah.
+- Layout, ikon, struktur halaman tidak berubah.
 
-### 5. Mobile responsive
-- Semua halaman: pertahankan `max-w-lg` container, tambah padding aman untuk bottom nav floating (`pb-32`), pastikan tap target ≥44px, font size mobile-friendly.
+## Hasil Visual
+- Logo gradient (`from-primary to-forest`) jadi gradien forest dalam → forest sedang, jauh lebih branded.
+- BottomNav pill jadi hijau hutan elegan, bukan terracotta.
+- Card kalkulator (`bg-peach-soft`) jadi krem pasir halus.
+- Tombol WhatsApp tetap hijau khasnya, kontras enak di latar krem.
 
-## Yang tidak diubah
-- Logika kalkulator, tabungan, notifikasi, data qurban.
-- Routing & komponen shadcn (cukup re-themed via tokens).
-- SEO components.
-
-## Catatan teknis
-- Semua warna dimasukkan sebagai HSL di `index.css`, komponen hanya pakai class semantik (`bg-primary`, `text-foreground`, dst). Tidak ada hex hardcoded di JSX.
-- Dark mode tetap didukung dengan versi gelap dari palet hangat (background coklat tua, primary terracotta cerah).
+## Verifikasi setelah build
+- Buka `/`, `/kalkulator`, `/edukasi`, `/pengingat`, `/tabungan` — pastikan semua surface terbaca, kontras AA aman, tidak ada warna oranye nyasar.
+- Cek dark mode toggle (kalau ada di app).
+- Validasi `theme-color` di tab browser & install prompt PWA jadi hijau hutan.
