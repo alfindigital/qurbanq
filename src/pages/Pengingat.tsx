@@ -18,6 +18,8 @@ import {
 } from "@/lib/notifications";
 
 const Pengingat = () => {
+  const [targetDate, setTargetDate] = useState<Date>(() => getNextIdulAdha());
+  const hijriYear = targetDate.getFullYear() - 579; // pendekatan: Masehi - 579 ≈ Hijriah untuk Idul Adha
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     try {
@@ -29,9 +31,13 @@ const Pengingat = () => {
   const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">(getNotificationPermission);
 
   useEffect(() => {
-    const target = getNextIdulAdha();
     const update = () => {
       const now = new Date();
+      let target = targetDate;
+      if (now >= target) {
+        target = getNextIdulAdha();
+        setTargetDate(target);
+      }
       const diff = target.getTime() - now.getTime();
       if (diff <= 0) return;
       setCountdown({
@@ -44,7 +50,7 @@ const Pengingat = () => {
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [targetDate]);
 
   // Check reminders on mount
   useEffect(() => {
@@ -108,7 +114,7 @@ const Pengingat = () => {
       <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="h-4 w-4" strokeWidth={1.5} />
-          <p className="text-sm font-semibold">Idul Adha 1447 H</p>
+          <p className="text-sm font-semibold">Idul Adha {hijriYear} H</p>
         </div>
         <div className="flex gap-2">
           {[
