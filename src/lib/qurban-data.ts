@@ -36,9 +36,17 @@ export const generateWhatsAppLink = (message: string): string => {
 // Idul Adha 2026: ~27 Mei 2026 (10 Dzulhijjah 1447 H)
 export const getNextIdulAdha = (): Date => {
   const now = new Date();
-  const idulAdha2025 = new Date(2025, 5, 7); // 7 Juni 2025
-  const idulAdha2026 = new Date(2026, 4, 27); // 27 Mei 2026
-  return now < idulAdha2025 ? idulAdha2025 : idulAdha2026;
+  // Perkiraan tanggal Idul Adha (10 Dzulhijjah) beberapa tahun ke depan
+  const dates = [
+    new Date(2025, 5, 7),   // 7 Juni 2025 (1446 H)
+    new Date(2026, 4, 27),  // 27 Mei 2026 (1447 H)
+    new Date(2027, 4, 17),  // 17 Mei 2027 (1448 H)
+    new Date(2028, 4, 5),   // 5 Mei 2028 (1449 H)
+    new Date(2029, 3, 24),  // 24 April 2029 (1450 H)
+    new Date(2030, 3, 14),  // 14 April 2030 (1451 H)
+  ];
+  // Ambil tanggal terdekat yang belum lewat; jika semua lewat, fallback ke yang terakhir
+  return dates.find((d) => now < d) ?? dates[dates.length - 1];
 };
 
 export const educationArticles = [
