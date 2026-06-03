@@ -114,7 +114,7 @@ const Pengingat = () => {
       <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="h-4 w-4" strokeWidth={1.5} />
-          <p className="text-sm font-semibold">Idul Adha 1447 H</p>
+          <p className="text-sm font-semibold">Idul Adha {hijriYear} H</p>
         </div>
         <div className="flex gap-2">
           {[
