@@ -18,6 +18,8 @@ import {
 } from "@/lib/notifications";
 
 const Pengingat = () => {
+  const [targetDate, setTargetDate] = useState<Date>(() => getNextIdulAdha());
+  const hijriYear = targetDate.getFullYear() - 579; // pendekatan: Masehi - 579 ≈ Hijriah untuk Idul Adha
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     try {
