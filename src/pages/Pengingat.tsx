@@ -31,9 +31,13 @@ const Pengingat = () => {
   const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">(getNotificationPermission);
 
   useEffect(() => {
-    const target = getNextIdulAdha();
     const update = () => {
       const now = new Date();
+      let target = targetDate;
+      if (now >= target) {
+        target = getNextIdulAdha();
+        setTargetDate(target);
+      }
       const diff = target.getTime() - now.getTime();
       if (diff <= 0) return;
       setCountdown({
@@ -46,7 +50,7 @@ const Pengingat = () => {
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [targetDate]);
 
   // Check reminders on mount
   useEffect(() => {
