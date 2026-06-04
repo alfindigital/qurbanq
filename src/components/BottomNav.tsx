@@ -23,25 +23,27 @@ const items = [
 
 const BottomNav = () => {
   return (
-    <nav
-      className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 pt-3 shadow-warm dark:ring-1 dark:ring-white/10"
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 px-4"
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
-      <div className="flex items-center justify-around">
-        {items.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === "/"}
-            aria-label={item.label}
-            className="flex items-center justify-center rounded-full px-4 py-2.5 text-white/70 transition-all"
-            activeClassName="text-white bg-white/20"
-          >
-            <item.icon className="h-7 w-7" strokeWidth={1.8} />
-          </NavLink>
-        ))}
-      </div>
-    </nav>
+      <nav className="mx-auto w-full max-w-md rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-2 py-2 shadow-warm dark:ring-1 dark:ring-white/10">
+        <div className="flex items-center justify-around">
+          {items.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/"}
+              aria-label={item.label}
+              className="flex items-center justify-center rounded-full px-3 py-2 text-white/70 transition-all sm:px-4 sm:py-2.5"
+              activeClassName="text-white bg-white/20"
+            >
+              <item.icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.8} />
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+    </div>
   );
 };
 
