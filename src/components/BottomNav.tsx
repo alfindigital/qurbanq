@@ -24,10 +24,14 @@ const items = [
 const BottomNav = () => {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 px-4"
-      style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      className="fixed bottom-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8"
+      style={{
+        paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+        paddingLeft: "max(1rem, env(safe-area-inset-left))",
+        paddingRight: "max(1rem, env(safe-area-inset-right))",
+      }}
     >
-      <nav className="mx-auto w-full max-w-md rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-2 py-2 shadow-warm dark:ring-1 dark:ring-white/10">
+      <nav className="mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 shadow-warm dark:ring-1 dark:ring-white/10">
         <div className="flex items-center justify-around">
           {items.map((item) => (
             <NavLink
@@ -35,10 +39,10 @@ const BottomNav = () => {
               to={item.to}
               end={item.to === "/"}
               aria-label={item.label}
-              className="flex items-center justify-center rounded-full px-3 py-2 text-white/70 transition-all sm:px-4 sm:py-2.5"
+              className="flex items-center justify-center rounded-full p-2 sm:p-2.5 md:p-3 text-white/70 transition-all"
               activeClassName="text-white bg-white/20"
             >
-              <item.icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.8} />
+              <item.icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" strokeWidth={1.8} />
             </NavLink>
           ))}
         </div>
