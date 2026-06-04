@@ -24,8 +24,8 @@ const items = [
 const BottomNav = () => {
   return (
     <nav
-      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 py-2 shadow-warm dark:ring-1 dark:ring-white/10"
-      style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+      className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 pt-3 shadow-warm dark:ring-1 dark:ring-white/10"
+      style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <div className="flex items-center justify-around">
         {items.map((item) => (
@@ -34,10 +34,10 @@ const BottomNav = () => {
             to={item.to}
             end={item.to === "/"}
             aria-label={item.label}
-            className="flex items-center justify-center rounded-full px-3 py-2 text-white/70 transition-all"
+            className="flex items-center justify-center rounded-full px-4 py-2.5 text-white/70 transition-all"
             activeClassName="text-white bg-white/20"
           >
-            <item.icon className="h-5 w-5" strokeWidth={1.8} />
+            <item.icon className="h-7 w-7" strokeWidth={1.8} />
           </NavLink>
         ))}
       </div>
