@@ -46,8 +46,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <path d="M5.5 26.5h21" />
               </svg>
             </div>
-            <span className="font-brand text-2xl font-bold tracking-tight text-forest transition-colors dark:text-white">
-              Qurban<span className="italic text-primary transition-colors dark:text-white/90">ku</span>
+            <span className="font-display text-2xl font-bold leading-tight text-forest transition-colors dark:text-white">
+              Qurbanku
             </span>
           </div>
           <button

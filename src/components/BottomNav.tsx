@@ -33,11 +33,11 @@ const BottomNav = () => {
             key={item.to}
             to={item.to}
             end={item.to === "/"}
-            className="flex flex-col items-center justify-center gap-1 rounded-full px-3 py-2 text-white/70 transition-all"
+            aria-label={item.label}
+            className="flex items-center justify-center rounded-full px-3 py-2 text-white/70 transition-all"
             activeClassName="text-white bg-white/20"
           >
             <item.icon className="h-5 w-5" strokeWidth={1.8} />
-            <span className="font-brand text-[10px] font-semibold tracking-tight">{item.label}</span>
           </NavLink>
         ))}
       </div>
