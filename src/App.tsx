@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,11 +8,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 
-const Kalkulator = lazy(() => import("./pages/Kalkulator"));
-const Tabungan = lazy(() => import("./pages/Tabungan"));
-const Edukasi = lazy(() => import("./pages/Edukasi"));
-const Pengingat = lazy(() => import("./pages/Pengingat"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const kalkulatorImport = () => import("./pages/Kalkulator");
+const tabunganImport = () => import("./pages/Tabungan");
+const edukasiImport = () => import("./pages/Edukasi");
+const pengingatImport = () => import("./pages/Pengingat");
+const notFoundImport = () => import("./pages/NotFound");
+
+const Kalkulator = lazy(kalkulatorImport);
+const Tabungan = lazy(tabunganImport);
+const Edukasi = lazy(edukasiImport);
+const Pengingat = lazy(pengingatImport);
+const NotFound = lazy(notFoundImport);
+
+// Prefetch all route chunks during idle time so menu switches are instant
+const prefetchRoutes = () => {
+  kalkulatorImport();
+  tabunganImport();
+  edukasiImport();
+  pengingatImport();
+};
 
 const queryClient = new QueryClient();
 
