@@ -54,21 +54,21 @@ const Edukasi = () => {
 
           {/* FAQ */}
           <div>
-            <div className="mb-2 flex items-center gap-1.5">
+            <div className="mb-3 flex items-center gap-2">
               <HelpCircle className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
               <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tanya Jawab</h2>
             </div>
-            <Accordion type="single" collapsible className="w-full space-y-2">
+            <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
               {faqItems.map((faq, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="overflow-hidden rounded-xl border bg-card px-3 [&]:border-b"
+                  className="overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:border-primary/30 hover:shadow-sm data-[state=open]:border-primary/20 data-[state=open]:bg-primary/[0.03]"
                 >
-                  <AccordionTrigger className="py-3 text-left font-sans text-sm font-semibold text-foreground hover:no-underline">
+                  <AccordionTrigger className="px-3 sm:px-4 py-3 sm:py-4 text-left text-sm font-semibold text-foreground hover:no-underline">
                     {faq.q}
                   </AccordionTrigger>
-                  <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground">
+                  <AccordionContent className="px-3 sm:px-4 pb-3 sm:pb-4 text-sm leading-relaxed text-muted-foreground">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>
