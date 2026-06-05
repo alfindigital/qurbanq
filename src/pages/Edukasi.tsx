@@ -58,11 +58,19 @@ const Edukasi = () => {
               <HelpCircle className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
               <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tanya Jawab</h2>
             </div>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full space-y-2">
               {faqItems.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`}>
-                  <AccordionTrigger className="text-left text-sm">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground">{faq.a}</AccordionContent>
+                <AccordionItem
+                  key={i}
+                  value={`faq-${i}`}
+                  className="overflow-hidden rounded-xl border bg-card px-3 [&]:border-b"
+                >
+                  <AccordionTrigger className="py-3 text-left font-sans text-sm font-semibold text-foreground hover:no-underline">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground">
+                    {faq.a}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
