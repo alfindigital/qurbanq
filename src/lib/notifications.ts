@@ -1,7 +1,6 @@
 import { getNextIdulAdha } from "./qurban-data";
 
 const REMINDER_STORAGE_KEY = "qurbanku-reminders";
-const IN_APP_DISMISSED_KEY = "qurbanku-inapp-dismissed";
 
 export interface ReminderSetting {
   id: string;
@@ -71,25 +70,4 @@ export const checkAndTriggerReminders = (reminders: ReminderSetting[]) => {
   });
 
   return triggered;
-};
-
-export const getInAppReminder = (): { message: string; type: "urgent" | "warning" | "info" } | null => {
-  const target = getNextIdulAdha();
-  const now = new Date();
-  const diffMs = target.getTime() - now.getTime();
-  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-  const dismissedDate = localStorage.getItem(IN_APP_DISMISSED_KEY);
-  const today = new Date().toDateString();
-  if (dismissedDate === today) return null;
-
-  if (diffDays <= 0) return null;
-  if (diffDays <= 3) return { message: `⚡ Idul Adha tinggal ${diffDays} hari lagi! Pastikan hewan qurban sudah dipesan.`, type: "urgent" };
-  if (diffDays <= 7) return { message: `⏰ Idul Adha ${diffDays} hari lagi. Sudah siapkan persiapan qurban?`, type: "warning" };
-  if (diffDays <= 30) return { message: `📅 ${diffDays} hari menuju Idul Adha. Yuk mulai persiapan qurban!`, type: "info" };
-  return null;
-};
-
-export const dismissInAppReminder = () => {
-  localStorage.setItem(IN_APP_DISMISSED_KEY, new Date().toDateString());
 };

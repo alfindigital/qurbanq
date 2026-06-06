@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
 import SEO from "@/components/SEO";
-import { animalOptions, formatCurrency, generateWhatsAppLink, WHATSAPP_NUMBER, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 
 const types: { key: AnimalType; label: string; icon: string }[] = [
   { key: "kambing", label: "Kambing", icon: "🐐" },
@@ -288,8 +288,6 @@ const Kalkulator = () => {
         </div>
       )}
 
-      {/* Step 3 for non-patungan single animals */}
-      {animal && animal.maxPersons === 1 && null}
 
       {/* Result */}
       {animal && (
