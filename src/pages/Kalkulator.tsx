@@ -16,7 +16,7 @@ const types: { key: AnimalType; label: string; icon: string }[] = [
   { key: "unta", label: "Unta", icon: "🐪" },
 ];
 
-const STORAGE_KEY = "qurbanku-patungan";
+const STORAGE_KEY = "qurbanku-kalkulator";
 
 const loadSaved = () => {
   try {
