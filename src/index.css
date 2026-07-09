@@ -161,7 +161,12 @@
 
 @layer utilities {
   .pb-nav {
-    padding-bottom: 8rem;
+    padding-bottom: 6.5rem;
+  }
+  @media (min-width: 640px) {
+    .pb-nav {
+      padding-bottom: 7rem;
+    }
   }
   .font-display {
     font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
