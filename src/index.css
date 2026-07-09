@@ -58,51 +58,51 @@
   }
 
   .dark {
-    /* Forest & Sand — night: high contrast, premium, non-flat */
-    --background: 150 42% 4%;            /* near-black forest */
-    --foreground: 42 48% 96%;            /* warm ivory text */
+    /* Night Market: charcoal base, ivory copy, emerald brand, sand-gold accents */
+    --background: 150 18% 6%;            /* #0c1210 */
+    --foreground: 42 55% 97%;            /* warm ivory */
 
-    --card: 148 30% 14%;                 /* visibly lifted surface */
-    --card-foreground: 42 48% 96%;
+    --card: 150 12% 16%;                 /* lifted charcoal surface */
+    --card-foreground: 42 55% 97%;
 
-    --popover: 148 32% 12%;
-    --popover-foreground: 42 48% 96%;
+    --popover: 150 13% 14%;
+    --popover-foreground: 42 55% 97%;
 
-    --primary: 144 60% 70%;              /* luminous sage CTA/text */
-    --primary-foreground: 150 42% 5%;
+    --primary: 147 63% 66%;              /* bright emerald */
+    --primary-foreground: 150 18% 6%;
 
-    --secondary: 147 38% 32%;            /* deep emerald blocks */
-    --secondary-foreground: 42 48% 96%;
+    --secondary: 151 42% 36%;            /* rich emerald panel */
+    --secondary-foreground: 42 55% 97%;
 
-    --muted: 148 22% 20%;                /* clear field/input surface */
-    --muted-foreground: 42 34% 88%;      /* readable secondary copy */
+    --muted: 150 10% 23%;                /* readable muted blocks */
+    --muted-foreground: 42 36% 86%;      /* secondary text, still bright */
 
-    --accent: 38 72% 73%;                /* sand-gold accent */
-    --accent-foreground: 150 42% 5%;
+    --accent: 39 82% 72%;                /* sand-gold */
+    --accent-foreground: 150 18% 6%;
 
-    --forest: 144 52% 76%;               /* readable sage for text-forest classes */
-    --peach-soft: 145 24% 18%;           /* legacy class: dark moss surface */
-    --terracotta-soft: 42 22% 20%;       /* legacy class: dark sand surface */
-    --sage-soft: 148 25% 21%;
+    --forest: 148 78% 78%;               /* all text-forest becomes readable */
+    --peach-soft: 150 10% 20%;           /* legacy class: neutral dark card */
+    --terracotta-soft: 39 24% 24%;       /* legacy class: warm dark highlight */
+    --sage-soft: 150 13% 24%;
 
-    --destructive: 0 72% 62%;
-    --destructive-foreground: 42 48% 96%;
+    --destructive: 0 76% 64%;
+    --destructive-foreground: 42 55% 97%;
 
-    --border: 145 25% 36%;               /* borders visible on cards/forms */
-    --input: 145 25% 36%;
-    --ring: 144 60% 70%;
+    --border: 150 10% 34%;               /* visible outlines */
+    --input: 150 10% 34%;
+    --ring: 147 63% 66%;
 
-    --sidebar-background: 150 36% 6%;
-    --sidebar-foreground: 42 48% 96%;
-    --sidebar-primary: 144 60% 70%;
-    --sidebar-primary-foreground: 150 42% 5%;
-    --sidebar-accent: 148 22% 20%;
-    --sidebar-accent-foreground: 42 48% 96%;
-    --sidebar-border: 145 22% 29%;
-    --sidebar-ring: 144 60% 70%;
+    --sidebar-background: 150 18% 7%;
+    --sidebar-foreground: 42 55% 97%;
+    --sidebar-primary: 147 63% 66%;
+    --sidebar-primary-foreground: 150 18% 6%;
+    --sidebar-accent: 150 10% 23%;
+    --sidebar-accent-foreground: 42 55% 97%;
+    --sidebar-border: 150 10% 34%;
+    --sidebar-ring: 147 63% 66%;
 
-    --shadow-warm: 0 18px 54px -18px hsl(144 60% 70% / 0.42);
-    --shadow-soft: 0 12px 36px -18px hsl(0 0% 0% / 0.85);
+    --shadow-warm: 0 18px 54px -18px hsl(147 63% 66% / 0.38);
+    --shadow-soft: 0 14px 40px -18px hsl(0 0% 0% / 0.9);
   }
 }
 
