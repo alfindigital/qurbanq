@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
-import html2canvas from "html2canvas";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -96,6 +96,7 @@ const Kalkulator = () => {
     if (!summaryRef.current || !animal) return;
     try {
       toast.loading("Membuat gambar...", { id: "export" });
+      const { default: html2canvas } = await import("html2canvas");
       const canvas = await html2canvas(summaryRef.current, {
         backgroundColor: null,
         scale: 2,

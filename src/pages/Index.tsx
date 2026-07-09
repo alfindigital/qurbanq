@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
-import html2canvas from "html2canvas";
+
 import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -105,6 +105,7 @@ const Index = () => {
     if (!summaryRef.current || !animal) return;
     try {
       toast.loading("Membuat gambar...", { id: "export" });
+      const { default: html2canvas } = await import("html2canvas");
       const canvas = await html2canvas(summaryRef.current, { backgroundColor: null, scale: 2, useCORS: true });
       const link = document.createElement("a");
       link.download = `patungan-qurban-${animal.label.toLowerCase().replace(/\s+/g, "-")}.png`;
