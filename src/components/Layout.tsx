@@ -27,9 +27,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-lg items-center justify-between px-5">
           <div className="flex items-center gap-2.5">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm">
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm dark:from-[hsl(var(--forest))] dark:to-secondary">
               {/* Qurban mark: mosque dome + crescent */}
-              <svg viewBox="0 0 32 32" className="h-6 w-6 text-white" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground dark:text-foreground" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 {/* crescent moon top-left */}
                 <path d="M9 7.5a2.8 2.8 0 1 0 2.6-3.9 2.3 2.3 0 0 1-2.6 3.9z" fill="currentColor" stroke="none" />
                 {/* finial */}
@@ -45,7 +45,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <path d="M5.5 26.5h21" />
               </svg>
             </div>
-            <span className="font-display text-2xl font-bold leading-tight text-forest transition-colors dark:text-white">
+            <span className="font-display text-2xl font-bold leading-tight text-forest transition-colors dark:text-foreground">
               Qurbanku
             </span>
           </div>
