@@ -62,54 +62,66 @@
     --background: 150 18% 6%;            /* #0c1210 */
     --foreground: 42 55% 97%;            /* warm ivory */
 
-    --card: 150 12% 16%;                 /* lifted charcoal surface */
+    --card: 150 12% 13%;                 /* lifted charcoal surface */
     --card-foreground: 42 55% 97%;
 
-    --popover: 150 13% 14%;
+    --popover: 150 13% 12%;
     --popover-foreground: 42 55% 97%;
 
     --primary: 147 63% 66%;              /* bright emerald */
-    --primary-foreground: 150 18% 6%;
+    --primary-foreground: 150 24% 8%;
 
-    --secondary: 151 42% 36%;            /* rich emerald panel */
-    --secondary-foreground: 42 55% 97%;
+    --secondary: 39 42% 22%;             /* warm bronze panel — breaks green-on-green */
+    --secondary-foreground: 42 65% 94%;
 
-    --muted: 150 10% 23%;                /* readable muted blocks */
-    --muted-foreground: 42 36% 86%;      /* secondary text, still bright */
+    --muted: 150 8% 20%;                 /* readable muted blocks */
+    --muted-foreground: 42 34% 82%;      /* WCAG AA on card & muted */
 
     --accent: 39 82% 72%;                /* sand-gold */
-    --accent-foreground: 150 18% 6%;
+    --accent-foreground: 150 24% 8%;
 
-    --forest: 148 78% 78%;               /* all text-forest becomes readable */
-    --peach-soft: 150 10% 20%;           /* legacy class: neutral dark card */
-    --terracotta-soft: 39 24% 24%;       /* legacy class: warm dark highlight */
-    --sage-soft: 150 13% 24%;
+    --forest: 148 62% 82%;               /* all text-forest becomes readable */
+    --peach-soft: 39 24% 15%;            /* warm dark surface (hero/cards) */
+    --terracotta-soft: 39 30% 20%;       /* warm dark highlight */
+    --sage-soft: 150 14% 22%;
 
     --destructive: 0 76% 64%;
     --destructive-foreground: 42 55% 97%;
 
-    --border: 150 10% 34%;               /* visible outlines */
-    --input: 150 10% 34%;
+    --border: 150 8% 30%;                /* visible outlines */
+    --input: 150 8% 30%;
     --ring: 147 63% 66%;
 
     --sidebar-background: 150 18% 7%;
     --sidebar-foreground: 42 55% 97%;
     --sidebar-primary: 147 63% 66%;
-    --sidebar-primary-foreground: 150 18% 6%;
-    --sidebar-accent: 150 10% 23%;
+    --sidebar-primary-foreground: 150 24% 8%;
+    --sidebar-accent: 150 8% 20%;
     --sidebar-accent-foreground: 42 55% 97%;
-    --sidebar-border: 150 10% 34%;
+    --sidebar-border: 150 8% 30%;
     --sidebar-ring: 147 63% 66%;
 
-    --shadow-warm: 0 18px 54px -18px hsl(147 63% 66% / 0.38);
+    --shadow-warm: 0 18px 54px -18px hsl(147 63% 66% / 0.35);
     --shadow-soft: 0 14px 40px -18px hsl(0 0% 0% / 0.9);
   }
+
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
+  /* Instant theme swap — no colour-lag between light/dark */
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: none !important;
+    animation-duration: 0s !important;
+  }
+
+
 
   html {
     font-size: 17px;
