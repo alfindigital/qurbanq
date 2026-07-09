@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600;1,9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -58,51 +58,51 @@
   }
 
   .dark {
-    /* Forest & Sand — night: deep forest floor + warm sand glow */
-    --background: 140 22% 6%;           /* #0f1d14 matches PWA theme-color */
-    --foreground: 40 28% 94%;           /* warm cream text */
+    /* Forest & Sand — night: dibuat lebih kontras & terbaca */
+    --background: 145 20% 8%;           /* #10201a base */
+    --foreground: 40 40% 96%;           /* warm cream, tinggi kontras */
 
-    --card: 140 18% 10%;                /* slightly raised card */
-    --card-foreground: 40 28% 94%;
+    --card: 145 18% 13%;                /* jelas lifted dari bg */
+    --card-foreground: 40 40% 96%;
 
-    --popover: 140 18% 10%;
-    --popover-foreground: 40 28% 94%;
+    --popover: 145 18% 13%;
+    --popover-foreground: 40 40% 96%;
 
-    --primary: 140 35% 60%;             /* sage-lime glow, AA on dark bg */
-    --primary-foreground: 140 22% 6%;
+    --primary: 140 45% 68%;             /* sage glow terang, AAA di bg gelap */
+    --primary-foreground: 145 25% 8%;
 
-    --secondary: 140 25% 32%;           /* mid forest */
-    --secondary-foreground: 40 28% 94%;
+    --secondary: 140 30% 40%;           /* mid forest lebih hidup */
+    --secondary-foreground: 40 40% 96%;
 
-    --muted: 140 14% 14%;
-    --muted-foreground: 40 18% 72%;     /* readable secondary text */
+    --muted: 145 15% 18%;
+    --muted-foreground: 40 22% 78%;     /* teks sekunder terbaca AA */
 
-    --accent: 36 35% 65%;               /* warm sand glow */
-    --accent-foreground: 140 22% 6%;
+    --accent: 36 55% 72%;               /* sand glow lebih hangat */
+    --accent-foreground: 145 25% 8%;
 
-    --forest: 140 28% 72%;              /* logo gradient pair */
-    --peach-soft: 36 18% 14%;           /* card tints stay subtle */
-    --terracotta-soft: 40 16% 14%;
-    --sage-soft: 140 16% 13%;
+    --forest: 140 40% 78%;              /* pair gradient logo terang */
+    --peach-soft: 36 20% 18%;
+    --terracotta-soft: 40 18% 18%;
+    --sage-soft: 140 20% 17%;
 
-    --destructive: 0 55% 50%;
+    --destructive: 0 65% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 140 14% 18%;
-    --input: 140 14% 18%;
-    --ring: 140 35% 60%;
+    --border: 145 15% 24%;              /* border cukup terlihat */
+    --input: 145 15% 24%;
+    --ring: 140 45% 68%;
 
-    --sidebar-background: 140 18% 8%;
-    --sidebar-foreground: 40 28% 94%;
-    --sidebar-primary: 140 35% 60%;
-    --sidebar-primary-foreground: 140 22% 6%;
-    --sidebar-accent: 140 14% 14%;
-    --sidebar-accent-foreground: 40 28% 94%;
-    --sidebar-border: 140 14% 16%;
-    --sidebar-ring: 140 35% 60%;
+    --sidebar-background: 145 18% 10%;
+    --sidebar-foreground: 40 40% 96%;
+    --sidebar-primary: 140 45% 68%;
+    --sidebar-primary-foreground: 145 25% 8%;
+    --sidebar-accent: 145 15% 18%;
+    --sidebar-accent-foreground: 40 40% 96%;
+    --sidebar-border: 145 15% 22%;
+    --sidebar-ring: 140 45% 68%;
 
-    --shadow-warm: 0 12px 40px -12px hsl(140 35% 60% / 0.22);
-    --shadow-soft: 0 6px 24px -10px hsl(0 0% 0% / 0.5);
+    --shadow-warm: 0 12px 40px -12px hsl(140 45% 30% / 0.5);
+    --shadow-soft: 0 6px 24px -10px hsl(0 0% 0% / 0.6);
   }
 }
 
@@ -111,17 +111,28 @@
     @apply border-border;
   }
 
+  html {
+    font-size: 17px;
+  }
+  @media (min-width: 640px) {
+    html { font-size: 17.5px; }
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 20;
+    font-weight: 450;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fraunces', 'Outfit', serif;
-    font-optical-sizing: auto;
-    font-variation-settings: "opsz" 120;
-    font-weight: 700;
+    font-family: 'Instrument Serif', 'Bricolage Grotesque', serif;
+    font-weight: 400;
     letter-spacing: -0.02em;
+    line-height: 1.05;
   }
 
   /* Brand-consistent focus ring across all interactives */
@@ -138,15 +149,19 @@
 
 @layer utilities {
   .pb-nav {
-    padding-bottom: 7rem;
+    padding-bottom: 8rem;
   }
   .font-display {
-    font-family: 'Outfit', system-ui, sans-serif;
+    font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "opsz" 48;
+    letter-spacing: -0.03em;
   }
   .font-brand {
-    font-family: 'Fraunces', 'Outfit', serif;
-    font-optical-sizing: auto;
-    font-variation-settings: "opsz" 120;
+    font-family: 'Instrument Serif', 'Bricolage Grotesque', serif;
+    letter-spacing: -0.025em;
+  }
+  .font-serif-display {
+    font-family: 'Instrument Serif', serif;
     letter-spacing: -0.02em;
   }
   .shadow-warm {
