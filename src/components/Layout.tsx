@@ -5,12 +5,12 @@ import BottomNav from "@/components/BottomNav";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [dark, setDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") ||
-        (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    }
-    return false;
+    if (typeof window === "undefined") return false;
+    const stored = localStorage.getItem("theme");
+    if (stored) return stored === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
+
 
   useEffect(() => {
     const root = document.documentElement;
