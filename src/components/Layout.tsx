@@ -13,14 +13,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    root.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
-    // Sync iOS/Android status bar with Forest & Sand brand
-    const brandColor = dark ? "#0f1d14" : "#1a3c2a";
+    const brandColor = dark ? "#0c1210" : "#1a3c2a";
     document
       .querySelectorAll('meta[name="theme-color"]')
       .forEach((m) => m.setAttribute("content", brandColor));
+    // Re-enable transitions on the next frame so the swap is instant
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => root.classList.remove("theme-switching")),
+    );
+    return () => cancelAnimationFrame(raf);
   }, [dark]);
+
 
   return (
     <div className="min-h-screen bg-background">
