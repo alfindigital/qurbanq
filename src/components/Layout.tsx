@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -65,7 +64,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
 
-      <FloatingWhatsApp />
       <BottomNav />
     </div>
   );
