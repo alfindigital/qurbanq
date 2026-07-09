@@ -31,7 +31,7 @@ const BottomNav = () => {
         paddingRight: "max(1rem, env(safe-area-inset-right))",
       }}
     >
-      <nav className="mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 py-2.5 sm:px-4 sm:py-3 shadow-warm dark:ring-1 dark:ring-white/10">
+      <nav className="mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg rounded-full bg-gradient-to-br from-primary to-[hsl(var(--forest))] px-3 py-2.5 sm:px-4 sm:py-3 shadow-warm ring-1 ring-primary-foreground/10 dark:from-[hsl(var(--forest))] dark:to-secondary dark:ring-accent/25">
         <div className="flex items-center justify-around">
           {items.map((item) => (
             <NavLink
@@ -39,8 +39,8 @@ const BottomNav = () => {
               to={item.to}
               end={item.to === "/"}
               aria-label={item.label}
-              className="flex items-center justify-center rounded-full p-3 sm:p-3.5 text-white/70 transition-all"
-              activeClassName="text-white bg-white/20"
+              className="flex items-center justify-center rounded-full p-3 sm:p-3.5 text-primary-foreground/75 transition-all dark:text-foreground/75"
+              activeClassName="text-primary-foreground bg-primary-foreground/20 dark:text-foreground dark:bg-foreground/14"
             >
               <item.icon className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={1.9} />
             </NavLink>

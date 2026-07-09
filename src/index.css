@@ -58,51 +58,51 @@
   }
 
   .dark {
-    /* Forest & Sand — night: dibuat lebih kontras & terbaca */
-    --background: 145 20% 8%;           /* #10201a base */
-    --foreground: 40 40% 96%;           /* warm cream, tinggi kontras */
+    /* Forest & Sand — night: high contrast, premium, non-flat */
+    --background: 150 36% 5%;            /* near-black forest */
+    --foreground: 42 48% 96%;            /* warm ivory text */
 
-    --card: 145 18% 13%;                /* jelas lifted dari bg */
-    --card-foreground: 40 40% 96%;
+    --card: 148 30% 12%;                 /* visibly lifted surface */
+    --card-foreground: 42 48% 96%;
 
-    --popover: 145 18% 13%;
-    --popover-foreground: 40 40% 96%;
+    --popover: 148 32% 10%;
+    --popover-foreground: 42 48% 96%;
 
-    --primary: 140 45% 68%;             /* sage glow terang, AAA di bg gelap */
-    --primary-foreground: 145 25% 8%;
+    --primary: 145 48% 58%;              /* luminous sage CTA/text */
+    --primary-foreground: 150 36% 6%;
 
-    --secondary: 140 30% 40%;           /* mid forest lebih hidup */
-    --secondary-foreground: 40 40% 96%;
+    --secondary: 147 36% 28%;            /* deep emerald blocks */
+    --secondary-foreground: 42 48% 96%;
 
-    --muted: 145 15% 18%;
-    --muted-foreground: 40 22% 78%;     /* teks sekunder terbaca AA */
+    --muted: 148 22% 18%;                /* clear field/input surface */
+    --muted-foreground: 42 28% 82%;      /* readable secondary copy */
 
-    --accent: 36 55% 72%;               /* sand glow lebih hangat */
-    --accent-foreground: 145 25% 8%;
+    --accent: 38 72% 73%;                /* sand-gold accent */
+    --accent-foreground: 150 36% 6%;
 
-    --forest: 140 40% 78%;              /* pair gradient logo terang */
-    --peach-soft: 36 20% 18%;
-    --terracotta-soft: 40 18% 18%;
-    --sage-soft: 140 20% 17%;
+    --forest: 150 46% 28%;               /* gradient anchor with white-safe contrast */
+    --peach-soft: 145 22% 17%;           /* legacy class: dark moss surface */
+    --terracotta-soft: 42 20% 18%;       /* legacy class: dark sand surface */
+    --sage-soft: 148 24% 19%;
 
-    --destructive: 0 65% 58%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 62%;
+    --destructive-foreground: 42 48% 96%;
 
-    --border: 145 15% 24%;              /* border cukup terlihat */
-    --input: 145 15% 24%;
-    --ring: 140 45% 68%;
+    --border: 145 22% 29%;               /* borders visible on cards/forms */
+    --input: 145 22% 29%;
+    --ring: 145 48% 58%;
 
-    --sidebar-background: 145 18% 10%;
-    --sidebar-foreground: 40 40% 96%;
-    --sidebar-primary: 140 45% 68%;
-    --sidebar-primary-foreground: 145 25% 8%;
-    --sidebar-accent: 145 15% 18%;
-    --sidebar-accent-foreground: 40 40% 96%;
-    --sidebar-border: 145 15% 22%;
-    --sidebar-ring: 140 45% 68%;
+    --sidebar-background: 150 36% 6%;
+    --sidebar-foreground: 42 48% 96%;
+    --sidebar-primary: 145 48% 58%;
+    --sidebar-primary-foreground: 150 36% 6%;
+    --sidebar-accent: 148 22% 18%;
+    --sidebar-accent-foreground: 42 48% 96%;
+    --sidebar-border: 145 22% 29%;
+    --sidebar-ring: 145 48% 58%;
 
-    --shadow-warm: 0 12px 40px -12px hsl(140 45% 30% / 0.5);
-    --shadow-soft: 0 6px 24px -10px hsl(0 0% 0% / 0.6);
+    --shadow-warm: 0 18px 54px -18px hsl(145 48% 58% / 0.45);
+    --shadow-soft: 0 12px 36px -18px hsl(0 0% 0% / 0.85);
   }
 }
 
