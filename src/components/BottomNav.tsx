@@ -29,7 +29,7 @@ const BottomNav = () => {
     >
       <nav
         aria-label="Navigasi utama"
-        className="mx-auto flex w-full items-stretch sm:max-w-2xl md:max-w-3xl"
+        className="mx-auto flex w-full items-stretch sm:max-w-2xl sm:justify-center md:max-w-3xl"
       >
         {items.map((item) => (
           <NavLink
