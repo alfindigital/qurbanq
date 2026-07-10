@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import Index from "./pages/Index";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const kalkulatorImport = () => import("./pages/Kalkulator");
 const tabunganImport = () => import("./pages/Tabungan");
