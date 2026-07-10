@@ -1,44 +1,42 @@
 import { test, expect } from "../playwright-fixture";
 
+// Accessible name for each link comes from aria-label in BottomNav.tsx.
 const items = [
-  { label: "Beranda", path: "/" },
-  { label: "Hitung", path: "/kalkulator" },
-  { label: "Tabung", path: "/tabungan" },
-  { label: "Edukasi", path: "/edukasi" },
-  { label: "Ingat", path: "/pengingat" },
+  { label: "Beranda", ariaLabel: "Halaman utama Qurbanku", path: "/" },
+  { label: "Hitung", ariaLabel: "Kalkulator qurban", path: "/kalkulator" },
+  { label: "Tabung", ariaLabel: "Rencana tabungan qurban", path: "/tabungan" },
+  { label: "Edukasi", ariaLabel: "Materi edukasi qurban", path: "/edukasi" },
+  { label: "Ingat", ariaLabel: "Pengingat qurban", path: "/pengingat" },
 ];
+
+const nav = (page: import("@playwright/test").Page) =>
+  page.getByRole("navigation", { name: "Navigasi utama" });
 
 test.describe("BottomNav — routing & scroll-to-top", () => {
   test("switches route for every menu item", async ({ page }) => {
     await page.goto("/");
-    const nav = page.getByRole("navigation", { name: "Navigasi utama" });
-    await expect(nav).toBeVisible();
+    await expect(nav(page)).toBeVisible();
 
     for (const item of items) {
-      await nav.getByRole("link", { name: new RegExp(item.label, "i") }).click();
-      await expect(page).toHaveURL(new RegExp(`${item.path.replace("/", "\\/")}$`));
+      await nav(page).getByRole("link", { name: item.ariaLabel }).click();
+      await expect(page).toHaveURL(new RegExp(`${item.path.replace(/\//g, "\\/")}$`));
     }
   });
 
   test("scrolls to top after route change", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 780 });
     await page.goto("/edukasi");
-    // Force scroll down
-    await page.evaluate(() => window.scrollTo(0, 600));
+    await page.evaluate(() => window.scrollTo(0, 800));
     await page.waitForFunction(() => window.scrollY > 100);
 
-    await page
-      .getByRole("navigation", { name: "Navigasi utama" })
-      .getByRole("link", { name: /Hitung/i })
-      .click();
-
+    await nav(page).getByRole("link", { name: "Kalkulator qurban" }).click();
     await expect(page).toHaveURL(/\/kalkulator$/);
     await page.waitForFunction(() => window.scrollY === 0);
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 });
 
-test.describe("BottomNav — keyboard navigation", () => {
+test.describe("BottomNav — keyboard navigation & focus", () => {
   for (const viewport of [
     { name: "mobile", width: 390, height: 780 },
     { name: "tablet", width: 820, height: 1180 },
@@ -48,35 +46,30 @@ test.describe("BottomNav — keyboard navigation", () => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto("/");
 
-      const nav = page.getByRole("navigation", { name: "Navigasi utama" });
-      const links = nav.getByRole("link");
+      const links = nav(page).getByRole("link");
       await expect(links).toHaveCount(items.length);
 
-      // Focus the first nav link directly, then Tab through the rest.
       await links.first().focus();
       for (let i = 0; i < items.length; i++) {
         const active = await page.evaluate(
           () => document.activeElement?.getAttribute("aria-label") ?? ""
         );
-        expect(active.toLowerCase()).toContain(items[i].label.toLowerCase().slice(0, 4));
+        expect(active).toBe(items[i].ariaLabel);
         if (i < items.length - 1) await page.keyboard.press("Tab");
       }
     });
 
-    test(`focus ring is visible & Enter navigates on ${viewport.name}`, async ({ page }) => {
+    test(`focus ring visible & Enter activates link on ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto("/");
 
-      const target = page
-        .getByRole("navigation", { name: "Navigasi utama" })
-        .getByRole("link", { name: /Tabung/i });
+      const target = nav(page).getByRole("link", { name: "Rencana tabungan qurban" });
       await target.focus();
 
-      // focus-visible must render a ring (box-shadow from Tailwind ring-*)
-      const shadow = await target.evaluate(
-        (el) => getComputedStyle(el).boxShadow
-      );
+      const shadow = await target.evaluate((el) => getComputedStyle(el).boxShadow);
+      // Tailwind ring-* renders as an inset box-shadow; must not be "none".
       expect(shadow).not.toBe("none");
+      expect(shadow).toContain("inset");
 
       await page.keyboard.press("Enter");
       await expect(page).toHaveURL(/\/tabungan$/);
