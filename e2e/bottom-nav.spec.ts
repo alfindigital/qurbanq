@@ -59,6 +59,45 @@ test.describe("BottomNav — keyboard navigation & focus", () => {
       }
     });
 
+    test(`Shift+Tab reverses focus order on ${viewport.name}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto("/");
+
+      const links = nav(page).getByRole("link");
+      await links.last().focus();
+
+      for (let i = items.length - 1; i >= 0; i--) {
+        const active = await page.evaluate(
+          () => document.activeElement?.getAttribute("aria-label") ?? ""
+        );
+        expect(active).toBe(items[i].ariaLabel);
+
+        // Focus ring must be present on every stop, not just the first
+        const shadow = await page.evaluate(
+          () => getComputedStyle(document.activeElement as Element).boxShadow
+        );
+        expect(shadow).not.toBe("none");
+        expect(shadow).toContain("inset");
+
+        if (i > 0) await page.keyboard.press("Shift+Tab");
+      }
+    });
+
+    test(`Tab past last item leaves the nav on ${viewport.name}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto("/");
+
+      await nav(page).getByRole("link").last().focus();
+      await page.keyboard.press("Tab");
+
+      const stillInNav = await page.evaluate(() =>
+        !!document
+          .querySelector('nav[aria-label="Navigasi utama"]')
+          ?.contains(document.activeElement)
+      );
+      expect(stillInNav).toBe(false);
+    });
+
     test(`focus ring visible & Enter activates link on ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto("/");
