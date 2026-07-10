@@ -161,13 +161,14 @@
 
 @layer utilities {
   .pb-nav {
-    padding-bottom: 6.5rem;
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
   }
   @media (min-width: 640px) {
     .pb-nav {
-      padding-bottom: 7rem;
+      padding-bottom: calc(7rem + env(safe-area-inset-bottom));
     }
   }
+
   .font-display {
     font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
     font-variation-settings: "opsz" 48;
