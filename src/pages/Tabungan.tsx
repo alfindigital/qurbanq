@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,10 +8,24 @@ import { MessageCircle } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
 
+const TABUNGAN_KEY = "qurbanku-tabungan";
+const loadTabungan = () => {
+  try {
+    const raw = localStorage.getItem(TABUNGAN_KEY);
+    if (raw) return JSON.parse(raw) as { selectedAnimal?: string; months?: number; saved?: number };
+  } catch {}
+  return null;
+};
+
 const Tabungan = () => {
-  const [selectedAnimal, setSelectedAnimal] = useState("");
-  const [months, setMonths] = useState(6);
-  const [saved, setSaved] = useState(0);
+  const initial = loadTabungan();
+  const [selectedAnimal, setSelectedAnimal] = useState(initial?.selectedAnimal ?? "");
+  const [months, setMonths] = useState(initial?.months ?? 6);
+  const [saved, setSaved] = useState(initial?.saved ?? 0);
+
+  useEffect(() => {
+    localStorage.setItem(TABUNGAN_KEY, JSON.stringify({ selectedAnimal, months, saved }));
+  }, [selectedAnimal, months, saved]);
 
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const target = animal?.price || 0;
