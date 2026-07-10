@@ -47,6 +47,8 @@ const AnimatedRoutes = () => {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
+      <ScrollToTop />
+
       <motion.div
         key={location.pathname}
         variants={pageVariants}
