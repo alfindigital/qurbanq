@@ -9,12 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
+import { animalIconMap } from "@/components/AnimalIcons";
 
-const types: { key: AnimalType; label: string; icon: string }[] = [
-  { key: "kambing", label: "Kambing", icon: "🐐" },
-  { key: "domba", label: "Domba", icon: "🐑" },
-  { key: "sapi", label: "Sapi", icon: "🐄" },
-  { key: "unta", label: "Unta", icon: "🐪" },
+const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
+  { key: "domba", label: "Domba", icon: animalIconMap.domba },
+  { key: "sapi", label: "Sapi", icon: animalIconMap.sapi },
+  { key: "unta", label: "Unta", icon: animalIconMap.unta },
 ];
 
 const STORAGE_KEY = "qurbanku-patungan";
@@ -176,8 +177,8 @@ const Index = () => {
                 onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
                 className={`flex flex-col items-center gap-2 rounded-2xl border-2 bg-card p-3 transition-all active:scale-95 ${active ? "border-primary shadow-soft" : "border-border"}`}
               >
-                <span className={`flex h-12 w-12 items-center justify-center rounded-xl text-2xl ${active ? "bg-terracotta-soft" : "bg-muted"}`}>
-                  {t.icon}
+                <span className={`flex h-12 w-12 items-center justify-center rounded-xl ${active ? "bg-terracotta-soft text-primary" : "bg-muted text-forest"}`}>
+                  <t.icon className="h-7 w-7" />
                 </span>
                 <span className={`text-[11px] font-semibold ${active ? "text-primary" : "text-forest"}`}>{t.label}</span>
               </button>
