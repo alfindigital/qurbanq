@@ -1,8 +1,22 @@
 import { Calculator, PiggyBank, BookOpen, Bell } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
-const MosqueIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 32 32" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+// MosqueIcon — matches AnimalIcons contract: strokeWidth 1.8, currentColor,
+// round caps/joins. Accepts `label` for screen-reader exposure.
+const MosqueIcon = ({ className, label }: { className?: string; label?: string }) => (
+  <svg
+    viewBox="0 0 32 32"
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={1.8}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...(label
+      ? { role: "img", "aria-label": label }
+      : { "aria-hidden": true, focusable: false, role: "presentation" })}
+  >
+    {label ? <title>{label}</title> : null}
     <path d="M9 7.5a2.8 2.8 0 1 0 2.6-3.9 2.3 2.3 0 0 1-2.6 3.9z" fill="currentColor" stroke="none" />
     <circle cx="22" cy="5.5" r="0.9" fill="currentColor" stroke="none" />
     <path d="M22 7v2.5" />
