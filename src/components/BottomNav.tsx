@@ -37,13 +37,13 @@ const BottomNav = () => {
             to={item.to}
             end={item.to === "/"}
             aria-label={item.description}
-            className="group relative flex min-h-[64px] flex-1 flex-col items-center justify-center gap-1 px-2 py-2.5 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring sm:min-h-[68px] sm:flex-initial sm:px-7 sm:py-3.5 md:px-10"
+            className="group relative flex min-h-[64px] flex-1 flex-col items-center justify-center gap-1 px-2 py-2.5 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring sm:min-h-[56px] sm:flex-initial sm:gap-0.5 sm:px-5 sm:py-2 md:px-7"
             activeClassName="bg-muted text-foreground"
           >
             {({ isActive }: { isActive: boolean }) => (
               <>
-                <item.icon className="h-8 w-8 sm:h-9 sm:w-9" />
-                <span className="text-[0.7rem] font-semibold leading-none tracking-wide sm:text-xs">
+                <item.icon className="h-8 w-8 sm:h-6 sm:w-6" />
+                <span className="text-[0.7rem] font-semibold leading-none tracking-wide sm:text-[11px]">
                   {item.label}
                 </span>
                 {isActive && (
