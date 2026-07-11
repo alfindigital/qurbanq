@@ -174,13 +174,14 @@ const Index = () => {
             return (
               <button
                 key={t.key}
+                aria-pressed={active}
                 onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
-                className={`flex flex-col items-center gap-2 rounded-2xl border-2 bg-card p-3 transition-all active:scale-95 ${active ? "border-primary shadow-soft" : "border-border"}`}
+                className={`flex flex-col items-center gap-2 rounded-2xl border-2 bg-card p-3 transition-colors active:scale-95 ${active ? "border-primary shadow-soft text-primary" : "border-border text-forest hover:text-primary hover:border-primary/40"}`}
               >
-                <span className={`flex h-12 w-12 items-center justify-center rounded-xl ${active ? "bg-terracotta-soft text-primary" : "bg-muted text-forest"}`}>
-                  <t.icon className="h-7 w-7" />
+                <span className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors ${active ? "bg-terracotta-soft" : "bg-muted"}`}>
+                  <t.icon className="h-6 w-6" label={`Ikon ${t.label.toLowerCase()}`} />
                 </span>
-                <span className={`text-[11px] font-semibold ${active ? "text-primary" : "text-forest"}`}>{t.label}</span>
+                <span className="text-[11px] font-semibold">{t.label}</span>
               </button>
             );
           })}
