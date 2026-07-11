@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 
-const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
   { key: "domba", label: "Domba", icon: animalIconMap.domba },
   { key: "sapi", label: "Sapi", icon: animalIconMap.sapi },

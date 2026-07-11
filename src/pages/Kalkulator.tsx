@@ -10,7 +10,7 @@ import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 
-const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
   { key: "domba", label: "Domba", icon: animalIconMap.domba },
   { key: "sapi", label: "Sapi", icon: animalIconMap.sapi },
