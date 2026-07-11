@@ -10,7 +10,7 @@ import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 
-const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
   { key: "domba", label: "Domba", icon: animalIconMap.domba },
   { key: "sapi", label: "Sapi", icon: animalIconMap.sapi },
@@ -141,16 +141,20 @@ const Kalkulator = () => {
       <div>
         <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</h2>
         <div className="grid grid-cols-4 gap-2">
-          {types.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
-              className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-all active:scale-95 ${selectedType === t.key ? "border-primary bg-primary/5" : "border-border"}`}
-            >
-              <t.icon className="h-6 w-6" />
-              <span className="text-[11px] font-medium">{t.label}</span>
-            </button>
-          ))}
+          {types.map((t) => {
+            const active = selectedType === t.key;
+            return (
+              <button
+                key={t.key}
+                aria-pressed={active}
+                onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
+                className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-colors active:scale-95 ${active ? "border-primary bg-primary/5 text-primary" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+              >
+                <t.icon className="h-6 w-6" label={`Ikon ${t.label.toLowerCase()}`} />
+                <span className="text-[11px] font-medium">{t.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
