@@ -44,7 +44,7 @@ const Edukasi = () => {
                   onClick={() => setActiveArticle(art.id)}
                 >
                   <div className="rounded-full bg-primary/8 p-2.5 text-primary">
-                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                    <Icon className="h-5 w-5" strokeWidth={1.8} />
                   </div>
                   <p className="text-xs font-medium leading-snug">{art.title}</p>
                 </button>
@@ -55,7 +55,7 @@ const Edukasi = () => {
           {/* FAQ */}
           <div>
             <div className="mb-3 flex items-center gap-2">
-              <HelpCircle className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+              <HelpCircle className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
               <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tanya Jawab</h2>
             </div>
             <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
@@ -84,7 +84,7 @@ const Edukasi = () => {
               className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
               onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin konsultasi memilih hewan qurban yang tepat."), "_blank")}
             >
-              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Konsultasi Gratis
+              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Konsultasi Gratis
             </Button>
           </div>
         </>
@@ -93,7 +93,7 @@ const Edukasi = () => {
       {article && (
         <div>
           <button onClick={() => setActiveArticle(null)} className="flex items-center gap-1 text-sm text-primary font-medium mb-4">
-            <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> Kembali
+            <ArrowLeft className="h-4 w-4" strokeWidth={1.8} /> Kembali
           </button>
 
           <div className="rounded-xl border bg-card p-5">
@@ -115,7 +115,7 @@ const Edukasi = () => {
                 className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
                 onClick={() => window.open(generateWhatsAppLink(`Assalamualaikum, saya baru membaca artikel "${article.title}" dan tertarik untuk berqurban. Mohon info lebih lanjut.`), "_blank")}
               >
-                <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Hubungi Kami
+                <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Hubungi Kami
               </Button>
             </div>
           </div>

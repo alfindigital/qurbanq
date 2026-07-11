@@ -113,7 +113,7 @@ const Pengingat = () => {
       {/* Countdown */}
       <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
         <div className="flex items-center gap-2 mb-3">
-          <Clock className="h-4 w-4" strokeWidth={1.5} />
+          <Clock className="h-4 w-4" strokeWidth={1.8} />
           <p className="text-sm font-semibold">Idul Adha {hijriYear} H</p>
         </div>
         <div className="flex gap-2">
@@ -135,7 +135,7 @@ const Pengingat = () => {
       <div className="rounded-xl border bg-card p-4 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <BellRing className="h-4 w-4 text-primary" strokeWidth={1.5} />
+            <BellRing className="h-4 w-4 text-primary" strokeWidth={1.8} />
             <p className="text-sm font-semibold">Pengingat Notifikasi</p>
           </div>
           {activeReminders > 0 && (
@@ -161,14 +161,14 @@ const Pengingat = () => {
 
         {notifPermission === "default" && (
           <Button size="sm" variant="outline" className="w-full" onClick={handleEnableNotifications}>
-            <Bell className="mr-2 h-3.5 w-3.5" strokeWidth={1.5} />
+            <Bell className="mr-2 h-3.5 w-3.5" strokeWidth={1.8} />
             Aktifkan Notifikasi Push
           </Button>
         )}
 
         {notifPermission === "granted" && (
           <p className="text-xs text-primary flex items-center gap-1.5">
-            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.8} />
             Notifikasi push aktif
           </p>
         )}
@@ -185,9 +185,9 @@ const Pengingat = () => {
               >
                 <div className="flex items-center gap-2.5">
                   {r.enabled ? (
-                    <Bell className="h-3.5 w-3.5 text-primary" strokeWidth={1.5} />
+                    <Bell className="h-3.5 w-3.5 text-primary" strokeWidth={1.8} />
                   ) : (
-                    <BellOff className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={1.5} />
+                    <BellOff className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={1.8} />
                   )}
                   <span className={`text-sm ${r.enabled ? "font-medium" : "text-muted-foreground"}`}>
                     {r.label}
@@ -233,7 +233,7 @@ const Pengingat = () => {
                       <span className={`text-sm flex-1 ${checked[item.id] ? "line-through text-muted-foreground" : ""}`}>
                         {item.label}
                       </span>
-                      {checked[item.id] && <CheckCircle2 className="h-4 w-4 text-primary" strokeWidth={1.5} />}
+                      {checked[item.id] && <CheckCircle2 className="h-4 w-4 text-primary" strokeWidth={1.8} />}
                     </label>
                   ))}
               </div>
@@ -250,7 +250,7 @@ const Pengingat = () => {
           className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
           onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin memesan hewan qurban. Mohon info ketersediaan."), "_blank")}
         >
-          <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
+          <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
         </Button>
       </div>
     </div>
