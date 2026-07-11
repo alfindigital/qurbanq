@@ -127,7 +127,7 @@ const Tabungan = () => {
                   window.open(generateWhatsAppLink(msg), "_blank");
                 }}
               >
-                <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
+                <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
               </Button>
             </div>
           )}

@@ -8,12 +8,13 @@ import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { animalIconMap } from "@/components/AnimalIcons";
 
-const types: { key: AnimalType; label: string; icon: string }[] = [
-  { key: "kambing", label: "Kambing", icon: "🐐" },
-  { key: "domba", label: "Domba", icon: "🐑" },
-  { key: "sapi", label: "Sapi", icon: "🐄" },
-  { key: "unta", label: "Unta", icon: "🐪" },
+const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
+  { key: "domba", label: "Domba", icon: animalIconMap.domba },
+  { key: "sapi", label: "Sapi", icon: animalIconMap.sapi },
+  { key: "unta", label: "Unta", icon: animalIconMap.unta },
 ];
 
 const STORAGE_KEY = "qurbanku-kalkulator";
@@ -146,7 +147,7 @@ const Kalkulator = () => {
               onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
               className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-all active:scale-95 ${selectedType === t.key ? "border-primary bg-primary/5" : "border-border"}`}
             >
-              <span className="text-xl">{t.icon}</span>
+              <t.icon className="h-6 w-6" />
               <span className="text-[11px] font-medium">{t.label}</span>
             </button>
           ))}
@@ -170,7 +171,7 @@ const Kalkulator = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-primary">{formatCurrency(a.price)}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
                 </div>
               </button>
             ))}
@@ -197,7 +198,7 @@ const Kalkulator = () => {
               className="flex-1"
               onClick={() => setPatunganMode(true)}
             >
-              <Users className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.5} />
+              <Users className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
               Patungan
             </Button>
           </div>
@@ -252,7 +253,7 @@ const Kalkulator = () => {
                           <span className="text-sm font-medium">{name}</span>
                         </div>
                         <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors">
-                          <X className="h-3.5 w-3.5" strokeWidth={1.5} />
+                          <X className="h-3.5 w-3.5" strokeWidth={1.8} />
                         </button>
                       </motion.div>
                     ))}
@@ -271,7 +272,7 @@ const Kalkulator = () => {
                     className="flex-1 text-sm"
                   />
                   <Button size="sm" variant="outline" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta">
-                    <UserPlus className="h-4 w-4" strokeWidth={1.5} />
+                    <UserPlus className="h-4 w-4" strokeWidth={1.8} />
                   </Button>
                 </div>
               )}
@@ -317,7 +318,7 @@ const Kalkulator = () => {
                             className="text-muted-foreground hover:text-primary transition-colors"
                             title={`Kirim ke ${name}`}
                           >
-                            <Share2 className="h-3 w-3" strokeWidth={1.5} />
+                            <Share2 className="h-3 w-3" strokeWidth={1.8} />
                           </button>
                         </div>
                       </div>
@@ -334,16 +335,16 @@ const Kalkulator = () => {
 
           <div className="flex flex-col gap-2">
             <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
-              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.5} /> Pesan via WhatsApp
+              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
             </Button>
             {patunganMode && validParticipants.length > 1 && (
               <Button variant="outline" size="sm" onClick={shareToAll}>
-                <Share2 className="mr-2 h-4 w-4" strokeWidth={1.5} /> Share Ringkasan ke Peserta
+                <Share2 className="mr-2 h-4 w-4" strokeWidth={1.8} /> Share Ringkasan ke Peserta
               </Button>
             )}
             {patunganMode && validParticipants.length > 0 && (
               <Button variant="outline" size="sm" onClick={exportAsImage}>
-                <Download className="mr-2 h-4 w-4" strokeWidth={1.5} /> Unduh Gambar Ringkasan
+                <Download className="mr-2 h-4 w-4" strokeWidth={1.8} /> Unduh Gambar Ringkasan
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={resetAll}>
