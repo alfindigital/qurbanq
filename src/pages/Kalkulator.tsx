@@ -131,6 +131,26 @@ const Kalkulator = () => {
         title="Kalkulator Qurban — Hitung Patungan Sapi & Kambing | Qurbanku"
         description="Pilih jenis hewan qurban dan hitung biaya patungan per orang. Estimasi harga sapi, kambing, domba, dan unta untuk Idul Adha."
         path="/kalkulator"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Kalkulator Qurban Qurbanku",
+            applicationCategory: "FinanceApplication",
+            operatingSystem: "Web",
+            description: "Kalkulator patungan qurban untuk menghitung biaya per orang berdasarkan jenis hewan (sapi, kambing, domba, unta).",
+            url: "https://qurban-q.lovable.app/kalkulator",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "IDR" },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Beranda", item: "https://qurban-q.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Kalkulator", item: "https://qurban-q.lovable.app/kalkulator" },
+            ],
+          },
+        ]}
       />
       <div>
         <h1 className="text-xl font-bold text-foreground">Kalkulator Qurban</h1>
