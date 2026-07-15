@@ -17,7 +17,8 @@ const SITE = "https://qurban-q.lovable.app";
 // paling penting untuk request ini; sisanya di-cek juga karena sudah
 // bagian dari sitemap saat ini.
 const REQUIRED_ROUTES = ["/", "/kalkulator"] as const;
-const ALL_PUBLIC_ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;
+const SECONDARY_ROUTES = ["/tabungan", "/edukasi", "/pengingat"] as const;
+const ALL_PUBLIC_ROUTES = ["/", "/kalkulator", ...SECONDARY_ROUTES] as const;
 
 async function readSitemapLocs(page: Page): Promise<string[]> {
   const res = await page.request.get(`${BASE}/sitemap.xml`);
