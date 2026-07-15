@@ -17,7 +17,8 @@ const SITE = "https://qurban-q.lovable.app";
 // paling penting untuk request ini; sisanya di-cek juga karena sudah
 // bagian dari sitemap saat ini.
 const REQUIRED_ROUTES = ["/", "/kalkulator"] as const;
-const ALL_PUBLIC_ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;
+const SECONDARY_ROUTES = ["/tabungan", "/edukasi", "/pengingat"] as const;
+const ALL_PUBLIC_ROUTES = ["/", "/kalkulator", ...SECONDARY_ROUTES] as const;
 
 async function readSitemapLocs(page: Page): Promise<string[]> {
   const res = await page.request.get(`${BASE}/sitemap.xml`);
@@ -92,6 +93,33 @@ test.describe("sitemap.xml x canonical consistency", () => {
         locs.some((l) => l.includes(forbidden)),
         `sitemap tidak boleh memuat ${forbidden}`,
       ).toBe(false);
+    }
+  });
+
+  // Verifikasi eksplisit untuk route sekunder: /tabungan, /edukasi, /pengingat.
+  // Setiap route harus (a) hadir di sitemap sebagai URL absolut https,
+  // dan (b) canonical yang dirender halaman itu sama persis dengan <loc>-nya.
+  for (const route of SECONDARY_ROUTES) {
+    test(`${route} ada di sitemap dan canonical-nya sama persis`, async ({ page }) => {
+      const expected = `${SITE}${route}`;
+
+      const locs = await readSitemapLocs(page);
+      expect(locs, `sitemap harus memuat ${route}`).toContain(expected);
+      expect(expected, `${route} di sitemap harus URL absolut https`).toMatch(/^https:\/\/[^\s]+$/);
+
+      const canonical = await readCanonical(page, route);
+      expect(canonical, `canonical ${route} harus = <loc> sitemap`).toBe(expected);
+      expect(canonical, `canonical ${route} tidak boleh = homepage`).not.toBe(`${SITE}/`);
+      expect(new URL(page.url()).pathname, `pathname browser ${route}`).toBe(route);
+    });
+  }
+
+  test("route sekunder (/tabungan, /edukasi, /pengingat) semua hadir tanpa duplikat", async ({ page }) => {
+    const locs = await readSitemapLocs(page);
+    for (const route of SECONDARY_ROUTES) {
+      const expected = `${SITE}${route}`;
+      const occurrences = locs.filter((l) => l === expected).length;
+      expect(occurrences, `${route} harus muncul tepat 1x di sitemap`).toBe(1);
     }
   });
 });
