@@ -156,12 +156,8 @@ const Index = () => {
         <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
         <div className="relative z-10">
           <h1 className="font-display text-2xl font-bold leading-tight">
-            {countdown.days} Hari Menuju
+            {countdown.days} Hari Menuju Hari Raya Idul Adha 1447 H
           </h1>
-          <p className="mt-1 text-sm font-medium opacity-90">Hari Raya Idul Adha 1447 H</p>
-          <span className="mt-4 inline-flex items-center rounded-full bg-forest/25 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
-            Mulai Persiapan Sekarang
-          </span>
         </div>
       </section>
 
