@@ -371,6 +371,27 @@ const Index = () => {
           )}
 
           {animal && (
+            <label className="flex cursor-pointer items-start gap-2 rounded-xl border border-dashed border-primary/30 bg-card p-3">
+              <input
+                type="checkbox"
+                checked={addonPelosok}
+                onChange={(e) => setAddonPelosok(e.target.checked)}
+                className="mt-0.5 h-4 w-4 accent-primary"
+              />
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-forest">Kirim daging ke pelosok</p>
+                <p className="text-[10px] text-muted-foreground">Distribusi ke daerah 3T. +{formatCurrency(ADDON_PRICE)}</p>
+              </div>
+            </label>
+          )}
+
+          {animal && patunganMode && animal.maxPersons > 1 && validParticipants.length > 0 && validParticipants.length < animal.maxPersons && costPerPerson < 2500000 && (
+            <div className="rounded-xl bg-terracotta-soft p-3 text-[11px] text-forest">
+              💡 Biaya per orang saat ini <strong>{formatCurrency(costPerPerson)}</strong>. Ajak {animal.maxPersons - validParticipants.length} orang lagi supaya patungan sapi lebih hemat.
+            </div>
+          )}
+
+          {animal && (
             <>
               <div className="flex items-end justify-between border-t border-accent/30 pt-4">
                 <div>
