@@ -58,6 +58,9 @@ const Index = () => {
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
+  // #39 Upsell distribusi ke pelosok
+  const [addonPelosok, setAddonPelosok] = useState(false);
+  const ADDON_PRICE = 150000;
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
