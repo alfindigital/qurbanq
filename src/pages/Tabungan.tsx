@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageCircle, PiggyBank, Plus, Trash2 } from "lucide-react";
+import { Flame, MessageCircle, PiggyBank, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
+import ReverseCalculator from "@/components/ReverseCalculator";
+import { calcStreak } from "@/lib/streak";
 
 const TABUNGAN_KEY = "qurbanku-tabungan";
 const LEDGER_KEY = "qurbanku-tabungan-ledger";
@@ -61,6 +63,7 @@ const Tabungan = () => {
   const perDay = target > 0 && months > 0 ? Math.ceil(target / (months * 30)) : 0;
   const progress = target > 0 ? Math.min(100, (saved / target) * 100) : 0;
   const remaining = Math.max(0, target - saved);
+  const streak = calcStreak(ledger.map((l) => l.date));
 
   const monthsUntilAdha = () => {
     const now = new Date();
@@ -241,7 +244,13 @@ const Tabungan = () => {
             <div className="rounded-xl bg-background p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Riwayat Setoran</p>
-                <span className="text-[10px] text-muted-foreground">{ledger.length} entri</span>
+                {streak > 0 ? (
+                  <span className="flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold text-primary">
+                    <Flame className="h-3 w-3" strokeWidth={2} /> {streak} minggu
+                  </span>
+                ) : (
+                  <span className="text-[10px] text-muted-foreground">{ledger.length} entri</span>
+                )}
               </div>
               <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
                 {ledger.slice(0, 30).map((entry) => (
@@ -285,6 +294,9 @@ const Tabungan = () => {
           )}
         </div>
       )}
+
+      <ReverseCalculator />
+
     </div>
   );
 };

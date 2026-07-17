@@ -58,6 +58,9 @@ const Index = () => {
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
+  // #39 Upsell distribusi ke pelosok
+  const [addonPelosok, setAddonPelosok] = useState(false);
+  const ADDON_PRICE = 150000;
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
@@ -148,8 +151,10 @@ const Index = () => {
     const participantList = patunganMode && names.length > 0
       ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
-    pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: animal.price });
+    const addonLine = addonPelosok ? `\n\n➕ Add-on: Kirim daging ke pelosok (+${formatCurrency(ADDON_PRICE)})` : "";
+    const total = animal.price + (addonPelosok ? ADDON_PRICE : 0);
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${addonLine}${participantList}\n\n💳 Total: ${formatCurrency(total)}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: total });
     window.open(generateWhatsAppLink(msg, "beranda:pesan"), "_blank");
   };
 
@@ -362,6 +367,27 @@ const Index = () => {
                   <Button size="sm" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta" className="bg-primary text-primary-foreground hover:bg-primary/90"><UserPlus className="h-4 w-4" strokeWidth={2} /></Button>
                 </div>
               )}
+            </div>
+          )}
+
+          {animal && (
+            <label className="flex cursor-pointer items-start gap-2 rounded-xl border border-dashed border-primary/30 bg-card p-3">
+              <input
+                type="checkbox"
+                checked={addonPelosok}
+                onChange={(e) => setAddonPelosok(e.target.checked)}
+                className="mt-0.5 h-4 w-4 accent-primary"
+              />
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-forest">Kirim daging ke pelosok</p>
+                <p className="text-[10px] text-muted-foreground">Distribusi ke daerah 3T. +{formatCurrency(ADDON_PRICE)}</p>
+              </div>
+            </label>
+          )}
+
+          {animal && patunganMode && animal.maxPersons > 1 && validParticipants.length > 0 && validParticipants.length < animal.maxPersons && costPerPerson < 2500000 && (
+            <div className="rounded-xl bg-terracotta-soft p-3 text-[11px] text-forest">
+              💡 Biaya per orang saat ini <strong>{formatCurrency(costPerPerson)}</strong>. Ajak {animal.maxPersons - validParticipants.length} orang lagi supaya patungan sapi lebih hemat.
             </div>
           )}
 
