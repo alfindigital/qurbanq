@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy, ShieldCheck } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { pushOrderHistory } from "@/lib/order-history";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
 
