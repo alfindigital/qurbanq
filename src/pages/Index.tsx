@@ -12,6 +12,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdhaInfo, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
+import { pushOrderHistory } from "@/lib/order-history";
+import TrustSection from "@/components/TrustSection";
+import TestimonialSection from "@/components/TestimonialSection";
+import AqiqahCard from "@/components/AqiqahCard";
+import OrderHistorySection from "@/components/OrderHistorySection";
 
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
