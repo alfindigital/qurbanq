@@ -233,7 +233,7 @@ const Tabungan = () => {
                 onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleQuickAdd(); } }}
                 className="flex-1 text-sm"
               />
-              <Button size="sm" onClick={handleQuickAdd} disabled={!quickAmount || parseInt(quickAmount, 10) <= 0}>
+              <Button size="sm" onClick={handleQuickAdd} disabled={!quickAmount || parseInt(quickAmount, 10) <= 0} aria-label="Tambah setoran">
                 <Plus className="h-4 w-4" strokeWidth={2} />
               </Button>
             </div>
