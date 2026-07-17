@@ -32,22 +32,27 @@ export const generateWhatsAppLink = (message: string): string => {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 };
 
-// Idul Adha 2025: ~7 Juni 2025 (10 Dzulhijjah 1446 H)
-// Idul Adha 2026: ~27 Mei 2026 (10 Dzulhijjah 1447 H)
-export const getNextIdulAdha = (): Date => {
+// Perkiraan tanggal Idul Adha (10 Dzulhijjah) beserta tahun Hijriah-nya.
+// Dijaga sinkron: kalau tanggal Masehi lewat, tahun Hijriah di UI ikut update.
+const IDUL_ADHA_SCHEDULE: { date: Date; hijriYear: number }[] = [
+  { date: new Date(2025, 5, 7), hijriYear: 1446 },
+  { date: new Date(2026, 4, 27), hijriYear: 1447 },
+  { date: new Date(2027, 4, 17), hijriYear: 1448 },
+  { date: new Date(2028, 4, 5), hijriYear: 1449 },
+  { date: new Date(2029, 3, 24), hijriYear: 1450 },
+  { date: new Date(2030, 3, 14), hijriYear: 1451 },
+];
+
+export const getNextIdulAdhaInfo = (): { date: Date; hijriYear: number } => {
   const now = new Date();
-  // Perkiraan tanggal Idul Adha (10 Dzulhijjah) beberapa tahun ke depan
-  const dates = [
-    new Date(2025, 5, 7),   // 7 Juni 2025 (1446 H)
-    new Date(2026, 4, 27),  // 27 Mei 2026 (1447 H)
-    new Date(2027, 4, 17),  // 17 Mei 2027 (1448 H)
-    new Date(2028, 4, 5),   // 5 Mei 2028 (1449 H)
-    new Date(2029, 3, 24),  // 24 April 2029 (1450 H)
-    new Date(2030, 3, 14),  // 14 April 2030 (1451 H)
-  ];
-  // Ambil tanggal terdekat yang belum lewat; jika semua lewat, fallback ke yang terakhir
-  return dates.find((d) => now < d) ?? dates[dates.length - 1];
+  return (
+    IDUL_ADHA_SCHEDULE.find((d) => now < d.date) ??
+    IDUL_ADHA_SCHEDULE[IDUL_ADHA_SCHEDULE.length - 1]
+  );
 };
+
+export const getNextIdulAdha = (): Date => getNextIdulAdhaInfo().date;
+
 
 export const educationArticles = [
   {
