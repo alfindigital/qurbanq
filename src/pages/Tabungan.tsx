@@ -63,6 +63,7 @@ const Tabungan = () => {
   const perDay = target > 0 && months > 0 ? Math.ceil(target / (months * 30)) : 0;
   const progress = target > 0 ? Math.min(100, (saved / target) * 100) : 0;
   const remaining = Math.max(0, target - saved);
+  const streak = calcStreak(ledger.map((l) => l.date));
 
   const monthsUntilAdha = () => {
     const now = new Date();
