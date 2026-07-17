@@ -82,7 +82,7 @@ const Edukasi = () => {
             <Button
               size="sm"
               className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
-              onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin konsultasi memilih hewan qurban yang tepat."), "_blank")}
+              onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin konsultasi memilih hewan qurban yang tepat.", "edukasi:konsultasi"), "_blank")}
             >
               <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Konsultasi Gratis
             </Button>
@@ -113,7 +113,7 @@ const Edukasi = () => {
               <Button
                 size="sm"
                 className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
-                onClick={() => window.open(generateWhatsAppLink(`Assalamualaikum, saya baru membaca artikel "${article.title}" dan tertarik untuk berqurban. Mohon info lebih lanjut.`), "_blank")}
+                onClick={() => window.open(generateWhatsAppLink(`Assalamualaikum, saya baru membaca artikel "${article.title}" dan tertarik untuk berqurban. Mohon info lebih lanjut.`, `edukasi:${article.id}`), "_blank")}
               >
                 <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Hubungi Kami
               </Button>
