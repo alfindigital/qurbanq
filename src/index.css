@@ -58,50 +58,50 @@
   }
 
   .dark {
-    /* Night Market: charcoal base, ivory copy, emerald brand, sand-gold accents */
-    --background: 150 18% 6%;            /* #0c1210 */
-    --foreground: 42 55% 97%;            /* warm ivory */
+    /* Night Market: deeper charcoal base + brighter emerald/ivory for AA+ contrast */
+    --background: 150 22% 5%;            /* #0a0f0c */
+    --foreground: 42 40% 97%;            /* bright warm ivory */
 
-    --card: 150 12% 13%;                 /* lifted charcoal surface */
-    --card-foreground: 42 55% 97%;
+    --card: 150 16% 13%;                 /* clearly lifted surface above bg */
+    --card-foreground: 42 40% 97%;
 
-    --popover: 150 13% 12%;
-    --popover-foreground: 42 55% 97%;
+    --popover: 150 16% 13%;
+    --popover-foreground: 42 40% 97%;
 
-    --primary: 147 63% 66%;              /* bright emerald */
-    --primary-foreground: 150 24% 8%;
+    --primary: 147 68% 62%;              /* vivid emerald */
+    --primary-foreground: 150 30% 6%;
 
-    --secondary: 39 42% 22%;             /* warm bronze panel — breaks green-on-green */
-    --secondary-foreground: 42 65% 94%;
+    --secondary: 148 48% 26%;            /* rich forest — strong contrast with ivory copy */
+    --secondary-foreground: 42 55% 97%;
 
-    --muted: 150 8% 20%;                 /* readable muted blocks */
-    --muted-foreground: 42 34% 82%;      /* WCAG AA on card & muted */
+    --muted: 150 10% 20%;                /* readable muted blocks */
+    --muted-foreground: 42 28% 86%;      /* brighter secondary copy (AA on card) */
 
-    --accent: 39 82% 72%;                /* sand-gold */
-    --accent-foreground: 150 24% 8%;
+    --accent: 39 88% 70%;                /* punchy sand-gold */
+    --accent-foreground: 150 30% 6%;
 
-    --forest: 148 62% 82%;               /* all text-forest becomes readable */
-    --peach-soft: 39 24% 15%;            /* warm dark surface (hero/cards) */
-    --terracotta-soft: 39 30% 20%;       /* warm dark highlight */
-    --sage-soft: 150 14% 22%;
+    --forest: 148 55% 88%;               /* very light sage — headings pop on dark cards */
+    --peach-soft: 148 35% 14%;           /* forest-tinted warm dark (hero/cards) */
+    --terracotta-soft: 147 45% 24%;      /* emerald active state */
+    --sage-soft: 150 18% 22%;
 
-    --destructive: 0 76% 64%;
-    --destructive-foreground: 42 55% 97%;
+    --destructive: 0 78% 66%;
+    --destructive-foreground: 42 40% 97%;
 
-    --border: 150 8% 30%;                /* visible outlines */
-    --input: 150 8% 30%;
-    --ring: 147 63% 66%;
+    --border: 150 12% 34%;               /* clearly visible outlines on charcoal */
+    --input: 150 12% 34%;
+    --ring: 147 68% 62%;
 
-    --sidebar-background: 150 18% 7%;
-    --sidebar-foreground: 42 55% 97%;
-    --sidebar-primary: 147 63% 66%;
-    --sidebar-primary-foreground: 150 24% 8%;
-    --sidebar-accent: 150 8% 20%;
-    --sidebar-accent-foreground: 42 55% 97%;
-    --sidebar-border: 150 8% 30%;
-    --sidebar-ring: 147 63% 66%;
+    --sidebar-background: 150 22% 6%;
+    --sidebar-foreground: 42 40% 97%;
+    --sidebar-primary: 147 68% 62%;
+    --sidebar-primary-foreground: 150 30% 6%;
+    --sidebar-accent: 150 10% 20%;
+    --sidebar-accent-foreground: 42 40% 97%;
+    --sidebar-border: 150 12% 34%;
+    --sidebar-ring: 147 68% 62%;
 
-    --shadow-warm: 0 18px 54px -18px hsl(147 63% 66% / 0.35);
+    --shadow-warm: 0 18px 54px -18px hsl(147 68% 62% / 0.4);
     --shadow-soft: 0 14px 40px -18px hsl(0 0% 0% / 0.9);
   }
 
