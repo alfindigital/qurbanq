@@ -130,6 +130,7 @@ const Kalkulator = () => {
       ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: animal.price });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
