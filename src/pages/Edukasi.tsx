@@ -96,6 +96,19 @@ const Edukasi = () => {
 
       {article && (
         <div>
+          <SEO
+            title={`${article.title} — Edukasi Qurban | Qurbanku`}
+            description={article.content.slice(0, 155).replace(/[*>\n]/g, " ").trim()}
+            path="/edukasi"
+            jsonLd={{
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: article.title,
+              articleBody: article.content.replace(/\*\*/g, ""),
+              author: { "@type": "Organization", name: "Qurbanku" },
+              publisher: { "@type": "Organization", name: "Qurbanku" },
+            }}
+          />
           <button onClick={() => setActiveArticle(null)} className="flex items-center gap-1 text-sm text-primary font-medium mb-4">
             <ArrowLeft className="h-4 w-4" strokeWidth={1.8} /> Kembali
           </button>
