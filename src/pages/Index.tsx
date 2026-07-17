@@ -3,12 +3,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 
-import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
+import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Heart, HandHeart, Utensils, CheckCircle2, Sparkles, HelpCircle } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
