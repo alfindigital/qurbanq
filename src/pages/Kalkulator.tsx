@@ -5,10 +5,11 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download } from "lucide-react";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy, ShieldCheck } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
+import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
@@ -18,22 +19,32 @@ const types: { key: AnimalType; label: string; icon: React.ComponentType<{ class
 ];
 
 const STORAGE_KEY = "qurbanku-kalkulator";
+const PAID_KEY = "qurbanku-paid-participants";
 
 const loadSaved = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as { type?: AnimalType; animal?: string; patungan?: boolean; participants?: string[] };
+    if (raw) return JSON.parse(raw) as { type?: AnimalType; animal?: string; patungan?: boolean; participants?: string[]; persons?: number };
   } catch {}
   return null;
+};
+
+const loadPaid = (): string[] => {
+  try {
+    const raw = localStorage.getItem(PAID_KEY);
+    if (raw) return JSON.parse(raw) as string[];
+  } catch {}
+  return [];
 };
 
 const Kalkulator = () => {
   const saved = loadSaved();
   const [selectedType, setSelectedType] = useState<AnimalType | null>(saved?.type ?? null);
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(saved?.animal ?? null);
-  const [persons, setPersons] = useState(1);
+  const [persons, setPersons] = useState(saved?.persons ?? 1);
   const [patunganMode, setPatunganMode] = useState(saved?.patungan ?? false);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
+  const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
 
@@ -43,55 +54,108 @@ const Kalkulator = () => {
   const activePersons = patunganMode ? validParticipants.length || 1 : persons;
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
 
-  // Persist patungan data to localStorage
+  // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
-    const data = { type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: participants.filter((n) => n.trim()) };
+    const incoming = readIncomingShare();
+    if (!incoming) return;
+    if (incoming.type) setSelectedType(incoming.type);
+    if (incoming.animal) setSelectedAnimal(incoming.animal);
+    if (typeof incoming.patungan === "boolean") setPatunganMode(incoming.patungan);
+    if (incoming.participants?.length) setParticipants(incoming.participants);
+    toast.success("Konfigurasi patungan dimuat dari link 🎉");
+  }, []);
+
+  // Persist patungan data
+  useEffect(() => {
+    const data = { type: selectedType, animal: selectedAnimal, patungan: patunganMode, persons, participants: validParticipants };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [selectedType, selectedAnimal, patunganMode, participants]);
+  }, [selectedType, selectedAnimal, patunganMode, persons, participants]);
+
+  useEffect(() => {
+    localStorage.setItem(PAID_KEY, JSON.stringify(paidParticipants));
+  }, [paidParticipants]);
 
   const canPatungan = animal && animal.maxPersons > 1;
+
+  // #12: konfirmasi kalau ganti jenis akan menghapus daftar peserta.
+  const changeType = (next: AnimalType) => {
+    if (next === selectedType) return;
+    if (validParticipants.length > 0) {
+      const ok = window.confirm(`Ganti jenis ke ${next}? Daftar ${validParticipants.length} peserta akan dihapus.`);
+      if (!ok) return;
+    }
+    setSelectedType(next);
+    setSelectedAnimal(null);
+    setParticipants([""]);
+    setNewName("");
+  };
+
+  // Pindah antar hewan dalam jenis yang sama: reset peserta hanya kalau melebihi maxPersons.
+  const changeAnimal = (id: string) => {
+    const a = animalOptions.find((x) => x.id === id);
+    if (!a) return;
+    setSelectedAnimal(id);
+    if (validParticipants.length > a.maxPersons) {
+      setParticipants(validParticipants.slice(0, a.maxPersons));
+    }
+  };
 
   const addParticipant = () => {
     const name = newName.trim();
     if (!name || !animal) return;
-    if (participants.filter((n) => n.trim()).length >= animal.maxPersons) return;
+    if (validParticipants.length >= animal.maxPersons) return;
     if (participants.some((n) => n.trim().toLowerCase() === name.toLowerCase())) {
       toast.error("Nama sudah ada", { description: `"${name}" sudah terdaftar sebagai peserta.` });
       return;
     }
-    const updated = [...participants.filter((n) => n.trim()), name];
-    setParticipants(updated);
+    setParticipants([...validParticipants, name]);
     setNewName("");
   };
 
   const removeParticipant = (index: number) => {
-    setParticipants(participants.filter((_, i) => i !== index));
+    const removed = validParticipants[index];
+    setParticipants(validParticipants.filter((_, i) => i !== index));
+    if (removed) setPaidParticipants((p) => p.filter((n) => n !== removed));
+  };
+
+  const togglePaid = (name: string) => {
+    setPaidParticipants((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]));
   };
 
   const handleOrder = () => {
     if (!animal) return;
-    const names = participants.filter((n) => n.trim());
+    const names = validParticipants;
     const participantList = patunganMode && names.length > 0
-      ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
+      ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
-    window.open(generateWhatsAppLink(msg), "_blank");
+    window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
   const shareToParticipant = (name: string) => {
     if (!animal) return;
     const names = validParticipants;
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail patungan qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
-    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail patungan qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const shareToAll = () => {
     if (!animal) return;
     const names = validParticipants;
-    const msg = `📢 *Ringkasan Patungan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`; 
-    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
+    const msg = `📢 *Ringkasan Patungan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
+  const copyShareLink = async () => {
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
+    try {
+      await navigator.clipboard.writeText(link);
+      toast.success("Link patungan disalin", { description: "Bagikan ke grup keluarga/teman." });
+    } catch {
+      toast.error("Gagal menyalin link");
+    }
   };
 
   const exportAsImage = useCallback(async () => {
@@ -120,8 +184,10 @@ const Kalkulator = () => {
     setPersons(1);
     setPatunganMode(false);
     setParticipants([""]);
+    setPaidParticipants([]);
     setNewName("");
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PAID_KEY);
   };
 
 
@@ -160,18 +226,18 @@ const Kalkulator = () => {
       {/* Step 1 */}
       <div>
         <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jenis Hewan</h2>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5 xs:gap-2">
           {types.map((t) => {
             const active = selectedType === t.key;
             return (
               <button
                 key={t.key}
                 aria-pressed={active}
-                onClick={() => { setSelectedType(t.key); setSelectedAnimal(null); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
-                className={`flex flex-col items-center gap-1 rounded-xl border-2 p-3 transition-colors active:scale-95 ${active ? "border-primary bg-primary/5 text-primary" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
+                onClick={() => changeType(t.key)}
+                className={`flex flex-col items-center gap-1 rounded-xl border-2 p-2 xs:p-3 transition-colors active:scale-95 ${active ? "border-primary bg-primary/5 text-primary" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
-                <t.icon className="h-6 w-6" label={`Ikon ${t.label.toLowerCase()}`} />
-                <span className="text-[11px] font-medium">{t.label}</span>
+                <t.icon className="h-5 w-5 xs:h-6 xs:w-6" label={`Ikon ${t.label.toLowerCase()}`} />
+                <span className="text-[10px] xs:text-[11px] font-medium">{t.label}</span>
               </button>
             );
           })}
@@ -186,7 +252,7 @@ const Kalkulator = () => {
             {filteredAnimals.map((a) => (
               <button
                 key={a.id}
-                onClick={() => { setSelectedAnimal(a.id); setPersons(1); setPatunganMode(false); setParticipants([""]); setNewName(""); }}
+                onClick={() => changeAnimal(a.id)}
                 className={`w-full flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all active:scale-[0.98] ${selectedAnimal === a.id ? "border-primary bg-primary/5" : "border-border"}`}
               >
                 <div>
@@ -206,7 +272,7 @@ const Kalkulator = () => {
       {/* Step 3: Patungan toggle & participants */}
       {canPatungan && (
         <div className="space-y-3">
-          {/* Toggle */}
+          {/* Toggle — non-destruktif, state peserta & persons masing-masing tetap. */}
           <div className="flex gap-2">
             <Button
               variant={!patunganMode ? "default" : "outline"}
@@ -253,14 +319,16 @@ const Kalkulator = () => {
                   Peserta Patungan
                 </Label>
                 <span className="text-xs text-muted-foreground">
-                  {validParticipants.length}/{animal!.maxPersons} orang
+                  {validParticipants.length}/{animal!.maxPersons} orang · {paidParticipants.filter((n) => validParticipants.includes(n)).length} lunas
                 </span>
               </div>
 
-              {/* Participant list */}
-                <div className="space-y-1.5">
-                  <AnimatePresence mode="popLayout">
-                    {validParticipants.map((name, i) => (
+              {/* Participant list dengan status transfer */}
+              <div className="space-y-1.5">
+                <AnimatePresence mode="popLayout">
+                  {validParticipants.map((name, i) => {
+                    const isPaid = paidParticipants.includes(name);
+                    return (
                       <motion.div
                         key={name}
                         layout
@@ -268,21 +336,33 @@ const Kalkulator = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, x: 40 }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2"
+                        className={`flex items-center justify-between rounded-lg px-3 py-2 ${isPaid ? "bg-primary/10" : "bg-muted/50"}`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
                             {i + 1}
                           </span>
                           <span className="text-sm font-medium">{name}</span>
+                          {isPaid && <span className="text-[10px] font-bold text-primary">LUNAS</span>}
                         </div>
-                        <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors">
-                          <X className="h-3.5 w-3.5" strokeWidth={1.8} />
-                        </button>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => togglePaid(name)}
+                            aria-label={`Tandai ${name} ${isPaid ? "belum" : "sudah"} transfer`}
+                            title={isPaid ? "Batal tandai lunas" : "Tandai sudah transfer"}
+                            className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors ${isPaid ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground hover:text-primary"}`}
+                          >
+                            <Check className="h-3 w-3" strokeWidth={2.4} />
+                          </button>
+                          <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors p-1">
+                            <X className="h-3.5 w-3.5" strokeWidth={1.8} />
+                          </button>
+                        </div>
                       </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </div>
+                    );
+                  })}
+                </AnimatePresence>
+              </div>
 
               {/* Add participant input */}
               {validParticipants.length < animal!.maxPersons && (
@@ -331,22 +411,27 @@ const Kalkulator = () => {
                 </div>
                 {patunganMode && validParticipants.length > 0 && (
                   <div className="border-t pt-2 space-y-1">
-                    {validParticipants.map((name, i) => (
-                      <div key={i} className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">{i + 1}. {name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{formatCurrency(costPerPerson)}</span>
-                          <button
-                            onClick={() => shareToParticipant(name)}
-                            aria-label={`Kirim ringkasan ke ${name}`}
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                            title={`Kirim ke ${name}`}
-                          >
-                            <Share2 className="h-3 w-3" strokeWidth={1.8} />
-                          </button>
+                    {validParticipants.map((name, i) => {
+                      const isPaid = paidParticipants.includes(name);
+                      return (
+                        <div key={i} className="flex items-center justify-between text-xs">
+                          <span className={isPaid ? "text-primary font-medium" : "text-muted-foreground"}>
+                            {i + 1}. {name} {isPaid && "✅"}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{formatCurrency(costPerPerson)}</span>
+                            <button
+                              onClick={() => shareToParticipant(name)}
+                              aria-label={`Kirim ringkasan ke ${name}`}
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title={`Kirim ke ${name}`}
+                            >
+                              <Share2 className="h-3 w-3" strokeWidth={1.8} />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
                 <div className="flex justify-between border-t pt-2">
@@ -357,14 +442,25 @@ const Kalkulator = () => {
             )}
           </div>
 
+          {/* #15 chip penjual biar CTA WA jelas */}
+          <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
+            <ShieldCheck className="h-3.5 w-3.5 text-primary" strokeWidth={1.8} />
+            Pesan akan dikirim ke <span className="font-semibold text-forest">Qurbanku (penyedia rekanan)</span>
+          </div>
+
           <div className="flex flex-col gap-2">
             <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
               <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
             </Button>
             {patunganMode && validParticipants.length > 1 && (
-              <Button variant="outline" size="sm" onClick={shareToAll}>
-                <Share2 className="mr-2 h-4 w-4" strokeWidth={1.8} /> Share Ringkasan ke Peserta
-              </Button>
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="outline" size="sm" onClick={shareToAll}>
+                  <Share2 className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Share ke Peserta
+                </Button>
+                <Button variant="outline" size="sm" onClick={copyShareLink}>
+                  <Copy className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Salin Link
+                </Button>
+              </div>
             )}
             {patunganMode && validParticipants.length > 0 && (
               <Button variant="outline" size="sm" onClick={exportAsImage}>

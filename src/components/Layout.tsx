@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
+import WhatsAppFab from "@/components/WhatsAppFab";
+import OnboardingModal from "@/components/OnboardingModal";
+
 
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -71,6 +74,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
 
+      <WhatsAppFab />
+      <OnboardingModal />
       <BottomNav />
     </div>
   );
