@@ -39,7 +39,8 @@ const Kalkulator = () => {
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
-  const activePersons = patunganMode ? participants.filter((n) => n.trim()).length || 1 : persons;
+  const validParticipants = participants.filter((n) => n.trim());
+  const activePersons = patunganMode ? validParticipants.length || 1 : persons;
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
 
   // Persist patungan data to localStorage
@@ -123,7 +124,6 @@ const Kalkulator = () => {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  const validParticipants = participants.filter((n) => n.trim());
 
   return (
     <div className="space-y-5">

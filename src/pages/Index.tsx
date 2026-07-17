@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdhaInfo, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
@@ -19,7 +19,8 @@ const types: { key: AnimalType; label: string; icon: React.ComponentType<{ class
   { key: "unta", label: "Unta", icon: animalIconMap.unta },
 ];
 
-const STORAGE_KEY = "qurbanku-patungan";
+// Selaras dengan Kalkulator.tsx supaya state kalkulator di Beranda & /kalkulator sinkron.
+const STORAGE_KEY = "qurbanku-kalkulator";
 
 const loadSaved = () => {
   try {
@@ -31,6 +32,7 @@ const loadSaved = () => {
 
 const Index = () => {
   const [countdown, setCountdown] = useState({ days: 0 });
+  const [hijriYear, setHijriYear] = useState<number>(() => getNextIdulAdhaInfo().hijriYear);
   const saved = loadSaved();
   const [selectedType, setSelectedType] = useState<AnimalType | null>(saved?.type ?? null);
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(saved?.animal ?? null);
@@ -47,9 +49,10 @@ const Index = () => {
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
 
   useEffect(() => {
-    const target = getNextIdulAdha();
     const update = () => {
-      const diff = target.getTime() - Date.now();
+      const info = getNextIdulAdhaInfo();
+      const diff = info.date.getTime() - Date.now();
+      setHijriYear(info.hijriYear);
       if (diff <= 0) return;
       setCountdown({ days: Math.floor(diff / (1000 * 60 * 60 * 24)) });
     };
@@ -157,7 +160,7 @@ const Index = () => {
         <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
         <div className="relative z-10">
           <h1 className="font-display text-2xl font-bold leading-tight">
-            {countdown.days} Hari Menuju Hari Raya Idul Adha 1447 H
+            {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
           </h1>
         </div>
       </section>

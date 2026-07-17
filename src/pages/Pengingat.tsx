@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Clock, MessageCircle, CheckCircle2, Bell, BellOff, BellRing } from "lucide-react";
 import SEO from "@/components/SEO";
-import { getNextIdulAdha, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
+import { getNextIdulAdha, getNextIdulAdhaInfo, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
 import {
   loadReminders,
   saveReminders,
@@ -18,8 +18,7 @@ import {
 } from "@/lib/notifications";
 
 const Pengingat = () => {
-  const [targetDate, setTargetDate] = useState<Date>(() => getNextIdulAdha());
-  const hijriYear = targetDate.getFullYear() - 579; // pendekatan: Masehi - 579 ≈ Hijriah untuk Idul Adha
+  const [{ date: targetDate, hijriYear }, setTargetInfo] = useState(() => getNextIdulAdhaInfo());
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     try {
@@ -35,8 +34,9 @@ const Pengingat = () => {
       const now = new Date();
       let target = targetDate;
       if (now >= target) {
-        target = getNextIdulAdha();
-        setTargetDate(target);
+        const next = getNextIdulAdhaInfo();
+        setTargetInfo(next);
+        target = next.date;
       }
       const diff = target.getTime() - now.getTime();
       if (diff <= 0) return;
