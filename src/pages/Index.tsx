@@ -160,7 +160,7 @@ const Index = () => {
         <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
         <div className="relative z-10">
           <h1 className="font-display text-2xl font-bold leading-tight">
-            {countdown.days} Hari Menuju Hari Raya Idul Adha 1447 H
+            {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
           </h1>
         </div>
       </section>
