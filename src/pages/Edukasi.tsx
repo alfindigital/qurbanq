@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft } from "lucide-react";
 import { educationArticles, faqItems, generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
+import KajianSection from "@/components/KajianSection";
 
 const iconMap: Record<string, React.ElementType> = { Scale, BookOpen, Users, Star };
 
@@ -76,6 +77,9 @@ const Edukasi = () => {
             </Accordion>
           </div>
 
+          <KajianSection />
+
+
           {/* CTA */}
           <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center space-y-2">
             <p className="text-sm text-muted-foreground">Butuh bantuan memilih hewan qurban?</p>
@@ -92,6 +96,19 @@ const Edukasi = () => {
 
       {article && (
         <div>
+          <SEO
+            title={`${article.title} — Edukasi Qurban | Qurbanku`}
+            description={article.content.slice(0, 155).replace(/[*>\n]/g, " ").trim()}
+            path="/edukasi"
+            jsonLd={{
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: article.title,
+              articleBody: article.content.replace(/\*\*/g, ""),
+              author: { "@type": "Organization", name: "Qurbanku" },
+              publisher: { "@type": "Organization", name: "Qurbanku" },
+            }}
+          />
           <button onClick={() => setActiveArticle(null)} className="flex items-center gap-1 text-sm text-primary font-medium mb-4">
             <ArrowLeft className="h-4 w-4" strokeWidth={1.8} /> Kembali
           </button>
