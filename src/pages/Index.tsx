@@ -417,8 +417,8 @@ const Index = () => {
 
       {/* Result summary (patungan extras) */}
       {animal && patunganMode && validParticipants.length > 0 && (
-        <section ref={summaryRef} className="rounded-2xl border border-border bg-card p-5 space-y-3">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</p>
+        <section ref={summaryRef} className="rounded-2xl border border-border bg-card p-5 space-y-3" aria-labelledby="daftar-peserta-heading">
+          <h2 id="daftar-peserta-heading" className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</h2>
           <div className="space-y-1.5">
             {validParticipants.map((name, i) => (
               <div key={i} className="flex items-center justify-between text-sm">
@@ -473,9 +473,9 @@ const Index = () => {
       </section>
 
       {/* Hadits / motivasi */}
-      <section className="relative overflow-hidden rounded-[1.75rem] border border-accent/30 bg-peach-soft p-6">
+      <section className="relative overflow-hidden rounded-[1.75rem] border border-accent/30 bg-peach-soft p-6" aria-labelledby="motivasi-qurban-heading">
         <Sparkles className="absolute right-4 top-4 h-5 w-5 text-accent" strokeWidth={1.6} aria-hidden />
-        <p className="text-[10px] font-bold uppercase tracking-wider text-secondary">Motivasi Qurban</p>
+        <h2 id="motivasi-qurban-heading" className="text-[10px] font-bold uppercase tracking-wider text-secondary">Motivasi Qurban</h2>
         <blockquote className="mt-3 font-brand text-lg leading-snug text-forest">
           "Tidak ada amalan anak Adam di hari Nahr yang lebih dicintai Allah daripada mengalirkan darah (berqurban)."
         </blockquote>
@@ -566,7 +566,7 @@ const Index = () => {
             <MessageCircle className="h-6 w-6" strokeWidth={2} />
           </div>
           <div className="flex-1">
-            <h3 className="font-display text-base font-bold">Butuh Bantuan Memilih?</h3>
+            <h2 className="font-display text-base font-bold">Butuh Bantuan Memilih?</h2>
             <p className="mt-1 text-xs opacity-90">Tim kami siap membantu konsultasi hewan qurban terbaik untuk Anda.</p>
             <Button
               size="sm"

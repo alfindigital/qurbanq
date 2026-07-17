@@ -195,8 +195,8 @@ const Kalkulator = () => {
 
   return (
     <div className="space-y-5">
-      <SEO
-        title="Kalkulator Qurban — Hitung Patungan Sapi & Kambing | Qurbanku"
+     <SEO
+        title="Kalkulator Qurban — Patungan Sapi & Kambing"
         description="Pilih jenis hewan qurban dan hitung biaya patungan per orang. Estimasi harga sapi, kambing, domba, dan unta untuk Idul Adha."
         path="/kalkulator"
         jsonLd={[
