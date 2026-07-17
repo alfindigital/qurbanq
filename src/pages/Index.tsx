@@ -347,6 +347,104 @@ const Index = () => {
           })}
         </div>
       </section>
+
+      {/* Hadits / motivasi */}
+      <section className="relative overflow-hidden rounded-[1.75rem] border border-accent/30 bg-peach-soft p-6">
+        <Sparkles className="absolute right-4 top-4 h-5 w-5 text-accent" strokeWidth={1.6} aria-hidden />
+        <p className="text-[10px] font-bold uppercase tracking-wider text-secondary">Motivasi Qurban</p>
+        <blockquote className="mt-3 font-brand text-lg leading-snug text-forest">
+          "Tidak ada amalan anak Adam di hari Nahr yang lebih dicintai Allah daripada mengalirkan darah (berqurban)."
+        </blockquote>
+        <p className="mt-2 text-xs text-muted-foreground">— HR. Tirmidzi</p>
+      </section>
+
+      {/* Pembagian daging */}
+      <section>
+        <h2 className="mb-3 font-display text-base font-bold text-forest">Pembagian Daging Qurban</h2>
+        <div className="grid grid-cols-3 gap-2.5">
+          {[
+            { icon: Utensils, label: "Keluarga", desc: "⅓ untuk dimakan sendiri", tone: "bg-terracotta-soft text-primary" },
+            { icon: HandHeart, label: "Fakir Miskin", desc: "⅓ untuk disedekahkan", tone: "bg-sage-soft text-secondary" },
+            { icon: Heart, label: "Kerabat", desc: "⅓ untuk dihadiahkan", tone: "bg-peach-soft text-accent-foreground" },
+          ].map((item) => (
+            <div key={item.label} className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-card p-3 text-center">
+              <div className={`flex h-10 w-10 items-center justify-center rounded-full ${item.tone}`}>
+                <item.icon className="h-5 w-5" strokeWidth={1.8} />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-forest">{item.label}</p>
+                <p className="text-[10px] text-muted-foreground leading-tight">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Tips persiapan singkat */}
+      <section>
+        <div className="mb-3 flex items-end justify-between">
+          <h2 className="font-display text-base font-bold text-forest">Tips Persiapan</h2>
+          <Link to="/pengingat" className="text-[11px] font-semibold text-primary hover:underline">
+            Lihat semua
+          </Link>
+        </div>
+        <div className="space-y-2">
+          {[
+            "Niatkan qurban karena Allah SWT",
+            "Pilih hewan sesuai syarat (usia, sehat, tidak cacat)",
+            "Pesan hewan qurban jauh-jauh hari",
+            "Siapkan dana lewat tabungan qurban",
+          ].map((tip) => (
+            <div key={tip} className="flex items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" strokeWidth={2} />
+              <p className="text-sm text-forest">{tip}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ singkat */}
+      <section>
+        <div className="mb-3 flex items-center gap-2">
+          <HelpCircle className="h-4 w-4 text-secondary" strokeWidth={2} />
+          <h2 className="font-display text-base font-bold text-forest">Pertanyaan Umum</h2>
+        </div>
+        <div className="rounded-2xl border border-border bg-card px-4">
+          <Accordion type="single" collapsible>
+            {faqItems.slice(0, 4).map((item, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border-border last:border-0">
+                <AccordionTrigger className="text-left text-sm font-semibold text-forest hover:no-underline">
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-xs leading-relaxed text-muted-foreground">
+                  {item.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* CTA WhatsApp */}
+      <section className="rounded-[1.75rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+            <MessageCircle className="h-6 w-6" strokeWidth={2} />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-display text-base font-bold">Butuh Bantuan Memilih?</h3>
+            <p className="mt-1 text-xs opacity-90">Tim kami siap membantu konsultasi hewan qurban terbaik untuk Anda.</p>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="mt-3 bg-background text-foreground hover:bg-background/90"
+              onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin konsultasi qurban."), "_blank")}
+            >
+              Chat via WhatsApp
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
