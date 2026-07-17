@@ -151,8 +151,10 @@ const Index = () => {
     const participantList = patunganMode && names.length > 0
       ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
-    pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: animal.price });
+    const addonLine = addonPelosok ? `\n\n➕ Add-on: Kirim daging ke pelosok (+${formatCurrency(ADDON_PRICE)})` : "";
+    const total = animal.price + (addonPelosok ? ADDON_PRICE : 0);
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${addonLine}${participantList}\n\n💳 Total: ${formatCurrency(total)}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: total });
     window.open(generateWhatsAppLink(msg, "beranda:pesan"), "_blank");
   };
 
