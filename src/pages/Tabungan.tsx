@@ -294,6 +294,9 @@ const Tabungan = () => {
           )}
         </div>
       )}
+
+      <ReverseCalculator />
+
     </div>
   );
 };
