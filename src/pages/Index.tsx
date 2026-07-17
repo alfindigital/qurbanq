@@ -12,6 +12,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdhaInfo, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
+import { pushOrderHistory } from "@/lib/order-history";
+import TrustSection from "@/components/TrustSection";
+import TestimonialSection from "@/components/TestimonialSection";
+import AqiqahCard from "@/components/AqiqahCard";
+import OrderHistorySection from "@/components/OrderHistorySection";
 
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
@@ -144,6 +149,7 @@ const Index = () => {
       ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: animal.price });
     window.open(generateWhatsAppLink(msg, "beranda:pesan"), "_blank");
   };
 
@@ -494,6 +500,16 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      <TrustSection />
+
+      <TestimonialSection />
+
+      <AqiqahCard />
+
+      <OrderHistorySection />
+
+
 
       {/* FAQ singkat */}
       <section>

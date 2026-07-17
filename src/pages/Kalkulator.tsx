@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy, ShieldCheck } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { pushOrderHistory } from "@/lib/order-history";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
 
@@ -129,6 +130,7 @@ const Kalkulator = () => {
       ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : "";
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: animal.price });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
