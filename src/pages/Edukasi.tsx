@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft } from "lucide-react";
 import { educationArticles, faqItems, generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
+import KajianSection from "@/components/KajianSection";
 
 const iconMap: Record<string, React.ElementType> = { Scale, BookOpen, Users, Star };
 
