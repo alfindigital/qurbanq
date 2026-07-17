@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageCircle, PiggyBank, Plus, Trash2 } from "lucide-react";
+import { Flame, MessageCircle, PiggyBank, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
+import ReverseCalculator from "@/components/ReverseCalculator";
+import { calcStreak } from "@/lib/streak";
 
 const TABUNGAN_KEY = "qurbanku-tabungan";
 const LEDGER_KEY = "qurbanku-tabungan-ledger";
