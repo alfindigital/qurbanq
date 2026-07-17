@@ -244,7 +244,13 @@ const Tabungan = () => {
             <div className="rounded-xl bg-background p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Riwayat Setoran</p>
-                <span className="text-[10px] text-muted-foreground">{ledger.length} entri</span>
+                {streak > 0 ? (
+                  <span className="flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold text-primary">
+                    <Flame className="h-3 w-3" strokeWidth={2} /> {streak} minggu
+                  </span>
+                ) : (
+                  <span className="text-[10px] text-muted-foreground">{ledger.length} entri</span>
+                )}
               </div>
               <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
                 {ledger.slice(0, 30).map((entry) => (
