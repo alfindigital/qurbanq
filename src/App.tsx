@@ -72,6 +72,8 @@ const AnimatedRoutes = () => {
               <Route path="/edukasi" element={<Edukasi />} />
               <Route path="/pengingat" element={<Pengingat />} />
               <Route path="/donasi" element={<Donasi />} />
+              <Route path="/metodologi" element={<Metodologi />} />
+              <Route path="/tentang" element={<Metodologi />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </RouteErrorBoundary>
