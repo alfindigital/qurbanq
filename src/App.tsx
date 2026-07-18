@@ -62,15 +62,17 @@ const AnimatedRoutes = () => {
         transition={{ duration: 0.18, ease: "easeOut" }}
       >
         <Suspense fallback={<RouteFallback />}>
-          <Routes location={location}>
-            <Route path="/" element={<Index />} />
-            <Route path="/kalkulator" element={<Kalkulator />} />
-            <Route path="/tabungan" element={<Tabungan />} />
-            <Route path="/edukasi" element={<Edukasi />} />
-            <Route path="/pengingat" element={<Pengingat />} />
-            <Route path="/donasi" element={<Donasi />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <RouteErrorBoundary key={location.pathname}>
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/kalkulator" element={<Kalkulator />} />
+              <Route path="/tabungan" element={<Tabungan />} />
+              <Route path="/edukasi" element={<Edukasi />} />
+              <Route path="/pengingat" element={<Pengingat />} />
+              <Route path="/donasi" element={<Donasi />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </RouteErrorBoundary>
         </Suspense>
       </motion.div>
     </AnimatePresence>
