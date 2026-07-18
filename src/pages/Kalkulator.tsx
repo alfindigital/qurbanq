@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy, ShieldCheck } from "lucide-react";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 import { pushOrderHistory } from "@/lib/order-history";
