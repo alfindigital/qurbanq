@@ -13,12 +13,14 @@ const kalkulatorImport = () => import("./pages/Kalkulator");
 const tabunganImport = () => import("./pages/Tabungan");
 const edukasiImport = () => import("./pages/Edukasi");
 const pengingatImport = () => import("./pages/Pengingat");
+const donasiImport = () => import("./pages/Donasi");
 const notFoundImport = () => import("./pages/NotFound");
 
 const Kalkulator = lazy(kalkulatorImport);
 const Tabungan = lazy(tabunganImport);
 const Edukasi = lazy(edukasiImport);
 const Pengingat = lazy(pengingatImport);
+const Donasi = lazy(donasiImport);
 const NotFound = lazy(notFoundImport);
 
 // Prefetch all route chunks during idle time so menu switches are instant
@@ -27,6 +29,7 @@ const prefetchRoutes = () => {
   tabunganImport();
   edukasiImport();
   pengingatImport();
+  donasiImport();
 };
 
 const queryClient = new QueryClient();
@@ -64,6 +67,7 @@ const AnimatedRoutes = () => {
             <Route path="/tabungan" element={<Tabungan />} />
             <Route path="/edukasi" element={<Edukasi />} />
             <Route path="/pengingat" element={<Pengingat />} />
+            <Route path="/donasi" element={<Donasi />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
