@@ -12,16 +12,19 @@ export interface AnimalOption {
   description: string;
 }
 
+// Harga & bobot diperbarui mengacu pasar Jabodetabek Mei–Juli 2026
+// (sumber: Kompas, Metrotvnews, Dompet Dhuafa, dombagarut.id). Estimasi
+// retail siap kirim; harga peternak langsung bisa lebih rendah.
 export const animalOptions: AnimalOption[] = [
-  { id: "kambing-a", type: "kambing", label: "Kambing Kacang", weight: "25-30 kg", price: 2500000, maxPersons: 1, description: "Kambing lokal, sehat & gemuk" },
-  { id: "kambing-b", type: "kambing", label: "Kambing Jawa", weight: "30-40 kg", price: 3500000, maxPersons: 1, description: "Kambing Jawa pilihan, berat ideal" },
-  { id: "kambing-c", type: "kambing", label: "Kambing Etawa", weight: "35-50 kg", price: 4500000, maxPersons: 1, description: "Kambing Etawa premium, besar & sehat" },
-  { id: "domba-a", type: "domba", label: "Domba Garut", weight: "30-40 kg", price: 3000000, maxPersons: 1, description: "Domba Garut berkualitas" },
-  { id: "domba-b", type: "domba", label: "Domba Ekor Gemuk", weight: "35-50 kg", price: 4000000, maxPersons: 1, description: "Domba ekor gemuk, berat prima" },
-  { id: "sapi-a", type: "sapi", label: "Sapi Lokal", weight: "250-300 kg", price: 18000000, maxPersons: 7, description: "Sapi lokal sehat, cocok untuk qurban bersama" },
-  { id: "sapi-b", type: "sapi", label: "Sapi Bali", weight: "300-400 kg", price: 23000000, maxPersons: 7, description: "Sapi Bali pilihan, daging berkualitas" },
-  { id: "sapi-c", type: "sapi", label: "Sapi Limosin", weight: "400-500 kg", price: 30000000, maxPersons: 7, description: "Sapi Limosin premium, bobot besar" },
-  { id: "unta-a", type: "unta", label: "Unta Standar", weight: "300-400 kg", price: 45000000, maxPersons: 7, description: "Unta qurban impor, lengkap surat" },
+  { id: "kambing-a", type: "kambing", label: "Kambing Kacang", weight: "23-28 kg", price: 2850000, maxPersons: 1, description: "Kambing lokal, sehat & cukup umur" },
+  { id: "kambing-b", type: "kambing", label: "Kambing Jawa", weight: "30-40 kg", price: 4500000, maxPersons: 1, description: "Kambing Jawa pilihan, berat ideal" },
+  { id: "kambing-c", type: "kambing", label: "Kambing Etawa", weight: "40-50 kg", price: 5800000, maxPersons: 1, description: "Kambing Etawa premium, besar & sehat" },
+  { id: "domba-a", type: "domba", label: "Domba Garut", weight: "30-45 kg", price: 4500000, maxPersons: 1, description: "Domba Garut berkualitas, karkas tebal" },
+  { id: "domba-b", type: "domba", label: "Domba Ekor Gemuk", weight: "35-50 kg", price: 5200000, maxPersons: 1, description: "Domba ekor gemuk, berat prima" },
+  { id: "sapi-a", type: "sapi", label: "Sapi Lokal", weight: "250-300 kg", price: 19500000, maxPersons: 7, description: "Sapi lokal sehat, cocok untuk qurban bersama" },
+  { id: "sapi-b", type: "sapi", label: "Sapi Bali", weight: "300-400 kg", price: 26000000, maxPersons: 7, description: "Sapi Bali pilihan, daging berkualitas" },
+  { id: "sapi-c", type: "sapi", label: "Sapi Limosin", weight: "400-550 kg", price: 35000000, maxPersons: 7, description: "Sapi Limosin premium, bobot besar" },
+  { id: "unta-a", type: "unta", label: "Unta Standar", weight: "300-400 kg", price: 48000000, maxPersons: 7, description: "Unta qurban impor, lengkap surat" },
 ];
 
 export const formatCurrency = (amount: number): string => {
