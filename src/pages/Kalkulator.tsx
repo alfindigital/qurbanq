@@ -65,6 +65,19 @@ const Kalkulator = () => {
   const totalCost = animal ? animal.price + extraCost : 0;
   const costPerPerson = animal ? Math.ceil(totalCost / activePersons) : 0;
 
+  // #16 Cicilan menuju Idul Adha berikutnya
+  const idulAdha = getNextIdulAdha();
+  const msUntil = Math.max(0, idulAdha.getTime() - Date.now());
+  const weeksLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 7)));
+  const monthsLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 30)));
+  const perWeek = animal ? Math.ceil(costPerPerson / weeksLeft) : 0;
+  const perMonth = animal ? Math.ceil(costPerPerson / monthsLeft) : 0;
+
+  // #19 Perkiraan jatah daging per orang (karkas ±55%)
+  const avgWeight = animal ? parseWeightKg(animal.weight) : 0;
+  const karkasKg = avgWeight * 0.55;
+  const meatPerPerson = animal ? karkasKg / activePersons : 0;
+
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
     const incoming = readIncomingShare();
