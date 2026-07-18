@@ -34,15 +34,21 @@ const OnboardingModal = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!localStorage.getItem(ONBOARD_KEY)) {
-      // delay biar first paint tidak keblokir
-      const t = setTimeout(() => setOpen(true), 500);
-      return () => clearTimeout(t);
-    }
+    if (localStorage.getItem(ONBOARD_KEY)) return;
+    const snoozedAt = Number(localStorage.getItem(SNOOZE_KEY) || 0);
+    if (snoozedAt && Date.now() - snoozedAt < SNOOZE_MS) return;
+    const t = setTimeout(() => setOpen(true), 500);
+    return () => clearTimeout(t);
   }, []);
 
   const finish = () => {
     localStorage.setItem(ONBOARD_KEY, "1");
+    localStorage.removeItem(SNOOZE_KEY);
+    setOpen(false);
+  };
+
+  const snooze = () => {
+    localStorage.setItem(SNOOZE_KEY, String(Date.now()));
     setOpen(false);
   };
 
