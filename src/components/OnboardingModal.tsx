@@ -8,7 +8,7 @@ const ONBOARD_KEY = "qurbanku-onboarded";
 const slides = [
   {
     icon: Calculator,
-    title: "Hitung Patungan Qurban",
+    title: "Hitung Biaya Qurban per Orang",
     body: "Pilih sapi, kambing, domba, atau unta. Kalkulator otomatis membagi biaya per peserta dan siap kamu bagikan ke grup keluarga via WhatsApp.",
     tone: "bg-terracotta-soft text-primary",
   },
