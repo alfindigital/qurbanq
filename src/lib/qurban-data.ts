@@ -35,8 +35,10 @@ export const formatCurrency = (amount: number): string => {
 // yang paling banyak convert ke WhatsApp (analog UTM, karena wa.me tidak
 // mendukung query param tambahan).
 export const generateWhatsAppLink = (message: string, source?: string): string => {
+  // Normalize control chars & CRLF supaya wa.me tidak truncate pesan
+  const clean = message.replace(/\r/g, "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
   const suffix = source ? `\n\n_(via qurbanku • ${source})_` : "";
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message + suffix)}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(clean + suffix)}`;
 };
 
 // Perkiraan tanggal Idul Adha (10 Dzulhijjah) beserta tahun Hijriah-nya.
