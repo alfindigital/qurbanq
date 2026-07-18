@@ -32,14 +32,27 @@ export const decodeCalcState = (encoded: string): SharedCalcState | null => {
   const raw = b64decode(encoded);
   if (!raw) return null;
   try {
-    const parsed = JSON.parse(raw) as SharedCalcState;
+    const parsed = JSON.parse(raw) as SharedCalcState & { patungan?: boolean };
     if (!parsed || typeof parsed !== "object") return null;
-    const persons = typeof parsed.persons === "number" && parsed.persons > 0 ? parsed.persons : 1;
+    const participants = Array.isArray(parsed.participants)
+      ? parsed.participants.filter((n) => typeof n === "string")
+      : [];
+    // Backward compat: link share versi lama menyimpan `patungan: boolean`.
+    // Kalau `persons` tidak ada, derive dari flag lama (patungan=7 utk sapi/unta, 1 utk lainnya)
+    // atau dari jumlah participants yang tersimpan.
+    let persons: number;
+    if (typeof parsed.persons === "number" && parsed.persons > 0) {
+      persons = parsed.persons;
+    } else if (typeof parsed.patungan === "boolean") {
+      persons = parsed.patungan ? Math.max(7, participants.length || 7) : 1;
+    } else {
+      persons = Math.max(1, participants.length);
+    }
     return {
       type: parsed.type ?? null,
       animal: parsed.animal ?? null,
       persons,
-      participants: Array.isArray(parsed.participants) ? parsed.participants.filter((n) => typeof n === "string") : [],
+      participants,
     };
   } catch {
     return null;
