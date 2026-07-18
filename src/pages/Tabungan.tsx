@@ -59,8 +59,20 @@ const Tabungan = () => {
     localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
   }, [ledger]);
 
-  const animal = animalOptions.find((a) => a.id === selectedAnimal);
-  const target = animal?.price || 0;
+  // #41 Auto-enable reminders H-30/H-7/H-1 saat target dipilih pertama kali
+  useEffect(() => {
+    if (!selectedAnimal) return;
+    if (localStorage.getItem(AUTO_REMINDER_KEY)) return;
+    const current = loadReminders();
+    const updated = current.map((r) =>
+      AUTO_REMINDER_IDS.includes(r.id) ? { ...r, enabled: true } : r,
+    );
+    saveReminders(updated);
+    localStorage.setItem(AUTO_REMINDER_KEY, "1");
+    toast.success("Pengingat H-30, H-7, H-1 diaktifkan", {
+      description: "Kelola di menu Pengingat kalau mau ubah.",
+    });
+  }, [selectedAnimal]);
   const perMonth = target > 0 && months > 0 ? Math.ceil(target / months) : 0;
   const perWeek = target > 0 && months > 0 ? Math.ceil(target / (months * 4)) : 0;
   const perDay = target > 0 && months > 0 ? Math.ceil(target / (months * 30)) : 0;
