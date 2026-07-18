@@ -73,6 +73,9 @@ const Tabungan = () => {
       description: "Kelola di menu Pengingat kalau mau ubah.",
     });
   }, [selectedAnimal]);
+
+  const animal = animalOptions.find((a) => a.id === selectedAnimal);
+  const target = animal?.price || 0;
   const perMonth = target > 0 && months > 0 ? Math.ceil(target / months) : 0;
   const perWeek = target > 0 && months > 0 ? Math.ceil(target / (months * 4)) : 0;
   const perDay = target > 0 && months > 0 ? Math.ceil(target / (months * 30)) : 0;
