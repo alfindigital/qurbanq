@@ -404,10 +404,31 @@ const Kalkulator = () => {
       {animal && (
         <div ref={summaryRef} className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
+
+          {/* #17: opsi biaya potong + antar */}
+          <label className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/60 p-3 cursor-pointer text-sm">
+            <input
+              type="checkbox"
+              checked={withPotong}
+              onChange={(e) => setWithPotong(e.target.checked)}
+              className="mt-0.5 h-4 w-4 accent-primary"
+              aria-label="Tambah biaya potong dan antar"
+            />
+            <div className="flex-1">
+              <span className="font-medium text-foreground">Tambah biaya potong &amp; antar</span>
+              <span className="ml-2 text-primary font-semibold">+{formatCurrency(POTONG_COST)}</span>
+              <p className="text-[11px] text-muted-foreground mt-0.5">Jasa penyembelihan &amp; distribusi (Jabodetabek).</p>
+            </div>
+          </label>
+
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Berat</span><span className="font-medium">{animal.weight}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">Harga Total</span><span className="font-semibold text-primary">{formatCurrency(animal.price)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Harga Hewan</span><span className="font-medium">{formatCurrency(animal.price)}</span></div>
+            {withPotong && (
+              <div className="flex justify-between"><span className="text-muted-foreground">Biaya potong &amp; antar</span><span className="font-medium">{formatCurrency(POTONG_COST)}</span></div>
+            )}
+            <div className="flex justify-between border-t pt-2"><span className="text-muted-foreground">Total</span><span className="font-semibold text-primary">{formatCurrency(totalCost)}</span></div>
             {animal.maxPersons > 1 && (
               <>
                 <div className="flex justify-between">
