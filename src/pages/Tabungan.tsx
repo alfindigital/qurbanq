@@ -10,9 +10,12 @@ import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
 import ReverseCalculator from "@/components/ReverseCalculator";
 import { calcStreak } from "@/lib/streak";
+import { loadReminders, saveReminders } from "@/lib/notifications";
 
 const TABUNGAN_KEY = "qurbanku-tabungan";
 const LEDGER_KEY = "qurbanku-tabungan-ledger";
+const AUTO_REMINDER_KEY = "qurbanku-auto-reminders-set";
+const AUTO_REMINDER_IDS = ["30d", "7d", "1d"];
 
 interface LedgerEntry {
   id: string;
@@ -55,6 +58,21 @@ const Tabungan = () => {
   useEffect(() => {
     localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
   }, [ledger]);
+
+  // #41 Auto-enable reminders H-30/H-7/H-1 saat target dipilih pertama kali
+  useEffect(() => {
+    if (!selectedAnimal) return;
+    if (localStorage.getItem(AUTO_REMINDER_KEY)) return;
+    const current = loadReminders();
+    const updated = current.map((r) =>
+      AUTO_REMINDER_IDS.includes(r.id) ? { ...r, enabled: true } : r,
+    );
+    saveReminders(updated);
+    localStorage.setItem(AUTO_REMINDER_KEY, "1");
+    toast.success("Pengingat H-30, H-7, H-1 diaktifkan", {
+      description: "Kelola di menu Pengingat kalau mau ubah.",
+    });
+  }, [selectedAnimal]);
 
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const target = animal?.price || 0;
