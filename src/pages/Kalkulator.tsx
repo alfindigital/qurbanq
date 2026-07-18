@@ -489,6 +489,41 @@ const Kalkulator = () => {
                 </div>
               </>
             )}
+
+            {/* #16 Cicilan tabungan menuju Idul Adha berikutnya */}
+            <div className="rounded-lg bg-background/60 border border-border/60 p-3 mt-2 space-y-1">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Cicilan sampai Idul Adha ({weeksLeft} minggu lagi)
+              </p>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Nabung per minggu</span>
+                <span className="font-semibold text-foreground">{formatCurrency(perWeek)}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Nabung per bulan</span>
+                <span className="font-semibold text-foreground">{formatCurrency(perMonth)}</span>
+              </div>
+            </div>
+
+            {/* #19 Perkiraan jatah daging (karkas ±55%) */}
+            {avgWeight > 0 && (
+              <div className="rounded-lg bg-background/60 border border-border/60 p-3 space-y-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Perkiraan Jatah Daging
+                </p>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Karkas (±55%)</span>
+                  <span className="font-semibold text-foreground">{karkasKg.toFixed(1)} kg</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Per orang</span>
+                  <span className="font-semibold text-foreground">{meatPerPerson.toFixed(1)} kg</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground pt-1">
+                  Dibagi 3: keluarga, sedekah, hadiah (±{(meatPerPerson / 3).toFixed(1)} kg/bagian).
+                </p>
+              </div>
+            )}
           </div>
 
 
