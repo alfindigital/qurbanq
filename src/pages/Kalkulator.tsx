@@ -7,10 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Share2, Download, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
-import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
 import { pushOrderHistory } from "@/lib/order-history";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
+
+// #19: perkiraan bobot karkas ~55% dari bobot hidup; dibagi 3 (keluarga/sedekah/hadiah)
+const parseWeightKg = (w: string): number => {
+  const nums = w.match(/\d+/g)?.map(Number) ?? [];
+  if (nums.length === 0) return 0;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+};
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
