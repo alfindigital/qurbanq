@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy, ShieldCheck } from "lucide-react";
+import { MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
 import { pushOrderHistory } from "@/lib/order-history";
@@ -444,11 +444,6 @@ const Kalkulator = () => {
             )}
           </div>
 
-          {/* #15 chip penjual biar CTA WA jelas */}
-          <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
-            <ShieldCheck className="h-3.5 w-3.5 text-primary" strokeWidth={1.8} />
-            Pesan akan dikirim ke <span className="font-semibold text-forest">Qurbanku (penyedia rekanan)</span>
-          </div>
 
           <div className="flex flex-col gap-2">
             <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
