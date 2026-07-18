@@ -126,14 +126,17 @@ const Kalkulator = () => {
     setPaidParticipants((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]));
   };
 
+  const potongLine = withPotong ? `\n➕ Biaya potong & antar: ${formatCurrency(POTONG_COST)}` : "";
+  const totalLine = withPotong ? `\n💰 Total: ${formatCurrency(totalCost)}` : "";
+
   const handleOrder = () => {
     if (!animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
       ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
-    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: animal.price });
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${potongLine}${totalLine}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: totalCost });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
@@ -141,7 +144,7 @@ const Kalkulator = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}${potongLine}${totalLine}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -149,7 +152,7 @@ const Kalkulator = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}${potongLine}${totalLine}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
