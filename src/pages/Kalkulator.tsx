@@ -7,10 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Share2, Download, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
-import { animalOptions, formatCurrency, generateWhatsAppLink, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
 import { pushOrderHistory } from "@/lib/order-history";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
+
+// #19: perkiraan bobot karkas ~55% dari bobot hidup; dibagi 3 (keluarga/sedekah/hadiah)
+const parseWeightKg = (w: string): number => {
+  const nums = w.match(/\d+/g)?.map(Number) ?? [];
+  if (nums.length === 0) return 0;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+};
 
 const types: { key: AnimalType; label: string; icon: React.ComponentType<{ className?: string; label?: string }> }[] = [
   { key: "kambing", label: "Kambing", icon: animalIconMap.kambing },
@@ -57,6 +64,19 @@ const Kalkulator = () => {
   const extraCost = withPotong && animal ? POTONG_COST : 0;
   const totalCost = animal ? animal.price + extraCost : 0;
   const costPerPerson = animal ? Math.ceil(totalCost / activePersons) : 0;
+
+  // #16 Cicilan menuju Idul Adha berikutnya
+  const idulAdha = getNextIdulAdha();
+  const msUntil = Math.max(0, idulAdha.getTime() - Date.now());
+  const weeksLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 7)));
+  const monthsLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 30)));
+  const perWeek = animal ? Math.ceil(costPerPerson / weeksLeft) : 0;
+  const perMonth = animal ? Math.ceil(costPerPerson / monthsLeft) : 0;
+
+  // #19 Perkiraan jatah daging per orang (karkas ±55%)
+  const avgWeight = animal ? parseWeightKg(animal.weight) : 0;
+  const karkasKg = avgWeight * 0.55;
+  const meatPerPerson = animal ? karkasKg / activePersons : 0;
 
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
@@ -469,6 +489,41 @@ const Kalkulator = () => {
                 </div>
               </>
             )}
+
+            {/* #16 Cicilan tabungan menuju Idul Adha berikutnya */}
+            <div className="rounded-lg bg-background/60 border border-border/60 p-3 mt-2 space-y-1">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Cicilan sampai Idul Adha ({weeksLeft} minggu lagi)
+              </p>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Nabung per minggu</span>
+                <span className="font-semibold text-foreground">{formatCurrency(perWeek)}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Nabung per bulan</span>
+                <span className="font-semibold text-foreground">{formatCurrency(perMonth)}</span>
+              </div>
+            </div>
+
+            {/* #19 Perkiraan jatah daging (karkas ±55%) */}
+            {avgWeight > 0 && (
+              <div className="rounded-lg bg-background/60 border border-border/60 p-3 space-y-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Perkiraan Jatah Daging
+                </p>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Karkas (±55%)</span>
+                  <span className="font-semibold text-foreground">{karkasKg.toFixed(1)} kg</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Per orang</span>
+                  <span className="font-semibold text-foreground">{meatPerPerson.toFixed(1)} kg</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground pt-1">
+                  Dibagi 3: keluarga, sedekah, hadiah (±{(meatPerPerson / 3).toFixed(1)} kg/bagian).
+                </p>
+              </div>
+            )}
           </div>
 
 
@@ -508,6 +563,36 @@ const Kalkulator = () => {
               Hubungi kami untuk penawaran terbaru.
             </p>
           </details>
+        </div>
+      )}
+
+      {/* #11 Sticky ringkasan — muncul saat hewan sudah dipilih */}
+      {animal && (
+        <div
+          className="fixed inset-x-0 z-30 mx-auto flex max-w-lg items-center justify-between gap-3 border-t border-border/60 bg-background/95 px-5 py-2.5 backdrop-blur-xl shadow-soft"
+          style={{ bottom: "calc(4.75rem + env(safe-area-inset-bottom))" }}
+          role="status"
+          aria-label="Ringkasan biaya qurban"
+        >
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[10px] uppercase tracking-wide text-muted-foreground">
+              {animal.label} · {activePersons} org
+            </p>
+            <p className="text-sm font-bold text-primary leading-tight">
+              {formatCurrency(costPerPerson)}
+              <span className="ml-1 text-[10px] font-normal text-muted-foreground">/orang</span>
+            </p>
+          </div>
+          {animal.type !== "unta" && (
+            <Button
+              size="sm"
+              onClick={handleOrder}
+              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
+              aria-label="Pesan via WhatsApp"
+            >
+              <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Pesan
+            </Button>
+          )}
         </div>
       )}
     </div>
