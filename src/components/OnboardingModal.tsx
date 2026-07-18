@@ -4,6 +4,8 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Button } from "@/components/ui/button";
 
 const ONBOARD_KEY = "qurbanku-onboarded";
+const SNOOZE_KEY = "qurbanku-onboard-snooze";
+const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000;
 
 const slides = [
   {
