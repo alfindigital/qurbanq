@@ -511,6 +511,8 @@ const Index = () => {
         </div>
       </section>
 
+      <WeeklyRecap />
+
       <TrustSection />
 
       <TestimonialSection />
