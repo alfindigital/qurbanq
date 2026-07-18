@@ -498,9 +498,16 @@ const Kalkulator = () => {
             </Button>
           </div>
 
-          <p className="text-[11px] text-muted-foreground text-center">
-            * Harga estimasi. Hubungi kami untuk penawaran terbaik.
-          </p>
+          <details className="text-[11px] text-muted-foreground">
+            <summary className="cursor-pointer text-center list-none marker:hidden hover:text-foreground transition-colors">
+              * Harga estimasi. Sumber &amp; metodologi
+            </summary>
+            <p className="mt-2 leading-relaxed">
+              Estimasi retail Jabodetabek (Mei–Juli 2026), disusun dari Kompas, Metrotvnews,
+              Dompet Dhuafa, dan dombagarut.id. Harga peternak langsung bisa lebih rendah.
+              Hubungi kami untuk penawaran terbaru.
+            </p>
+          </details>
         </div>
       )}
     </div>
