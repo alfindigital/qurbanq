@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 
-import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Users, Share2, Download, Heart, HandHeart, Utensils, CheckCircle2, Sparkles, HelpCircle, Check, Copy, ShieldCheck } from "lucide-react";
+import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Share2, Download, Heart, HandHeart, Utensils, CheckCircle2, Sparkles, HelpCircle, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ const STORAGE_KEY = "qurbanku-kalkulator";
 const loadSaved = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as { type?: AnimalType; animal?: string; patungan?: boolean; participants?: string[] };
+    if (raw) return JSON.parse(raw) as { type?: AnimalType; animal?: string; participants?: string[]; persons?: number };
   } catch {}
   return null;
 };
@@ -52,8 +52,7 @@ const Index = () => {
   const saved = loadSaved();
   const [selectedType, setSelectedType] = useState<AnimalType | null>(saved?.type ?? null);
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(saved?.animal ?? null);
-  const [persons, setPersons] = useState(1);
-  const [patunganMode, setPatunganMode] = useState(saved?.patungan ?? false);
+  const [persons, setPersons] = useState(saved?.persons ?? 7);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
@@ -65,7 +64,7 @@ const Index = () => {
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const validParticipants = participants.filter((n) => n.trim());
-  const activePersons = patunganMode ? validParticipants.length || 1 : persons;
+  const activePersons = persons;
   const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
 
   // #44: kalau user buka via share link `?p=<base64>`, prefill state.
@@ -74,9 +73,9 @@ const Index = () => {
     if (!incoming) return;
     if (incoming.type) setSelectedType(incoming.type);
     if (incoming.animal) setSelectedAnimal(incoming.animal);
-    if (typeof incoming.patungan === "boolean") setPatunganMode(incoming.patungan);
+    if (typeof incoming.persons === "number") setPersons(incoming.persons);
     if (incoming.participants?.length) setParticipants(incoming.participants);
-    toast.success("Konfigurasi patungan dimuat dari link 🎉");
+    toast.success("Konfigurasi qurban dimuat dari link 🎉");
   }, []);
 
   useEffect(() => {
@@ -93,9 +92,9 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const data = { type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants };
+    const data = { type: selectedType, animal: selectedAnimal, persons, participants: validParticipants };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [selectedType, selectedAnimal, patunganMode, participants]);
+  }, [selectedType, selectedAnimal, persons, participants]);
 
   useEffect(() => {
     localStorage.setItem(PAID_KEY, JSON.stringify(paidParticipants));
@@ -148,9 +147,9 @@ const Index = () => {
   const handleOrder = () => {
     if (!animal) return;
     const names = validParticipants;
-    const participantList = patunganMode && names.length > 0
-      ? `\n\n👥 Peserta Patungan (${names.length} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
-      : "";
+    const participantList = names.length > 0
+      ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
+      : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
     const addonLine = addonPelosok ? `\n\n➕ Add-on: Kirim daging ke pelosok (+${formatCurrency(ADDON_PRICE)})` : "";
     const total = animal.price + (addonPelosok ? ADDON_PRICE : 0);
     const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${addonLine}${participantList}\n\n💳 Total: ${formatCurrency(total)}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
@@ -161,24 +160,24 @@ const Index = () => {
   const shareToParticipant = (name: string) => {
     if (!animal) return;
     const names = validParticipants;
-    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail patungan qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const shareToAll = () => {
     if (!animal) return;
     const names = validParticipants;
-    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
-    const msg = `📢 *Ringkasan Patungan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${names.length} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
+    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const copyShareLink = async () => {
-    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, patungan: patunganMode, participants: validParticipants });
+    const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
     try {
       await navigator.clipboard.writeText(link);
-      toast.success("Link patungan disalin", { description: "Bagikan ke grup keluarga/teman." });
+      toast.success("Link qurban disalin", { description: "Bagikan ke grup keluarga/teman." });
     } catch {
       toast.error("Gagal menyalin link");
     }
@@ -192,7 +191,7 @@ const Index = () => {
       const { default: html2canvas } = await import("html2canvas");
       const canvas = await html2canvas(summaryRef.current, { backgroundColor: null, scale: 2, useCORS: true });
       const link = document.createElement("a");
-      link.download = `patungan-qurban-${animal.label.toLowerCase().replace(/\s+/g, "-")}.png`;
+      link.download = `qurban-${animal.label.toLowerCase().replace(/\s+/g, "-")}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
       toast.success("Gambar berhasil diunduh!", { id: "export" });
@@ -204,8 +203,7 @@ const Index = () => {
   const resetAll = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
-    setPersons(1);
-    setPatunganMode(false);
+    setPersons(7);
     setParticipants([""]);
     setPaidParticipants([]);
     setNewName("");
@@ -222,15 +220,15 @@ const Index = () => {
   return (
     <div className="space-y-6">
       <SEO
-        title="Qurbanku — Kalkulator Patungan & Tabungan Qurban"
-        description="Hitung biaya qurban Idul Adha, atur patungan sapi/kambing, dan kirim pesanan via WhatsApp langsung dari beranda Qurbanku."
+        title="Qurbanku — Kalkulator & Tabungan Qurban"
+        description="Hitung biaya qurban Idul Adha per orang, atur daftar peserta, dan kirim pesanan via WhatsApp langsung dari beranda Qurbanku."
         path="/"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "Qurbanku",
           applicationCategory: "LifestyleApplication",
-          description: "Kalkulator patungan dan tabungan qurban Idul Adha.",
+          description: "Kalkulator dan tabungan qurban Idul Adha.",
           url: "https://qurban-q.lovable.app/",
         }}
       />
@@ -306,69 +304,58 @@ const Index = () => {
             </span>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              onClick={() => setPatunganMode(false)}
-              className={`flex-1 rounded-xl py-2 text-xs font-bold transition-all ${!patunganMode ? "bg-primary text-primary-foreground shadow-soft" : "bg-card text-forest"}`}
-            >
-              Mandiri
-            </button>
-            <button
-              onClick={() => setPatunganMode(true)}
-              className={`flex-1 rounded-xl py-2 text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${patunganMode ? "bg-primary text-primary-foreground shadow-soft" : "bg-card text-forest"}`}
-            >
-              <Users className="h-3.5 w-3.5" strokeWidth={2} /> Patungan
-            </button>
+          <div className="rounded-2xl bg-card p-4">
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+              Jumlah Peserta (maks {animal!.maxPersons})
+            </Label>
+            <div className="mt-2 flex items-center gap-3">
+              <Input
+                type="number"
+                min={1}
+                max={animal!.maxPersons}
+                value={persons}
+                onChange={(e) => setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))}
+                className="w-20 bg-background"
+                aria-label="Jumlah peserta"
+              />
+              <span className="text-sm text-muted-foreground">orang</span>
+            </div>
           </div>
 
-          {!patunganMode && (
-            <div className="rounded-2xl bg-card p-4">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
-                Jumlah Peserta (maks {animal!.maxPersons})
-              </Label>
-              <div className="mt-2 flex items-center gap-3">
-                <Input type="number" min={1} max={animal!.maxPersons} value={persons} onChange={(e) => setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)))} className="w-20 bg-background" />
-                <span className="text-sm text-muted-foreground">orang</span>
-              </div>
+          <div className="rounded-2xl bg-card p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</Label>
+              <span className="text-xs text-muted-foreground">{validParticipants.length}/{animal!.maxPersons} orang · {paidParticipants.filter((n) => validParticipants.includes(n)).length} lunas</span>
             </div>
-          )}
-
-          {patunganMode && (
-            <div className="rounded-2xl bg-card p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Peserta</Label>
-                <span className="text-xs text-muted-foreground">{validParticipants.length}/{animal!.maxPersons} orang</span>
-              </div>
-              <div className="space-y-1.5">
-                <AnimatePresence mode="popLayout">
-                  {validParticipants.map((name, i) => {
-                    const isPaid = paidParticipants.includes(name);
-                    return (
-                      <motion.div key={name} layout initial={{ opacity: 0, scale: 0.9, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, x: 40 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className={`flex items-center justify-between rounded-xl px-3 py-2 ${isPaid ? "bg-primary/15" : "bg-muted"}`}>
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-[10px] font-bold text-primary">{i + 1}</span>
-                          <span className="text-sm font-medium text-forest">{name}</span>
-                          {isPaid && <span className="text-[9px] font-bold text-primary">LUNAS</span>}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <button onClick={() => togglePaid(name)} aria-label={`Tandai ${name} ${isPaid ? "belum" : "sudah"} transfer`} title={isPaid ? "Batal lunas" : "Tandai lunas"} className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors ${isPaid ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground hover:text-primary"}`}>
-                            <Check className="h-3 w-3" strokeWidth={2.4} />
-                          </button>
-                          <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors p-1"><X className="h-3.5 w-3.5" strokeWidth={2} /></button>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-              {validParticipants.length < animal!.maxPersons && (
-                <div className="flex gap-2">
-                  <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 bg-background text-sm" />
-                  <Button size="sm" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta" className="bg-primary text-primary-foreground hover:bg-primary/90"><UserPlus className="h-4 w-4" strokeWidth={2} /></Button>
-                </div>
-              )}
+            <div className="space-y-1.5">
+              <AnimatePresence mode="popLayout">
+                {validParticipants.map((name, i) => {
+                  const isPaid = paidParticipants.includes(name);
+                  return (
+                    <motion.div key={name} layout initial={{ opacity: 0, scale: 0.9, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, x: 40 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className={`flex items-center justify-between rounded-xl px-3 py-2 ${isPaid ? "bg-primary/15" : "bg-muted"}`}>
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-[10px] font-bold text-primary">{i + 1}</span>
+                        <span className="text-sm font-medium text-forest">{name}</span>
+                        {isPaid && <span className="text-[9px] font-bold text-primary">LUNAS</span>}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => togglePaid(name)} aria-label={`Tandai ${name} ${isPaid ? "belum" : "sudah"} transfer`} title={isPaid ? "Batal lunas" : "Tandai lunas"} className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors ${isPaid ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground hover:text-primary"}`}>
+                          <Check className="h-3 w-3" strokeWidth={2.4} />
+                        </button>
+                        <button onClick={() => removeParticipant(i)} aria-label={`Hapus peserta ${name}`} className="text-muted-foreground hover:text-destructive transition-colors p-1"><X className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
             </div>
-          )}
+            {validParticipants.length < animal!.maxPersons && (
+              <div className="flex gap-2">
+                <Input placeholder="Nama peserta..." value={newName} maxLength={50} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addParticipant(); } }} className="flex-1 bg-background text-sm" aria-label="Nama peserta baru" />
+                <Button size="sm" onClick={addParticipant} disabled={!newName.trim()} aria-label="Tambah peserta" className="bg-primary text-primary-foreground hover:bg-primary/90"><UserPlus className="h-4 w-4" strokeWidth={2} /></Button>
+              </div>
+            )}
+          </div>
 
           {animal && (
             <label className="flex cursor-pointer items-start gap-2 rounded-xl border border-dashed border-primary/30 bg-card p-3">
@@ -385,7 +372,7 @@ const Index = () => {
             </label>
           )}
 
-          {animal && patunganMode && animal.maxPersons > 1 && validParticipants.length > 0 && validParticipants.length < animal.maxPersons && costPerPerson < 2500000 && (
+          {animal && animal.maxPersons > 1 && validParticipants.length > 0 && validParticipants.length < animal.maxPersons && costPerPerson < 2500000 && (
             <div className="rounded-xl bg-terracotta-soft p-3 text-[11px] text-forest">
               💡 Biaya per orang saat ini <strong>{formatCurrency(costPerPerson)}</strong>. Ajak {animal.maxPersons - validParticipants.length} orang lagi supaya patungan sapi lebih hemat.
             </div>
@@ -396,27 +383,23 @@ const Index = () => {
               <div className="flex items-end justify-between border-t border-accent/30 pt-4">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
-                    {patunganMode || persons > 1 ? "Per Orang" : "Estimasi Biaya"}
+                    Per Orang
                   </p>
                   <p className="font-display text-2xl font-bold text-primary leading-tight">
-                    {formatCurrency(patunganMode || persons > 1 ? costPerPerson : animal.price)}
+                    {formatCurrency(costPerPerson)}
                   </p>
                 </div>
                 <Button onClick={handleOrder} size="sm" className="rounded-xl bg-primary text-primary-foreground shadow-warm hover:bg-primary/90">
                   <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={2} /> Pesan
                 </Button>
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-                <ShieldCheck className="h-3 w-3 text-primary" strokeWidth={2} />
-                Dikirim ke <span className="font-semibold text-forest">Qurbanku (penyedia rekanan)</span>
-              </div>
             </>
           )}
         </section>
       )}
 
-      {/* Result summary (patungan extras) */}
-      {animal && patunganMode && validParticipants.length > 0 && (
+      {/* Result summary */}
+      {animal && validParticipants.length > 0 && (
         <section ref={summaryRef} className="rounded-2xl border border-border bg-card p-5 space-y-3" aria-labelledby="daftar-peserta-heading">
           <h2 id="daftar-peserta-heading" className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</h2>
           <div className="space-y-1.5">

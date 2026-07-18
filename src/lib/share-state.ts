@@ -1,12 +1,12 @@
-// Encode / decode state kalkulator patungan ke URL hash supaya user bisa
+// Encode / decode state kalkulator qurban ke URL hash supaya user bisa
 // share link `?p=<base64>` di WA grup keluarga dan penerima langsung
-// melihat konfigurasi patungan yang sama tanpa perlu backend.
+// melihat konfigurasi yang sama tanpa perlu backend.
 import type { AnimalType } from "./qurban-data";
 
 export interface SharedCalcState {
   type: AnimalType | null;
   animal: string | null;
-  patungan: boolean;
+  persons: number;
   participants: string[];
 }
 
@@ -34,10 +34,11 @@ export const decodeCalcState = (encoded: string): SharedCalcState | null => {
   try {
     const parsed = JSON.parse(raw) as SharedCalcState;
     if (!parsed || typeof parsed !== "object") return null;
+    const persons = typeof parsed.persons === "number" && parsed.persons > 0 ? parsed.persons : 1;
     return {
       type: parsed.type ?? null,
       animal: parsed.animal ?? null,
-      patungan: !!parsed.patungan,
+      persons,
       participants: Array.isArray(parsed.participants) ? parsed.participants.filter((n) => typeof n === "string") : [],
     };
   } catch {

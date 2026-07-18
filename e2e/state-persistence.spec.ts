@@ -7,11 +7,10 @@ const nav = (page: import("@playwright/test").Page) =>
 test("Kalkulator & Tabungan state survives repeated BottomNav switches", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 
-  // Seed Kalkulator: sapi + first animal + patungan + participant "Budi"
+  // Seed Kalkulator: sapi + first animal + participant "Budi"
   await page.goto("/kalkulator");
   await page.getByRole("button", { name: "Sapi" }).click();
   await page.locator("button:has-text('Rp')").first().click();
-  await page.getByRole("button", { name: /Patungan/i }).click();
   await page.getByPlaceholder("Nama peserta...").fill("Budi");
   await page.getByRole("button", { name: "Tambah peserta" }).click();
   await expect(page.getByText("Budi", { exact: false })).toBeVisible();
@@ -40,8 +39,8 @@ test("Kalkulator & Tabungan state survives repeated BottomNav switches", async (
   await expect(page.locator('input[type="number"]').nth(0)).toHaveValue("9");
   await expect(page.locator('input[type="number"]').nth(1)).toHaveValue("500000");
 
-  // Kalkulator retained in patungan mode with participant
+  // Kalkulator retained with participant
   await nav(page).getByRole("link", { name: "Kalkulator qurban" }).click();
-  await expect(page.getByText("Peserta Patungan")).toBeVisible();
+  await expect(page.getByText("Daftar Peserta")).toBeVisible();
   await expect(page.getByText("Budi", { exact: false })).toBeVisible();
 });
