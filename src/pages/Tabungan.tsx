@@ -10,9 +10,12 @@ import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
 import ReverseCalculator from "@/components/ReverseCalculator";
 import { calcStreak } from "@/lib/streak";
+import { loadReminders, saveReminders } from "@/lib/notifications";
 
 const TABUNGAN_KEY = "qurbanku-tabungan";
 const LEDGER_KEY = "qurbanku-tabungan-ledger";
+const AUTO_REMINDER_KEY = "qurbanku-auto-reminders-set";
+const AUTO_REMINDER_IDS = ["30d", "7d", "1d"];
 
 interface LedgerEntry {
   id: string;
