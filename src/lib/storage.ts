@@ -76,8 +76,39 @@ export const downloadBackup = () => {
   URL.revokeObjectURL(url);
 };
 
+export const BACKUP_PREV_KEY = "qurbanku-backup-prev";
+
+// Simpan snapshot state saat ini sebelum overwrite (undo satu langkah).
+const snapshotCurrentState = () => {
+  const snap: Record<string, string> = {};
+  QURBANKU_KEYS.forEach((k) => {
+    const raw = localStorage.getItem(k);
+    if (raw) snap[k] = raw;
+  });
+  try {
+    localStorage.setItem(BACKUP_PREV_KEY, JSON.stringify({ at: new Date().toISOString(), snap }));
+  } catch {}
+};
+
+export const restorePreviousBackup = (): boolean => {
+  try {
+    const raw = localStorage.getItem(BACKUP_PREV_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw) as { snap?: Record<string, string> };
+    if (!parsed?.snap) return false;
+    // Clear then restore
+    QURBANKU_KEYS.forEach((k) => localStorage.removeItem(k));
+    Object.entries(parsed.snap).forEach(([k, v]) => localStorage.setItem(k, v));
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const importAllData = (jsonText: string): { imported: number; skipped: number } => {
   const parsed = JSON.parse(jsonText) as Record<string, unknown>;
+  // Snapshot dulu sebelum overwrite supaya user bisa undo lewat restorePreviousBackup().
+  snapshotCurrentState();
   let imported = 0;
   let skipped = 0;
   QURBANKU_KEYS.forEach((k) => {
