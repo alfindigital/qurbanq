@@ -46,13 +46,17 @@ const Kalkulator = () => {
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
+  const [withPotong, setWithPotong] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
 
+  const POTONG_COST = 150000; // #17 biaya potong + antar per ekor (opsional)
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const validParticipants = participants.filter((n) => n.trim());
   const activePersons = persons;
-  const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
+  const extraCost = withPotong && animal ? POTONG_COST : 0;
+  const totalCost = animal ? animal.price + extraCost : 0;
+  const costPerPerson = animal ? Math.ceil(totalCost / activePersons) : 0;
 
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
@@ -122,14 +126,17 @@ const Kalkulator = () => {
     setPaidParticipants((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]));
   };
 
+  const potongLine = withPotong ? `\n➕ Biaya potong & antar: ${formatCurrency(POTONG_COST)}` : "";
+  const totalLine = withPotong ? `\n💰 Total: ${formatCurrency(totalCost)}` : "";
+
   const handleOrder = () => {
     if (!animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
       ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
       : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
-    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: animal.price });
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${potongLine}${totalLine}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: totalCost });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
@@ -137,7 +144,7 @@ const Kalkulator = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}${potongLine}${totalLine}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -145,7 +152,7 @@ const Kalkulator = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}${potongLine}${totalLine}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -400,10 +407,31 @@ const Kalkulator = () => {
       {animal && (
         <div ref={summaryRef} className="rounded-2xl border border-primary/20 bg-primary/5 p-5 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ringkasan</p>
+
+          {/* #17: opsi biaya potong + antar */}
+          <label className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/60 p-3 cursor-pointer text-sm">
+            <input
+              type="checkbox"
+              checked={withPotong}
+              onChange={(e) => setWithPotong(e.target.checked)}
+              className="mt-0.5 h-4 w-4 accent-primary"
+              aria-label="Tambah biaya potong dan antar"
+            />
+            <div className="flex-1">
+              <span className="font-medium text-foreground">Tambah biaya potong &amp; antar</span>
+              <span className="ml-2 text-primary font-semibold">+{formatCurrency(POTONG_COST)}</span>
+              <p className="text-[11px] text-muted-foreground mt-0.5">Jasa penyembelihan &amp; distribusi (Jabodetabek).</p>
+            </div>
+          </label>
+
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-muted-foreground">Hewan</span><span className="font-medium">{animal.label}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Berat</span><span className="font-medium">{animal.weight}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">Harga Total</span><span className="font-semibold text-primary">{formatCurrency(animal.price)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Harga Hewan</span><span className="font-medium">{formatCurrency(animal.price)}</span></div>
+            {withPotong && (
+              <div className="flex justify-between"><span className="text-muted-foreground">Biaya potong &amp; antar</span><span className="font-medium">{formatCurrency(POTONG_COST)}</span></div>
+            )}
+            <div className="flex justify-between border-t pt-2"><span className="text-muted-foreground">Total</span><span className="font-semibold text-primary">{formatCurrency(totalCost)}</span></div>
             {animal.maxPersons > 1 && (
               <>
                 <div className="flex justify-between">
@@ -470,9 +498,16 @@ const Kalkulator = () => {
             </Button>
           </div>
 
-          <p className="text-[11px] text-muted-foreground text-center">
-            * Harga estimasi. Hubungi kami untuk penawaran terbaik.
-          </p>
+          <details className="text-[11px] text-muted-foreground">
+            <summary className="cursor-pointer text-center list-none marker:hidden hover:text-foreground transition-colors">
+              * Harga estimasi. Sumber &amp; metodologi
+            </summary>
+            <p className="mt-2 leading-relaxed">
+              Estimasi retail Jabodetabek (Mei–Juli 2026), disusun dari Kompas, Metrotvnews,
+              Dompet Dhuafa, dan dombagarut.id. Harga peternak langsung bisa lebih rendah.
+              Hubungi kami untuk penawaran terbaru.
+            </p>
+          </details>
         </div>
       )}
     </div>

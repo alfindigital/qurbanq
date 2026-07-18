@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 import ScrollToTop from "@/components/ScrollToTop";
+import RouteErrorBoundary from "@/components/RouteErrorBoundary";
 
 const kalkulatorImport = () => import("./pages/Kalkulator");
 const tabunganImport = () => import("./pages/Tabungan");
@@ -61,15 +62,17 @@ const AnimatedRoutes = () => {
         transition={{ duration: 0.18, ease: "easeOut" }}
       >
         <Suspense fallback={<RouteFallback />}>
-          <Routes location={location}>
-            <Route path="/" element={<Index />} />
-            <Route path="/kalkulator" element={<Kalkulator />} />
-            <Route path="/tabungan" element={<Tabungan />} />
-            <Route path="/edukasi" element={<Edukasi />} />
-            <Route path="/pengingat" element={<Pengingat />} />
-            <Route path="/donasi" element={<Donasi />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <RouteErrorBoundary key={location.pathname}>
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/kalkulator" element={<Kalkulator />} />
+              <Route path="/tabungan" element={<Tabungan />} />
+              <Route path="/edukasi" element={<Edukasi />} />
+              <Route path="/pengingat" element={<Pengingat />} />
+              <Route path="/donasi" element={<Donasi />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </RouteErrorBoundary>
         </Suspense>
       </motion.div>
     </AnimatePresence>
