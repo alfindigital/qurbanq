@@ -15,6 +15,7 @@ import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
 import { pushOrderHistory } from "@/lib/order-history";
 import TrustSection from "@/components/TrustSection";
 import TestimonialSection from "@/components/TestimonialSection";
+import WeeklyRecap from "@/components/WeeklyRecap";
 import AqiqahCard from "@/components/AqiqahCard";
 import OrderHistorySection from "@/components/OrderHistorySection";
 
