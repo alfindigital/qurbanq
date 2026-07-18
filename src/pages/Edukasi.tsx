@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft } from "lucide-react";
+import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft, Heart, ArrowRight } from "lucide-react";
 import { educationArticles, faqItems, generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
 import KajianSection from "@/components/KajianSection";
@@ -52,6 +53,24 @@ const Edukasi = () => {
               );
             })}
           </div>
+
+          {/* Qurbani Donation CTA */}
+          <Link
+            to="/donasi"
+            className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/[0.03] p-4 transition-all hover:border-primary/40 hover:bg-primary/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label="Baca panduan qurbani donation untuk audiens internasional"
+          >
+            <div className="rounded-full bg-primary/10 p-2.5 text-primary">
+              <Heart className="h-5 w-5" strokeWidth={1.8} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-sm font-semibold text-foreground">Qurbani Donation Guide</h2>
+              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                Panduan berqurban dari luar negeri untuk didistribusikan di Indonesia.
+              </p>
+            </div>
+            <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" strokeWidth={1.8} />
+          </Link>
 
           {/* FAQ */}
           <div>
