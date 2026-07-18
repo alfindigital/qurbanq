@@ -46,13 +46,17 @@ const Kalkulator = () => {
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
+  const [withPotong, setWithPotong] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
 
+  const POTONG_COST = 150000; // #17 biaya potong + antar per ekor (opsional)
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
   const animal = animalOptions.find((a) => a.id === selectedAnimal);
   const validParticipants = participants.filter((n) => n.trim());
   const activePersons = persons;
-  const costPerPerson = animal ? Math.ceil(animal.price / activePersons) : 0;
+  const extraCost = withPotong && animal ? POTONG_COST : 0;
+  const totalCost = animal ? animal.price + extraCost : 0;
+  const costPerPerson = animal ? Math.ceil(totalCost / activePersons) : 0;
 
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
