@@ -15,6 +15,7 @@ const tabunganImport = () => import("./pages/Tabungan");
 const edukasiImport = () => import("./pages/Edukasi");
 const pengingatImport = () => import("./pages/Pengingat");
 const donasiImport = () => import("./pages/Donasi");
+const metodologiImport = () => import("./pages/Metodologi");
 const notFoundImport = () => import("./pages/NotFound");
 
 const Kalkulator = lazy(kalkulatorImport);
@@ -22,6 +23,7 @@ const Tabungan = lazy(tabunganImport);
 const Edukasi = lazy(edukasiImport);
 const Pengingat = lazy(pengingatImport);
 const Donasi = lazy(donasiImport);
+const Metodologi = lazy(metodologiImport);
 const NotFound = lazy(notFoundImport);
 
 // Prefetch all route chunks during idle time so menu switches are instant
