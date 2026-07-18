@@ -446,9 +446,11 @@ const Kalkulator = () => {
 
 
           <div className="flex flex-col gap-2">
-            <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
-              <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
-            </Button>
+            {animal?.type !== "unta" && (
+              <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
+                <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
+              </Button>
+            )}
             {patunganMode && validParticipants.length > 1 && (
               <div className="grid grid-cols-2 gap-2">
                 <Button variant="outline" size="sm" onClick={shareToAll}>
