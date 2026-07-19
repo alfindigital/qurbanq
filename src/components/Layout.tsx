@@ -73,7 +73,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
 
-      <WhatsAppFab />
       <OnboardingModal />
       <BottomNav />
     </div>
