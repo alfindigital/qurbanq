@@ -47,8 +47,11 @@ const loadPaid = (): string[] => {
 
 const Kalkulator = () => {
   const saved = loadSaved();
-  const [selectedType, setSelectedType] = useState<AnimalType | null>(saved?.type ?? null);
-  const [selectedAnimal, setSelectedAnimal] = useState<string | null>(saved?.animal ?? null);
+  // Default: kambing termurah supaya kalkulator langsung menampilkan hasil, bukan viewport kosong.
+  const defaultType: AnimalType = saved?.type ?? "kambing";
+  const defaultAnimal = saved?.animal ?? animalOptions.find((a) => a.type === defaultType)?.id ?? null;
+  const [selectedType, setSelectedType] = useState<AnimalType | null>(defaultType);
+  const [selectedAnimal, setSelectedAnimal] = useState<string | null>(defaultAnimal);
   const [persons, setPersons] = useState(saved?.persons ?? 7);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
