@@ -43,7 +43,7 @@ const OnboardingModal = () => {
     if (snoozedAt && Date.now() - snoozedAt < SNOOZE_MS) return;
     const t = setTimeout(() => setOpen(true), 500);
     return () => clearTimeout(t);
-  }, []);
+  }, [location.pathname]);
 
   const finish = () => {
     localStorage.setItem(ONBOARD_KEY, "1");
