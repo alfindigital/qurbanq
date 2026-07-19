@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Calculator, PiggyBank, Bell } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -31,9 +32,12 @@ const slides = [
 const OnboardingModal = () => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // Hanya tampil di beranda supaya tidak menghalangi utility (kalkulator, tabungan, dll).
+    if (location.pathname !== "/") return;
     if (localStorage.getItem(ONBOARD_KEY)) return;
     const snoozedAt = Number(localStorage.getItem(SNOOZE_KEY) || 0);
     if (snoozedAt && Date.now() - snoozedAt < SNOOZE_MS) return;
