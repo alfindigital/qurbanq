@@ -234,16 +234,33 @@ const Index = () => {
         }}
       />
 
-      {/* Hero countdown */}
-      <section className="relative overflow-hidden rounded-[2rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
-        <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-forest/25" aria-hidden />
-        <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
-        <div className="relative z-10">
-          <h1 className="font-display text-2xl font-bold leading-tight">
-            {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
-          </h1>
-        </div>
-      </section>
+      {/* Hero countdown + CTA nabung harian */}
+      {(() => {
+        const cheapest = animalOptions.reduce((min, a) => (a.price < min.price ? a : min), animalOptions[0]);
+        const daysLeft = Math.max(1, countdown.days);
+        const perDay = Math.ceil(cheapest.price / daysLeft);
+        return (
+          <section className="relative overflow-hidden rounded-[2rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
+            <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-forest/25" aria-hidden />
+            <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
+            <div className="relative z-10 space-y-4">
+              <h1 className="font-display text-2xl font-bold leading-tight">
+                {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
+              </h1>
+              <p className="text-xs opacity-90">
+                Nabung <span className="font-bold">{formatCurrency(perDay)}/hari</span> sudah cukup buat 1 {cheapest.label.toLowerCase()}.
+              </p>
+              <Link
+                to="/tabungan"
+                className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-4 py-2 text-xs font-bold text-forest shadow-soft hover:bg-background transition-colors"
+              >
+                Mulai Nabung
+                <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} />
+              </Link>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Animal type picker */}
       <section>
