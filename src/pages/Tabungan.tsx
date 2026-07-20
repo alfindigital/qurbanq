@@ -158,10 +158,16 @@ const Tabungan = () => {
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jangka (bulan)</Label>
               <Input type="number" min={1} max={24} value={months} onChange={(e) => setMonths(Math.max(1, parseInt(e.target.value) || 1))} />
-              <button onClick={() => setMonths(monthsUntilAdha())} className="text-[11px] text-primary font-medium">
-                Auto: {monthsUntilAdha()} bulan
-              </button>
+              <p className="text-[11px] text-muted-foreground">
+                Otomatis dari countdown Idul Adha: {monthsUntilAdha()} bulan
+                {months !== monthsUntilAdha() && (
+                  <button onClick={() => setMonths(monthsUntilAdha())} className="ml-1 text-primary font-medium">
+                    · reset
+                  </button>
+                )}
+              </p>
             </div>
+
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Sudah Ditabung</Label>
               <Input type="number" min={0} value={saved} onChange={(e) => setSaved(Math.max(0, parseInt(e.target.value) || 0))} />
