@@ -43,10 +43,17 @@ const loadLedger = (): LedgerEntry[] => {
 const MILESTONES = [25, 50, 75, 100];
 const MILESTONE_EMOJI: Record<number, string> = { 25: "🌱", 50: "🌿", 75: "🌳", 100: "🎉" };
 
+const monthsUntilAdha = () => {
+  const now = new Date();
+  const adha = getNextIdulAdha();
+  const diff = (adha.getFullYear() - now.getFullYear()) * 12 + (adha.getMonth() - now.getMonth());
+  return Math.max(1, diff);
+};
+
 const Tabungan = () => {
   const initial = loadTabungan();
   const [selectedAnimal, setSelectedAnimal] = useState(initial?.selectedAnimal ?? "");
-  const [months, setMonths] = useState(initial?.months ?? 6);
+  const [months, setMonths] = useState(initial?.months ?? monthsUntilAdha());
   const [saved, setSaved] = useState(initial?.saved ?? 0);
   const [ledger, setLedger] = useState<LedgerEntry[]>(loadLedger);
   const [quickAmount, setQuickAmount] = useState("");
@@ -54,6 +61,7 @@ const Tabungan = () => {
   useEffect(() => {
     localStorage.setItem(TABUNGAN_KEY, JSON.stringify({ selectedAnimal, months, saved }));
   }, [selectedAnimal, months, saved]);
+
 
   useEffect(() => {
     localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
@@ -83,12 +91,8 @@ const Tabungan = () => {
   const remaining = Math.max(0, target - saved);
   const streak = calcStreak(ledger.map((l) => l.date));
 
-  const monthsUntilAdha = () => {
-    const now = new Date();
-    const adha = getNextIdulAdha();
-    const diff = (adha.getFullYear() - now.getFullYear()) * 12 + (adha.getMonth() - now.getMonth());
-    return Math.max(1, diff);
-  };
+
+
 
   const addDeposit = (amount: number, note?: string) => {
     if (amount <= 0) return;
@@ -154,10 +158,16 @@ const Tabungan = () => {
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jangka (bulan)</Label>
               <Input type="number" min={1} max={24} value={months} onChange={(e) => setMonths(Math.max(1, parseInt(e.target.value) || 1))} />
-              <button onClick={() => setMonths(monthsUntilAdha())} className="text-[11px] text-primary font-medium">
-                Auto: {monthsUntilAdha()} bulan
-              </button>
+              <p className="text-[11px] text-muted-foreground">
+                Otomatis dari countdown Idul Adha: {monthsUntilAdha()} bulan
+                {months !== monthsUntilAdha() && (
+                  <button onClick={() => setMonths(monthsUntilAdha())} className="ml-1 text-primary font-medium">
+                    · reset
+                  </button>
+                )}
+              </p>
             </div>
+
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Sudah Ditabung</Label>
               <Input type="number" min={0} value={saved} onChange={(e) => setSaved(Math.max(0, parseInt(e.target.value) || 0))} />
