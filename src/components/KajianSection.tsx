@@ -41,11 +41,9 @@ const KajianSection = () => (
   <section>
     <div className="mb-3 flex items-end justify-between">
       <h2 className="font-display text-base font-bold text-forest">Kajian Qurban</h2>
-      <span className="text-[10px] font-semibold text-muted-foreground">Ahlus Sunnah</span>
     </div>
     <p className="mb-3 text-[11px] text-muted-foreground">
-      Referensi kajian dari ustadz-ustadz Ahlus Sunnah, bersumber dari Al-Qur'an
-      dan Sunnah sesuai pemahaman salafush shalih.
+      Referensi kajian dari ustadz-ustadz yang mengajarkan sesuai Al-Qur'an dan Sunnah.
     </p>
     <ul className="space-y-2">
       {kajian.map((k) => (
