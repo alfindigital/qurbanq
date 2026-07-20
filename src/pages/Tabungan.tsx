@@ -43,10 +43,17 @@ const loadLedger = (): LedgerEntry[] => {
 const MILESTONES = [25, 50, 75, 100];
 const MILESTONE_EMOJI: Record<number, string> = { 25: "🌱", 50: "🌿", 75: "🌳", 100: "🎉" };
 
+const monthsUntilAdha = () => {
+  const now = new Date();
+  const adha = getNextIdulAdha();
+  const diff = (adha.getFullYear() - now.getFullYear()) * 12 + (adha.getMonth() - now.getMonth());
+  return Math.max(1, diff);
+};
+
 const Tabungan = () => {
   const initial = loadTabungan();
   const [selectedAnimal, setSelectedAnimal] = useState(initial?.selectedAnimal ?? "");
-  const [months, setMonths] = useState(initial?.months ?? 6);
+  const [months, setMonths] = useState(initial?.months ?? monthsUntilAdha());
   const [saved, setSaved] = useState(initial?.saved ?? 0);
   const [ledger, setLedger] = useState<LedgerEntry[]>(loadLedger);
   const [quickAmount, setQuickAmount] = useState("");
@@ -54,6 +61,7 @@ const Tabungan = () => {
   useEffect(() => {
     localStorage.setItem(TABUNGAN_KEY, JSON.stringify({ selectedAnimal, months, saved }));
   }, [selectedAnimal, months, saved]);
+
 
   useEffect(() => {
     localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
