@@ -2,6 +2,35 @@ export const WHATSAPP_NUMBER = "6289619093961";
 
 export type AnimalType = "sapi" | "kambing" | "domba" | "unta";
 
+export interface Supplier {
+  id: string;
+  name: string;
+  location: string;
+  bankName: string;
+  bankAccount: string;
+  bankHolder: string;
+  dpKambing: number;
+  dpSapi: number;
+  deliveryAreas: string;
+  deliveryNote: string;
+}
+
+// Supplier utama Qurbanku. Tambah supplier lain di sini seiring waktu.
+export const suppliers: Supplier[] = [
+  {
+    id: "rabbanian-farm",
+    name: "Rabbanian Farm",
+    location: "Dramaga, Bogor",
+    bankName: "Bank Syariah Indonesia (BSI)",
+    bankAccount: "7305813715",
+    bankHolder: "PT Rabbanian Berkah Utama",
+    dpKambing: 1000000,
+    dpSapi: 5000000,
+    deliveryAreas: "Bogor Raya H-1, Jabodetabek H-2 Idul Adha",
+    deliveryNote: "Domba/kambing khusus Jabodetabek. Sapi Jabodetabek, luar daerah by request.",
+  },
+];
+
 export interface AnimalOption {
   id: string;
   type: AnimalType;
@@ -10,20 +39,26 @@ export interface AnimalOption {
   price: number;
   maxPersons: number;
   description: string;
+  supplier?: string;
 }
 
-// Harga & bobot diperbarui mengacu pasar Jabodetabek Mei–Juli 2026
-// (sumber: Kompas, Metrotvnews, Dompet Dhuafa, dombagarut.id). Estimasi
-// retail siap kirim; harga peternak langsung bisa lebih rendah.
+// Acuan harga: katalog Rabbanian Farm (2026) sebagai supplier utama.
+// Nilai bisa berbeda antar supplier & wilayah. Cek metodologi di /metodologi.
 export const animalOptions: AnimalOption[] = [
-  { id: "kambing-a", type: "kambing", label: "Kambing Kacang", weight: "23-28 kg", price: 2850000, maxPersons: 1, description: "Kambing lokal, sehat & cukup umur" },
-  { id: "kambing-b", type: "kambing", label: "Kambing Jawa", weight: "30-40 kg", price: 4500000, maxPersons: 1, description: "Kambing Jawa pilihan, berat ideal" },
-  { id: "kambing-c", type: "kambing", label: "Kambing Etawa", weight: "40-50 kg", price: 5800000, maxPersons: 1, description: "Kambing Etawa premium, besar & sehat" },
-  { id: "domba-a", type: "domba", label: "Domba Garut", weight: "30-45 kg", price: 4500000, maxPersons: 1, description: "Domba Garut berkualitas, karkas tebal" },
-  { id: "domba-b", type: "domba", label: "Domba Ekor Gemuk", weight: "35-50 kg", price: 5200000, maxPersons: 1, description: "Domba ekor gemuk, berat prima" },
-  { id: "sapi-a", type: "sapi", label: "Sapi Lokal", weight: "250-300 kg", price: 19500000, maxPersons: 7, description: "Sapi lokal sehat, cocok untuk qurban bersama" },
-  { id: "sapi-b", type: "sapi", label: "Sapi Bali", weight: "300-400 kg", price: 26000000, maxPersons: 7, description: "Sapi Bali pilihan, daging berkualitas" },
-  { id: "sapi-c", type: "sapi", label: "Sapi Limosin", weight: "400-550 kg", price: 35000000, maxPersons: 7, description: "Sapi Limosin premium, bobot besar" },
+  { id: "kambing-bronze", type: "kambing", label: "Kambing Jawa Bronze", weight: "21-25 kg", price: 2700000, maxPersons: 1, description: "Kambing jantan pilihan, memenuhi syarat", supplier: "rabbanian-farm" },
+  { id: "kambing-silver", type: "kambing", label: "Kambing Jawa Silver", weight: "26-30 kg", price: 3200000, maxPersons: 1, description: "Bobot ideal, sehat & cukup umur", supplier: "rabbanian-farm" },
+  { id: "kambing-gold", type: "kambing", label: "Kambing Jawa Gold", weight: "31-35 kg", price: 3700000, maxPersons: 1, description: "Karkas tebal, populer untuk qurban", supplier: "rabbanian-farm" },
+  { id: "kambing-platinum", type: "kambing", label: "Kambing Jawa Platinum", weight: "36-40 kg", price: 4200000, maxPersons: 1, description: "Kelas premium, bobot maksimal", supplier: "rabbanian-farm" },
+  { id: "domba-bronze", type: "domba", label: "Domba Tanduk Bronze", weight: "21-25 kg", price: 2600000, maxPersons: 1, description: "Domba tanduk jantan pilihan", supplier: "rabbanian-farm" },
+  { id: "domba-silver", type: "domba", label: "Domba Tanduk Silver", weight: "26-30 kg", price: 3100000, maxPersons: 1, description: "Bobot ideal, sehat", supplier: "rabbanian-farm" },
+  { id: "domba-gold", type: "domba", label: "Domba Tanduk Gold", weight: "31-35 kg", price: 3600000, maxPersons: 1, description: "Karkas tebal, tanduk kokoh", supplier: "rabbanian-farm" },
+  { id: "domba-platinum", type: "domba", label: "Domba Tanduk Platinum", weight: "36-40 kg", price: 4100000, maxPersons: 1, description: "Kelas premium, bobot maksimal", supplier: "rabbanian-farm" },
+  { id: "sapi-a", type: "sapi", label: "Sapi Bima Type A", weight: "230-250 kg", price: 18750000, maxPersons: 7, description: "Sapi Bima siap qurban, terverifikasi dinas", supplier: "rabbanian-farm" },
+  { id: "sapi-b", type: "sapi", label: "Sapi Bima Type B", weight: "270-300 kg", price: 22250000, maxPersons: 7, description: "Sapi Bima bobot menengah", supplier: "rabbanian-farm" },
+  { id: "sapi-c", type: "sapi", label: "Sapi Bima Type C", weight: "305-335 kg", price: 25200000, maxPersons: 7, description: "Sapi Bima bobot besar", supplier: "rabbanian-farm" },
+  { id: "sapi-d", type: "sapi", label: "Sapi Bima Type D", weight: "335-350 kg", price: 25750000, maxPersons: 7, description: "Sapi Bima daging berkualitas", supplier: "rabbanian-farm" },
+  { id: "sapi-e", type: "sapi", label: "Sapi Bima Type E", weight: "350-375 kg", price: 27200000, maxPersons: 7, description: "Sapi Bima kelas atas", supplier: "rabbanian-farm" },
+  { id: "sapi-super", type: "sapi", label: "Sapi Bima Super", weight: "380-400 kg", price: 28750000, maxPersons: 7, description: "Sapi Bima super premium", supplier: "rabbanian-farm" },
   { id: "unta-a", type: "unta", label: "Unta Standar", weight: "300-400 kg", price: 48000000, maxPersons: 7, description: "Unta qurban impor, lengkap surat" },
 ];
 
