@@ -558,14 +558,16 @@ const Kalkulator = () => {
 
           <details className="text-[11px] text-muted-foreground">
             <summary className="cursor-pointer text-center list-none marker:hidden hover:text-foreground transition-colors">
-              * Harga estimasi. Sumber &amp; metodologi
+              * Harga acuan supplier. Detail &amp; rekening
             </summary>
             <p className="mt-2 leading-relaxed">
-              Estimasi retail Jabodetabek (Mei–Juli 2026), disusun dari Kompas, Metrotvnews,
-              Dompet Dhuafa, dan dombagarut.id. Harga peternak langsung bisa lebih rendah.
-              Hubungi kami untuk penawaran terbaru.
+              Acuan harga mengikuti katalog <strong>Rabbanian Farm</strong> (2026) sebagai
+              supplier rekanan. Harga bervariasi antar supplier &amp; wilayah. Lihat rincian
+              supplier, DP, dan rekening resmi di{" "}
+              <a href="/metodologi" className="font-semibold text-primary hover:underline">halaman metodologi</a>.
             </p>
           </details>
+
         </div>
       )}
 

@@ -4,7 +4,7 @@ import { animalOptions, formatCurrency, generateWhatsAppLink } from "@/lib/qurba
 
 // #18 Kalkulator ringan aqiqah — pakai harga kambing yang sudah ada.
 const AqiqahCard = () => {
-  const kambing = animalOptions.find((a) => a.type === "kambing" && a.id === "kambing-b") ?? animalOptions.find((a) => a.type === "kambing")!;
+  const kambing = animalOptions.find((a) => a.type === "kambing" && a.id === "kambing-gold") ?? animalOptions.find((a) => a.type === "kambing")!;
   const laki = kambing.price * 2;
   const perempuan = kambing.price;
 

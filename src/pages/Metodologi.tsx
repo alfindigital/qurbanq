@@ -1,12 +1,13 @@
 import SEO from "@/components/SEO";
 import { animalOptions, formatCurrency } from "@/lib/qurban-data";
+import SupplierInfo from "@/components/SupplierInfo";
 
 const Metodologi = () => {
   return (
     <div className="space-y-6">
       <SEO
         title="Metodologi & Sumber Data — Qurbanku"
-        description="Sumber harga, asumsi bobot, dan disclaimer non-transaksional aplikasi Qurbanku."
+        description="Sumber harga, supplier rekanan, dan disclaimer non-transaksional aplikasi Qurbanku."
         path="/metodologi"
       />
 
@@ -20,12 +21,15 @@ const Metodologi = () => {
       <section className="rounded-xl border bg-card p-4 space-y-2">
         <h2 className="text-sm font-semibold text-foreground">Sumber Harga</h2>
         <p className="text-xs text-muted-foreground leading-relaxed">
-          Estimasi retail Jabodetabek (Mei–Juli 2026) disusun dari beberapa referensi
-          publik: <strong>Kompas</strong>, <strong>Metrotvnews</strong>,{" "}
-          <strong>Dompet Dhuafa</strong>, <strong>dombagarut.id</strong>, dan katalog
-          penyedia lokal. Harga peternak langsung biasanya lebih rendah 5–15%.
+          Acuan harga di aplikasi mengikuti katalog <strong>Rabbanian Farm</strong> (2026)
+          sebagai supplier rekanan utama. Harga bervariasi antar supplier & wilayah;
+          Qurbanku adalah kalkulator, bukan marketplace, jadi kamu bebas memilih penyedia
+          lain sebagai pembanding.
         </p>
       </section>
+
+      <SupplierInfo />
+
 
       <section className="rounded-xl border bg-card p-4 space-y-2">
         <h2 className="text-sm font-semibold text-foreground">Asumsi Bobot &amp; Karkas</h2>
