@@ -91,12 +91,8 @@ const Tabungan = () => {
   const remaining = Math.max(0, target - saved);
   const streak = calcStreak(ledger.map((l) => l.date));
 
-  const monthsUntilAdha = () => {
-    const now = new Date();
-    const adha = getNextIdulAdha();
-    const diff = (adha.getFullYear() - now.getFullYear()) * 12 + (adha.getMonth() - now.getMonth());
-    return Math.max(1, diff);
-  };
+
+
 
   const addDeposit = (amount: number, note?: string) => {
     if (amount <= 0) return;
