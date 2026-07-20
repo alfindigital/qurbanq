@@ -22,7 +22,7 @@ const AqiqahCard = () => {
         <div>
           <h2 className="font-display text-base font-bold text-forest">Paket Aqiqah</h2>
           <p className="text-[11px] text-muted-foreground">
-            Aqiqah berbeda dengan qurban — disyariatkan untuk kelahiran bayi.
+            Aqiqah berbeda dengan qurban, disyariatkan untuk kelahiran bayi.
           </p>
         </div>
       </div>
