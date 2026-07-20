@@ -147,8 +147,8 @@ const Kalkulator = () => {
     setPaidParticipants((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]));
   };
 
-  const potongLine = withPotong ? `\n➕ Biaya potong & antar: ${formatCurrency(POTONG_COST)}` : "";
-  const totalLine = withPotong ? `\n💰 Total: ${formatCurrency(totalCost)}` : "";
+
+
 
   const handleOrder = () => {
     if (!animal) return;
