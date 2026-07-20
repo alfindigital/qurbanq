@@ -9,7 +9,7 @@ const TestimonialSection = () => {
     <section>
       <div className="mb-3">
         <h2 className="font-display text-base font-bold text-forest">Cerita Pequrban</h2>
-        <p className="text-[11px] text-muted-foreground">Bagikan pengalaman qurbanmu — bantu sesama muslim mempersiapkan ibadahnya.</p>
+        <p className="text-[11px] text-muted-foreground">Bagikan pengalaman qurbanmu, bantu sesama muslim mempersiapkan ibadahnya.</p>
       </div>
       <a
         href={generateWhatsAppLink(msg, "beranda:kirim-cerita")}

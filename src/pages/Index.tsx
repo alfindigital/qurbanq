@@ -248,7 +248,7 @@ const Index = () => {
                 {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
               </h1>
               <p className="text-xs opacity-90">
-                Nabung <span className="font-bold">{formatCurrency(perDay)}/hari</span> sudah cukup buat 1 {cheapest.label.toLowerCase()}.
+                Nabung <span className="font-bold">{formatCurrency(perDay)}/hari</span> sudah cukup buat 1 kambing/domba. Yuk Qurban!
               </p>
               <Link
                 to="/tabungan"
@@ -570,7 +570,7 @@ const Index = () => {
           </div>
           <div className="flex-1">
             <h2 className="font-display text-base font-bold">Butuh Bantuan Memilih?</h2>
-            <p className="mt-1 text-xs opacity-90">Tim kami siap membantu konsultasi hewan qurban terbaik untuk Anda.</p>
+            <p className="mt-1 text-xs opacity-90">Tim kami siap membantu konsultasi qurban untuk Anda.</p>
             <Button
               size="sm"
               variant="secondary"
