@@ -226,9 +226,11 @@ const Kalkulator = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
     setPersons(7);
+    setPersonsInput("7");
     setParticipants([""]);
     setPaidParticipants([]);
     setNewName("");
+    setErrors({});
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(PAID_KEY);
   };
