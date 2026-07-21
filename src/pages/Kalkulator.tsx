@@ -45,6 +45,16 @@ const loadPaid = (): string[] => {
   return [];
 };
 
+const validatePersons = (value: string, max: number): string | undefined => {
+  const trimmed = value.trim();
+  if (!trimmed) return "Jumlah peserta wajib diisi";
+  const n = Number(trimmed);
+  if (Number.isNaN(n) || !Number.isInteger(n)) return "Jumlah peserta harus berupa angka bulat";
+  if (n < 1) return "Jumlah peserta minimal 1 orang";
+  if (n > max) return `Jumlah peserta maksimal ${max} orang`;
+  return undefined;
+};
+
 const Kalkulator = () => {
   const saved = loadSaved();
   // Default: kambing termurah supaya kalkulator langsung menampilkan hasil, bukan viewport kosong.
