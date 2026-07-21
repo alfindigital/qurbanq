@@ -56,6 +56,8 @@ const Kalkulator = () => {
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
+  const [personsInput, setPersonsInput] = useState(String(saved?.persons ?? 7));
+  const [errors, setErrors] = useState<{ persons?: string; price?: string }>({});
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
