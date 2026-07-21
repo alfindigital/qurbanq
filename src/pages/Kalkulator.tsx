@@ -180,7 +180,7 @@ const Kalkulator = () => {
     if (!validateAll() || !animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Hewan: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nLihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -188,7 +188,7 @@ const Kalkulator = () => {
     if (!validateAll() || !animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const msg = `*Ringkasan Qurban*\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Hewan: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nBuka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
