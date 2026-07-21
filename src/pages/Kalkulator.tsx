@@ -166,7 +166,7 @@ const Kalkulator = () => {
 
 
   const handleOrder = () => {
-    if (!animal) return;
+    if (!validateAll() || !animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
       ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
