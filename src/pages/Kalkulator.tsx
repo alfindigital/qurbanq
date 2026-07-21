@@ -115,6 +115,17 @@ const Kalkulator = () => {
     localStorage.setItem(PAID_KEY, JSON.stringify(paidParticipants));
   }, [paidParticipants]);
 
+  // Pastikan jumlah peserta tidak melebihi kapasitas hewan yang dipilih.
+  useEffect(() => {
+    if (!animal) return;
+    if (persons > animal.maxPersons) {
+      const next = animal.maxPersons;
+      setPersons(next);
+      setPersonsInput(String(next));
+      setErrors((prev) => ({ ...prev, persons: undefined }));
+    }
+  }, [animal, persons]);
+
   const canPatungan = animal && animal.maxPersons > 1;
 
   // #12: konfirmasi kalau ganti jenis akan menghapus daftar peserta.
