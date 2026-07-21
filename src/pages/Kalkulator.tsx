@@ -204,6 +204,7 @@ const Kalkulator = () => {
   };
 
   const exportAsImage = useCallback(async () => {
+    if (!validateAll()) return;
     if (!summaryRef.current || !animal) return;
     try {
       toast.loading("Membuat gambar...", { id: "export" });
