@@ -560,7 +560,7 @@ const Kalkulator = () => {
 
           <div className="flex flex-col gap-2">
             {animal?.type !== "unta" && (
-              <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
+              <Button onClick={handleOrder} disabled={!!errors.persons || !!errors.price} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white disabled:opacity-60 disabled:cursor-not-allowed">
                 <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
               </Button>
             )}
