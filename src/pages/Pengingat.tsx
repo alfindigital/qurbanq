@@ -74,7 +74,7 @@ const Pengingat = () => {
     setNotifPermission(permission);
     if (permission === "granted") {
       toast.success("Notifikasi diaktifkan!", { description: "Anda akan menerima pengingat qurban." });
-      sendBrowserNotification("🎉 Notifikasi Aktif", "Anda akan menerima pengingat menjelang Idul Adha.");
+      sendBrowserNotification("Notifikasi Aktif", "Anda akan menerima pengingat menjelang Idul Adha.");
     } else {
       toast.error("Izin notifikasi ditolak", { description: "Aktifkan dari pengaturan browser untuk menerima pengingat." });
     }
