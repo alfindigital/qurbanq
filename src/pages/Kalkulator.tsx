@@ -97,7 +97,10 @@ const Kalkulator = () => {
     if (!incoming) return;
     if (incoming.type) setSelectedType(incoming.type);
     if (incoming.animal) setSelectedAnimal(incoming.animal);
-    if (typeof incoming.persons === "number") setPersons(incoming.persons);
+    if (typeof incoming.persons === "number") {
+      setPersons(incoming.persons);
+      setPersonsInput(String(incoming.persons));
+    }
     if (incoming.participants?.length) setParticipants(incoming.participants);
     toast.success("Konfigurasi qurban dimuat dari link 🎉");
   }, []);
