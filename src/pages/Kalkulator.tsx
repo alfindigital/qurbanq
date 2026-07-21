@@ -102,7 +102,7 @@ const Kalkulator = () => {
       setPersonsInput(String(incoming.persons));
     }
     if (incoming.participants?.length) setParticipants(incoming.participants);
-    toast.success("Konfigurasi qurban dimuat dari link 🎉");
+    toast.success("Konfigurasi qurban dimuat dari link");
   }, []);
 
   // Persist data kalkulator
