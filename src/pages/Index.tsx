@@ -149,11 +149,11 @@ const Index = () => {
     if (!animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
-      ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
-      : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
-    const addonLine = addonPelosok ? `\n\n➕ Add-on: Kirim daging ke pelosok (+${formatCurrency(ADDON_PRICE)})` : "";
+      ? `\n\nDaftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\nBiaya per orang: ${formatCurrency(costPerPerson)}`
+      : `\n\nJumlah Peserta: ${activePersons} orang\nBiaya per orang: ${formatCurrency(costPerPerson)}`;
+    const addonLine = addonPelosok ? `\n\nAdd-on: Kirim daging ke pelosok (+${formatCurrency(ADDON_PRICE)})` : "";
     const total = animal.price + (addonPelosok ? ADDON_PRICE : 0);
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${addonLine}${participantList}\n\n💳 Total: ${formatCurrency(total)}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga: ${formatCurrency(animal.price)}${addonLine}${participantList}\n\nTotal: ${formatCurrency(total)}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
     pushOrderHistory({ source: "beranda:pesan", label: animal.label, amount: total });
     window.open(generateWhatsAppLink(msg, "beranda:pesan"), "_blank");
   };
@@ -162,7 +162,7 @@ const Index = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Total: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nDetail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -170,7 +170,7 @@ const Index = () => {
     if (!animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Total: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const msg = `*Ringkasan Qurban*\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Total: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nBuka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
