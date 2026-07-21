@@ -620,7 +620,8 @@ const Kalkulator = () => {
             <Button
               size="sm"
               onClick={handleOrder}
-              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
+              disabled={!!errors.persons || !!errors.price}
+              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white disabled:opacity-60 disabled:cursor-not-allowed"
               aria-label="Pesan via WhatsApp"
             >
               <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Pesan
