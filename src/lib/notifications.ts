@@ -12,16 +12,24 @@ export interface ReminderSetting {
 export const defaultReminders: ReminderSetting[] = [
   { id: "30d", label: "30 hari sebelum", daysBefore: 30, enabled: false },
   { id: "10d", label: "10 hari Dzulhijjah (mulai puasa & larangan cukur)", daysBefore: 10, enabled: false },
-  { id: "9d", label: "H-1 (puasa Arafah)", daysBefore: 1, enabled: false },
   { id: "7d", label: "7 hari sebelum", daysBefore: 7, enabled: false },
-  { id: "3d", label: "3 hari sebelum", daysBefore: 3, enabled: false },
   { id: "1d", label: "1 hari sebelum", daysBefore: 1, enabled: false },
 ];
 
 export const loadReminders = (): ReminderSetting[] => {
   try {
     const raw = localStorage.getItem(REMINDER_STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const saved: ReminderSetting[] = JSON.parse(raw);
+      const validIds = new Set(defaultReminders.map((r) => r.id));
+      const filtered = saved.filter((r) => validIds.has(r.id));
+      // merge any new defaults not yet saved
+      const merged = defaultReminders.map((d) => {
+        const existing = filtered.find((r) => r.id === d.id);
+        return existing ? { ...d, enabled: existing.enabled } : d;
+      });
+      return merged;
+    }
   } catch {}
   return defaultReminders;
 };
