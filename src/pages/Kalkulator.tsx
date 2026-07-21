@@ -222,6 +222,23 @@ const Kalkulator = () => {
     }
   }, [animal]);
 
+  const validateAll = (): boolean => {
+    const priceErr = !animal
+      ? "Pilih hewan qurban terlebih dahulu"
+      : animal.price <= 0
+        ? "Estimasi harga hewan tidak valid"
+        : undefined;
+    const personsErr = animal
+      ? validatePersons(personsInput, animal.maxPersons)
+      : "Pilih hewan qurban terlebih dahulu";
+    setErrors({ price: priceErr, persons: personsErr });
+    if (priceErr || personsErr) {
+      toast.error("Data belum lengkap", { description: priceErr || personsErr });
+      return false;
+    }
+    return true;
+  };
+
   const resetAll = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
