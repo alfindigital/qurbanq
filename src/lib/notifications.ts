@@ -19,7 +19,17 @@ export const defaultReminders: ReminderSetting[] = [
 export const loadReminders = (): ReminderSetting[] => {
   try {
     const raw = localStorage.getItem(REMINDER_STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const saved: ReminderSetting[] = JSON.parse(raw);
+      const validIds = new Set(defaultReminders.map((r) => r.id));
+      const filtered = saved.filter((r) => validIds.has(r.id));
+      // merge any new defaults not yet saved
+      const merged = defaultReminders.map((d) => {
+        const existing = filtered.find((r) => r.id === d.id);
+        return existing ? { ...d, enabled: existing.enabled } : d;
+      });
+      return merged;
+    }
   } catch {}
   return defaultReminders;
 };
