@@ -319,27 +319,6 @@ const Kalkulator = () => {
               />
               <span className="text-sm text-muted-foreground">orang</span>
             </div>
-            <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Preset jumlah peserta">
-              {[1, 3, 7].filter((n) => n <= animal!.maxPersons).map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => {
-                    setPersons(n);
-                    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
-                  }}
-                  aria-label={`Set ${n} peserta`}
-                  aria-pressed={persons === n}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                    persons === n
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-muted/40 text-foreground hover:bg-muted"
-                  }`}
-                >
-                  {n} orang
-                </button>
-              ))}
-            </div>
           </div>
 
           <div className="rounded-xl border bg-card p-4 space-y-3">
