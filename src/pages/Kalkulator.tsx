@@ -193,6 +193,7 @@ const Kalkulator = () => {
   };
 
   const copyShareLink = async () => {
+    if (!validateAll()) return;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
     try {
       await navigator.clipboard.writeText(link);
