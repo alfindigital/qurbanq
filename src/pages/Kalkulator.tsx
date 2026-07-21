@@ -481,9 +481,12 @@ const Kalkulator = () => {
                       const isPaid = paidParticipants.includes(name);
                       return (
                         <div key={i} className="flex items-center justify-between text-xs">
-                          <span className={isPaid ? "text-primary font-medium" : "text-muted-foreground"}>
-                            {i + 1}. {name} {isPaid && "✅"}
-                          </span>
+                        <span className={isPaid ? "text-primary font-medium" : "text-muted-foreground"}>
+                          {i + 1}. {name}
+                          {isPaid && (
+                            <Check className="inline h-3 w-3 ml-1 text-primary" strokeWidth={2.4} />
+                          )}
+                        </span>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">{formatCurrency(costPerPerson)}</span>
                             <button
