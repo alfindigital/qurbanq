@@ -345,16 +345,35 @@ const Kalkulator = () => {
                 type="number"
                 min={1}
                 max={animal!.maxPersons}
-                value={persons}
+                value={personsInput}
                 onChange={(e) => {
-                  setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)));
-                  if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
+                  const val = e.target.value;
+                  setPersonsInput(val);
+                  const err = validatePersons(val, animal!.maxPersons);
+                  setErrors((prev) => ({ ...prev, persons: err }));
+                  const n = parseInt(val, 10);
+                  if (!err && !Number.isNaN(n)) {
+                    setPersons(n);
+                    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
+                  }
                 }}
-                className="w-20"
+                onBlur={() => {
+                  const err = validatePersons(personsInput, animal!.maxPersons);
+                  setErrors((prev) => ({ ...prev, persons: err }));
+                  if (err) setPersonsInput(String(persons));
+                }}
+                className={`w-20 ${errors.persons ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 aria-label="Jumlah peserta"
+                aria-invalid={!!errors.persons}
+                aria-describedby={errors.persons ? "persons-error" : undefined}
               />
               <span className="text-sm text-muted-foreground">orang</span>
             </div>
+            {errors.persons && (
+              <p id="persons-error" className="text-xs text-destructive mt-1.5" role="alert">
+                {errors.persons}
+              </p>
+            )}
           </div>
 
           <div className="rounded-xl border bg-card p-4 space-y-3">
