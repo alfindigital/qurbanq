@@ -68,10 +68,6 @@ const KajianSection = () => (
         </li>
       ))}
     </ul>
-    <p className="mt-3 text-[10px] leading-relaxed text-muted-foreground">
-      Link mengarah ke channel resmi masing-masing ustadz. Qurbanku tidak
-      berafiliasi; silakan pilih materi yang paling sesuai.
-    </p>
   </section>
 );
 
