@@ -31,7 +31,7 @@ export function AppSidebar() {
       <SidebarContent>
         <div className="flex items-center gap-2 px-4 py-5">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <span className="text-lg font-bold">🕌</span>
+            <span className="text-lg font-bold">Q</span>
           </div>
           {!collapsed && (
             <div>

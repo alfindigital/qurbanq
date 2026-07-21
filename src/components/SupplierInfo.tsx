@@ -70,7 +70,7 @@ const SupplierInfo = () => {
           </div>
 
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            ⚠️ Selalu konfirmasi ke supplier sebelum transfer. Qurbanku tidak menahan dana; transaksi langsung ke rekening supplier.
+            Penting: Selalu konfirmasi ke supplier sebelum transfer. Qurbanku tidak menahan dana; transaksi langsung ke rekening supplier.
           </p>
         </div>
       ))}

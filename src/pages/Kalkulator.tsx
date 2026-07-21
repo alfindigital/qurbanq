@@ -45,6 +45,16 @@ const loadPaid = (): string[] => {
   return [];
 };
 
+const validatePersons = (value: string, max: number): string | undefined => {
+  const trimmed = value.trim();
+  if (!trimmed) return "Jumlah peserta wajib diisi";
+  const n = Number(trimmed);
+  if (Number.isNaN(n) || !Number.isInteger(n)) return "Jumlah peserta harus berupa angka bulat";
+  if (n < 1) return "Jumlah peserta minimal 1 orang";
+  if (n > max) return `Jumlah peserta maksimal ${max} orang`;
+  return undefined;
+};
+
 const Kalkulator = () => {
   const saved = loadSaved();
   // Default: kambing termurah supaya kalkulator langsung menampilkan hasil, bukan viewport kosong.
@@ -56,6 +66,8 @@ const Kalkulator = () => {
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
+  const [personsInput, setPersonsInput] = useState(String(saved?.persons ?? 7));
+  const [errors, setErrors] = useState<{ persons?: string; price?: string }>({});
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const filteredAnimals = selectedType ? animalOptions.filter((a) => a.type === selectedType) : [];
@@ -85,9 +97,12 @@ const Kalkulator = () => {
     if (!incoming) return;
     if (incoming.type) setSelectedType(incoming.type);
     if (incoming.animal) setSelectedAnimal(incoming.animal);
-    if (typeof incoming.persons === "number") setPersons(incoming.persons);
+    if (typeof incoming.persons === "number") {
+      setPersons(incoming.persons);
+      setPersonsInput(String(incoming.persons));
+    }
     if (incoming.participants?.length) setParticipants(incoming.participants);
-    toast.success("Konfigurasi qurban dimuat dari link 🎉");
+    toast.success("Konfigurasi qurban dimuat dari link");
   }, []);
 
   // Persist data kalkulator
@@ -99,6 +114,17 @@ const Kalkulator = () => {
   useEffect(() => {
     localStorage.setItem(PAID_KEY, JSON.stringify(paidParticipants));
   }, [paidParticipants]);
+
+  // Pastikan jumlah peserta tidak melebihi kapasitas hewan yang dipilih.
+  useEffect(() => {
+    if (!animal) return;
+    if (persons > animal.maxPersons) {
+      const next = animal.maxPersons;
+      setPersons(next);
+      setPersonsInput(String(next));
+      setErrors((prev) => ({ ...prev, persons: undefined }));
+    }
+  }, [animal, persons]);
 
   const canPatungan = animal && animal.maxPersons > 1;
 
@@ -151,33 +177,34 @@ const Kalkulator = () => {
 
 
   const handleOrder = () => {
-    if (!animal) return;
+    if (!validateAll() || !animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
-      ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
-      : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+      ? `\n\nDaftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\nBiaya per orang: ${formatCurrency(costPerPerson)}`
+      : `\n\nJumlah Peserta: ${activePersons} orang\nBiaya per orang: ${formatCurrency(costPerPerson)}`;
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
     pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: totalCost });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
 
   const shareToParticipant = (name: string) => {
-    if (!animal) return;
+    if (!validateAll() || !animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Lihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan 🙏`;
+    const msg = `Assalamualaikum ${name},\n\nBerikut detail qurban kita:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Hewan: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nLihat detail: ${link}\n\nMohon segera konfirmasi. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const shareToAll = () => {
-    if (!animal) return;
+    if (!validateAll() || !animal) return;
     const names = validParticipants;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
-    const msg = `📢 *Ringkasan Qurban*\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga Hewan: ${formatCurrency(animal.price)}\n👥 Jumlah Peserta: ${activePersons} orang\n\n📋 Daftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n\n💵 Biaya per orang: *${formatCurrency(costPerPerson)}*\n\n🔗 Buka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan 🙏`;
+    const msg = `*Ringkasan Qurban*\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga Hewan: ${formatCurrency(animal.price)}\nJumlah Peserta: ${activePersons} orang\n\nDaftar Peserta:\n${names.map((n, i) => `${i + 1}. ${n} — ${formatCurrency(costPerPerson)}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\n\nBiaya per orang: *${formatCurrency(costPerPerson)}*\n\nBuka di Qurbanku: ${link}\n\nSilakan transfer ke rekening yang sudah disepakati. Jazakallahu khairan.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const copyShareLink = async () => {
+    if (!validateAll()) return;
     const link = buildShareUrl({ type: selectedType, animal: selectedAnimal, persons: activePersons, participants: validParticipants });
     try {
       await navigator.clipboard.writeText(link);
@@ -188,6 +215,7 @@ const Kalkulator = () => {
   };
 
   const exportAsImage = useCallback(async () => {
+    if (!validateAll()) return;
     if (!summaryRef.current || !animal) return;
     try {
       toast.loading("Membuat gambar...", { id: "export" });
@@ -207,13 +235,32 @@ const Kalkulator = () => {
     }
   }, [animal]);
 
+  const validateAll = (): boolean => {
+    const priceErr = !animal
+      ? "Pilih hewan qurban terlebih dahulu"
+      : animal.price <= 0
+        ? "Estimasi harga hewan tidak valid"
+        : undefined;
+    const personsErr = animal
+      ? validatePersons(personsInput, animal.maxPersons)
+      : "Pilih hewan qurban terlebih dahulu";
+    setErrors({ price: priceErr, persons: personsErr });
+    if (priceErr || personsErr) {
+      toast.error("Data belum lengkap", { description: priceErr || personsErr });
+      return false;
+    }
+    return true;
+  };
+
   const resetAll = () => {
     setSelectedType(null);
     setSelectedAnimal(null);
     setPersons(7);
+    setPersonsInput("7");
     setParticipants([""]);
     setPaidParticipants([]);
     setNewName("");
+    setErrors({});
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(PAID_KEY);
   };
@@ -309,16 +356,35 @@ const Kalkulator = () => {
                 type="number"
                 min={1}
                 max={animal!.maxPersons}
-                value={persons}
+                value={personsInput}
                 onChange={(e) => {
-                  setPersons(Math.min(animal!.maxPersons, Math.max(1, parseInt(e.target.value) || 1)));
-                  if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
+                  const val = e.target.value;
+                  setPersonsInput(val);
+                  const err = validatePersons(val, animal!.maxPersons);
+                  setErrors((prev) => ({ ...prev, persons: err }));
+                  const n = parseInt(val, 10);
+                  if (!err && !Number.isNaN(n)) {
+                    setPersons(n);
+                    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
+                  }
                 }}
-                className="w-20"
+                onBlur={() => {
+                  const err = validatePersons(personsInput, animal!.maxPersons);
+                  setErrors((prev) => ({ ...prev, persons: err }));
+                  if (err) setPersonsInput(String(persons));
+                }}
+                className={`w-20 ${errors.persons ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 aria-label="Jumlah peserta"
+                aria-invalid={!!errors.persons}
+                aria-describedby={errors.persons ? "persons-error" : undefined}
               />
               <span className="text-sm text-muted-foreground">orang</span>
             </div>
+            {errors.persons && (
+              <p id="persons-error" className="text-xs text-destructive mt-1.5" role="alert">
+                {errors.persons}
+              </p>
+            )}
           </div>
 
           <div className="rounded-xl border bg-card p-4 space-y-3">
@@ -426,9 +492,12 @@ const Kalkulator = () => {
                       const isPaid = paidParticipants.includes(name);
                       return (
                         <div key={i} className="flex items-center justify-between text-xs">
-                          <span className={isPaid ? "text-primary font-medium" : "text-muted-foreground"}>
-                            {i + 1}. {name} {isPaid && "✅"}
-                          </span>
+                        <span className={isPaid ? "text-primary font-medium" : "text-muted-foreground"}>
+                          {i + 1}. {name}
+                          {isPaid && (
+                            <Check className="inline h-3 w-3 ml-1 text-primary" strokeWidth={2.4} />
+                          )}
+                        </span>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">{formatCurrency(costPerPerson)}</span>
                             <button
@@ -491,7 +560,7 @@ const Kalkulator = () => {
 
           <div className="flex flex-col gap-2">
             {animal?.type !== "unta" && (
-              <Button onClick={handleOrder} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white">
+              <Button onClick={handleOrder} disabled={!!errors.persons || !!errors.price} className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white disabled:opacity-60 disabled:cursor-not-allowed">
                 <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
               </Button>
             )}
@@ -551,7 +620,8 @@ const Kalkulator = () => {
             <Button
               size="sm"
               onClick={handleOrder}
-              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
+              disabled={!!errors.persons || !!errors.price}
+              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white disabled:opacity-60 disabled:cursor-not-allowed"
               aria-label="Pesan via WhatsApp"
             >
               <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Pesan
