@@ -217,7 +217,6 @@ const Tabungan = () => {
                   key={m}
                   className={`flex items-center gap-0.5 ${progress >= m ? "text-primary font-semibold" : "text-muted-foreground"}`}
                 >
-                  <span>{MILESTONE_EMOJI[m]}</span>
                   <span>{m}%</span>
                 </span>
               ))}
