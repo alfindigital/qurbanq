@@ -307,7 +307,7 @@ const Tabungan = () => {
 
           {progress >= 100 && (
             <div className="rounded-xl bg-primary/10 p-4 text-center space-y-3">
-              <p className="font-semibold text-primary text-sm">🎉 Target tercapai!</p>
+              <p className="font-semibold text-primary text-sm">Target tercapai!</p>
               <Button
                 className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
                 onClick={() => {
