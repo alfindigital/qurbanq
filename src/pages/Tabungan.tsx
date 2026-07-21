@@ -41,7 +41,7 @@ const loadLedger = (): LedgerEntry[] => {
 };
 
 const MILESTONES = [25, 50, 75, 100];
-const MILESTONE_EMOJI: Record<number, string> = { 25: "🌱", 50: "🌿", 75: "🌳", 100: "🎉" };
+
 
 const monthsUntilAdha = () => {
   const now = new Date();
