@@ -169,9 +169,9 @@ const Kalkulator = () => {
     if (!validateAll() || !animal) return;
     const names = validParticipants;
     const participantList = names.length > 0
-      ? `\n\n👥 Daftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " ✅" : ""}`).join("\n")}\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`
-      : `\n\n👥 Jumlah Peserta: ${activePersons} orang\n💵 Biaya per orang: ${formatCurrency(costPerPerson)}`;
-    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\n🐾 Hewan: ${animal.label}\n⚖️ Berat: ${animal.weight}\n💰 Harga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
+      ? `\n\nDaftar Peserta (${activePersons} orang):\n${names.map((n, i) => `${i + 1}. ${n}${paidParticipants.includes(n) ? " (Lunas)" : ""}`).join("\n")}\nBiaya per orang: ${formatCurrency(costPerPerson)}`
+      : `\n\nJumlah Peserta: ${activePersons} orang\nBiaya per orang: ${formatCurrency(costPerPerson)}`;
+    const msg = `Assalamualaikum, saya ingin memesan hewan qurban:\n\nHewan: ${animal.label}\nBerat: ${animal.weight}\nHarga: ${formatCurrency(animal.price)}${participantList}\n\nMohon informasi lebih lanjut. Jazakallahu khairan.`;
     pushOrderHistory({ source: "kalkulator:pesan", label: animal.label, amount: totalCost });
     window.open(generateWhatsAppLink(msg, "kalkulator:pesan"), "_blank");
   };
