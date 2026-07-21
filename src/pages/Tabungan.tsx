@@ -41,7 +41,7 @@ const loadLedger = (): LedgerEntry[] => {
 };
 
 const MILESTONES = [25, 50, 75, 100];
-const MILESTONE_EMOJI: Record<number, string> = { 25: "🌱", 50: "🌿", 75: "🌳", 100: "🎉" };
+
 
 const monthsUntilAdha = () => {
   const now = new Date();
@@ -217,7 +217,6 @@ const Tabungan = () => {
                   key={m}
                   className={`flex items-center gap-0.5 ${progress >= m ? "text-primary font-semibold" : "text-muted-foreground"}`}
                 >
-                  <span>{MILESTONE_EMOJI[m]}</span>
                   <span>{m}%</span>
                 </span>
               ))}
@@ -308,7 +307,7 @@ const Tabungan = () => {
 
           {progress >= 100 && (
             <div className="rounded-xl bg-primary/10 p-4 text-center space-y-3">
-              <p className="font-semibold text-primary text-sm">🎉 Target tercapai!</p>
+              <p className="font-semibold text-primary text-sm">Target tercapai!</p>
               <Button
                 className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
                 onClick={() => {
