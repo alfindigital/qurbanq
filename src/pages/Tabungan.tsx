@@ -320,18 +320,67 @@ const Tabungan = () => {
               </div>
               <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
                 {ledger.slice(0, 30).map((entry) => (
-                  <div key={entry.id} className="flex items-center justify-between text-xs py-1 border-b border-border last:border-0">
-                    <div>
-                      <span className="font-semibold text-primary">+{formatCurrency(entry.amount)}</span>
-                      <span className="text-muted-foreground"> · {dateLabel(entry.date)}</span>
-                    </div>
-                    <button
-                      onClick={() => removeDeposit(entry.id)}
-                      aria-label="Hapus setoran"
-                      className="text-muted-foreground hover:text-destructive transition-colors p-1"
-                    >
-                      <Trash2 className="h-3 w-3" strokeWidth={1.8} />
-                    </button>
+                  <div key={entry.id} className="flex items-center justify-between gap-2 text-xs py-1 border-b border-border last:border-0">
+                    {editingId === entry.id ? (
+                      <>
+                        <div className="flex flex-1 items-center gap-1.5">
+                          <Input
+                            type="number"
+                            inputMode="numeric"
+                            value={editAmount}
+                            onChange={(e) => setEditAmount(e.target.value)}
+                            className="h-8 w-24 text-xs"
+                            aria-label="Nominal setoran"
+                          />
+                          <Input
+                            type="date"
+                            value={editDate}
+                            onChange={(e) => setEditDate(e.target.value)}
+                            className="h-8 flex-1 text-xs"
+                            aria-label="Tanggal setoran"
+                          />
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <button
+                            onClick={() => saveEdit(entry.id)}
+                            aria-label="Simpan perubahan"
+                            className="text-primary hover:opacity-80 p-1"
+                          >
+                            <Check className="h-4 w-4" strokeWidth={2} />
+                          </button>
+                          <button
+                            onClick={cancelEdit}
+                            aria-label="Batal"
+                            className="text-muted-foreground hover:text-destructive p-1"
+                          >
+                            <X className="h-4 w-4" strokeWidth={2} />
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <span className="font-semibold text-primary">+{formatCurrency(entry.amount)}</span>
+                          <span className="text-muted-foreground"> · {dateLabel(entry.date)}</span>
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <button
+                            onClick={() => startEdit(entry)}
+                            aria-label="Edit setoran"
+                            className="text-muted-foreground hover:text-primary transition-colors p-1"
+                          >
+                            <Pencil className="h-3 w-3" strokeWidth={1.8} />
+                          </button>
+                          <button
+                            onClick={() => removeDeposit(entry.id)}
+                            aria-label="Hapus setoran"
+                            className="text-muted-foreground hover:text-destructive transition-colors p-1"
+                          >
+                            <Trash2 className="h-3 w-3" strokeWidth={1.8} />
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
