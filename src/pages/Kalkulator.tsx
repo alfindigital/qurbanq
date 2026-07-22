@@ -57,16 +57,20 @@ const validatePersons = (value: string, max: number): string | undefined => {
 
 const Kalkulator = () => {
   const saved = loadSaved();
-  // Default: kambing termurah supaya kalkulator langsung menampilkan hasil, bukan viewport kosong.
-  const defaultType: AnimalType = saved?.type ?? "kambing";
-  const defaultAnimal = saved?.animal ?? animalOptions.find((a) => a.type === defaultType)?.id ?? null;
+  // Default: domba/kambing termurah (Domba Tanduk Bronze) supaya kalkulator langsung menampilkan hasil.
+  const cheapestAnimal = animalOptions
+    .filter((a) => a.type === "kambing" || a.type === "domba")
+    .sort((a, b) => a.price - b.price)[0];
+  const defaultType: AnimalType = saved?.type ?? cheapestAnimal?.type ?? "kambing";
+  const defaultAnimal = saved?.animal ?? cheapestAnimal?.id ?? null;
+  const defaultPersons = Math.min(saved?.persons ?? cheapestAnimal?.maxPersons ?? 1, cheapestAnimal?.maxPersons ?? 1);
   const [selectedType, setSelectedType] = useState<AnimalType | null>(defaultType);
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(defaultAnimal);
-  const [persons, setPersons] = useState(saved?.persons ?? 7);
+  const [persons, setPersons] = useState(defaultPersons);
   const [participants, setParticipants] = useState<string[]>(saved?.participants?.length ? saved.participants : [""]);
   const [paidParticipants, setPaidParticipants] = useState<string[]>(loadPaid);
   const [newName, setNewName] = useState("");
-  const [personsInput, setPersonsInput] = useState(String(saved?.persons ?? 7));
+  const [personsInput, setPersonsInput] = useState(String(defaultPersons));
   const [errors, setErrors] = useState<{ persons?: string; price?: string }>({});
   const summaryRef = useRef<HTMLDivElement>(null);
 
