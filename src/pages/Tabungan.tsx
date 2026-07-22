@@ -54,9 +54,11 @@ const Tabungan = () => {
   const initial = loadTabungan();
   const [selectedAnimal, setSelectedAnimal] = useState(initial?.selectedAnimal ?? "");
   const [months, setMonths] = useState(initial?.months ?? monthsUntilAdha());
-  const [saved, setSaved] = useState(initial?.saved ?? 0);
+  // Default sudah ditabung = 0 untuk pengguna baru / setelah reset data
+  const [saved, setSaved] = useState<number>(Number(initial?.saved) || 0);
   const [ledger, setLedger] = useState<LedgerEntry[]>(loadLedger);
   const [quickAmount, setQuickAmount] = useState("");
+
 
   useEffect(() => {
     localStorage.setItem(TABUNGAN_KEY, JSON.stringify({ selectedAnimal, months, saved }));
