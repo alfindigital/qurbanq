@@ -164,8 +164,15 @@ const Tabungan = () => {
 
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Sudah Ditabung</Label>
-              <Input type="number" min={0} value={saved} onChange={(e) => setSaved(Math.max(0, parseInt(e.target.value) || 0))} />
+              <Input
+                type="number"
+                min={0}
+                placeholder="0"
+                value={saved}
+                onChange={(e) => setSaved(Math.max(0, parseInt(e.target.value) || 0))}
+              />
             </div>
+
           </div>
         )}
       </div>
