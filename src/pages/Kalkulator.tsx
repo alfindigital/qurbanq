@@ -599,36 +599,6 @@ const Kalkulator = () => {
         </div>
       )}
 
-      {/* #11 Sticky ringkasan — muncul saat hewan sudah dipilih */}
-      {animal && (
-        <div
-          className="fixed inset-x-0 z-30 mx-auto flex max-w-lg items-center justify-between gap-3 border-t border-border/60 bg-background/95 px-5 py-2.5 backdrop-blur-xl shadow-soft"
-          style={{ bottom: "calc(4.75rem + env(safe-area-inset-bottom))" }}
-          role="status"
-          aria-label="Ringkasan biaya qurban"
-        >
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-[10px] uppercase tracking-wide text-muted-foreground">
-              {animal.label} · {activePersons} org
-            </p>
-            <p className="text-sm font-bold text-primary leading-tight">
-              {formatCurrency(costPerPerson)}
-              <span className="ml-1 text-[10px] font-normal text-muted-foreground">/orang</span>
-            </p>
-          </div>
-          {animal.type !== "unta" && (
-            <Button
-              size="sm"
-              onClick={handleOrder}
-              disabled={!!errors.persons || !!errors.price}
-              className="h-9 shrink-0 bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white disabled:opacity-60 disabled:cursor-not-allowed"
-              aria-label="Pesan via WhatsApp"
-            >
-              <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Pesan
-            </Button>
-          )}
-        </div>
-      )}
     </div>
   );
 };
