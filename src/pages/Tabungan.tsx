@@ -118,6 +118,44 @@ const Tabungan = () => {
     setSaved((s) => Math.max(0, s - target.amount));
   };
 
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editAmount, setEditAmount] = useState("");
+  const [editDate, setEditDate] = useState("");
+
+  const startEdit = (entry: LedgerEntry) => {
+    setEditingId(entry.id);
+    setEditAmount(String(entry.amount));
+    setEditDate(entry.date.slice(0, 10));
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditAmount("");
+    setEditDate("");
+  };
+
+  const saveEdit = (id: string) => {
+    const amt = parseInt(editAmount, 10);
+    if (!amt || amt <= 0) {
+      toast.error("Nominal harus lebih dari 0");
+      return;
+    }
+    const d = new Date(editDate);
+    if (isNaN(d.getTime())) {
+      toast.error("Tanggal tidak valid");
+      return;
+    }
+    const prev = ledger.find((l) => l.id === id);
+    if (!prev) return;
+    const diff = amt - prev.amount;
+    setLedger((list) =>
+      list.map((l) => (l.id === id ? { ...l, amount: amt, date: d.toISOString() } : l)),
+    );
+    setSaved((s) => Math.max(0, s + diff));
+    cancelEdit();
+    toast.success("Setoran diperbarui");
+  };
+
   const handleQuickAdd = () => {
     const n = parseInt(quickAmount, 10);
     if (!n || n <= 0) return;
