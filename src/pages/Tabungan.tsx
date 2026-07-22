@@ -387,11 +387,6 @@ const Tabungan = () => {
             </div>
           )}
 
-          {remaining > 0 && (
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Tabung <strong>{formatCurrency(perMonth)}</strong>/bulan selama <strong>{months} bulan</strong> untuk mencapai target.
-            </p>
-          )}
 
           {progress >= 100 && (
             <div className="rounded-xl bg-primary/10 p-4 text-center space-y-3">
