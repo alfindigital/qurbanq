@@ -54,17 +54,17 @@ const Edukasi = () => {
             })}
           </div>
 
-          {/* Qurbani Donation CTA */}
+          {/* Donasi Qurban CTA */}
           <Link
             to="/donasi"
             className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/[0.03] p-4 transition-all hover:border-primary/40 hover:bg-primary/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            aria-label="Baca panduan qurbani donation untuk audiens internasional"
+            aria-label="Baca panduan donasi qurban"
           >
             <div className="rounded-full bg-primary/10 p-2.5 text-primary">
               <Heart className="h-5 w-5" strokeWidth={1.8} />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-sm font-semibold text-foreground">Qurbani Donation Guide</h2>
+              <h2 className="text-sm font-semibold text-foreground">Panduan Donasi Qurban</h2>
               <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
                 Panduan berqurban dari luar negeri untuk didistribusikan di Indonesia.
               </p>

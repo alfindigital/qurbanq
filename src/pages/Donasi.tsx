@@ -10,7 +10,7 @@ const donationSteps = [
   {
     icon: Globe,
     title: "Pilih Program",
-    desc: "Pilih qurbani donation untuk Indonesia. Tersedia kambing, domba, sapi, atau unta dengan harga transparan.",
+    desc: "Pilih program donasi qurban untuk Indonesia. Tersedia kambing, domba, sapi, atau unta dengan harga transparan.",
   },
   {
     icon: Users,
@@ -31,24 +31,24 @@ const donationSteps = [
 
 const donationFaq = [
   {
-    q: "What is a qurbani donation?",
-    a: "A qurbani donation is the act of giving money so that an animal (goat, sheep, cow, or camel) can be sacrificed on Eid al-Adha on your behalf. The meat is then distributed to those in need.",
+    q: "Apa itu donasi qurban?",
+    a: "Donasi qurban adalah menitipkan dana agar seekor hewan (kambing, domba, sapi, atau unta) disembelih pada hari Idul Adha atas nama Anda. Dagingnya kemudian didistribusikan kepada yang membutuhkan.",
   },
   {
-    q: "Can I donate qurbani from abroad?",
-    a: "Yes. Qurbanku accepts qurbani donations from anywhere in the world. We handle the animal selection, slaughtering, and distribution in Indonesia on your behalf.",
+    q: "Bisakah berdonasi qurban dari luar negeri?",
+    a: "Bisa. Qurbanku menerima donasi qurban dari mana saja. Kami mengurus pemilihan hewan, penyembelihan, dan distribusi daging di Indonesia atas nama Anda.",
   },
   {
-    q: "Is the animal healthy and halal?",
-    a: "All animals are checked for health, age, and shar'i requirements. We work with trusted local partners to ensure the qurban is valid.",
+    q: "Apakah hewannya sehat dan halal?",
+    a: "Semua hewan diperiksa kesehatan, usia, dan syarat syar'i-nya. Kami bekerja sama dengan mitra peternak terpercaya untuk memastikan qurban sah.",
   },
   {
-    q: "How is the meat distributed?",
-    a: "Meat is distributed to the poor, orphans, and local communities. You may also request a portion for relatives in Indonesia, subject to availability.",
+    q: "Bagaimana daging didistribusikan?",
+    a: "Daging dibagikan kepada fakir miskin, yatim, dan warga sekitar. Anda juga dapat meminta sebagian untuk keluarga di Indonesia sesuai ketersediaan.",
   },
   {
-    q: "Will I receive proof of qurban?",
-    a: "Yes. We provide documentation such as photos or videos of the slaughtering process and distribution, depending on the package you choose.",
+    q: "Apakah saya menerima bukti qurban?",
+    a: "Ya. Kami menyediakan dokumentasi berupa foto atau video proses penyembelihan dan distribusi, tergantung paket yang Anda pilih.",
   },
 ];
 
@@ -58,15 +58,15 @@ const Donasi = () => {
   return (
     <div className="space-y-5">
       <SEO
-        title="Qurbani Donation Online — Sacrifice & Share Blessings | Qurbanku"
-        description="Make your qurbani donation online with Qurbanku. Transparent pricing, shar'i-compliant animals, and distribution to those in need across Indonesia."
+        title="Donasi Qurban Online — Titip Qurban & Berbagi Berkah | Qurbanku"
+        description="Titip donasi qurban Anda secara online lewat Qurbanku. Harga transparan, hewan sesuai syariat, dan distribusi ke yang membutuhkan di Indonesia."
         path="/donasi"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: "Qurbani Donation Online — Sacrifice & Share Blessings",
+          headline: "Donasi Qurban Online — Titip Qurban & Berbagi Berkah",
           description:
-            "Make your qurbani donation online with Qurbanku. Transparent pricing, shar'i-compliant animals, and distribution to those in need across Indonesia.",
+            "Titip donasi qurban Anda secara online lewat Qurbanku. Harga transparan, hewan sesuai syariat, dan distribusi ke yang membutuhkan di Indonesia.",
           author: { "@type": "Organization", name: "Qurbanku" },
           publisher: { "@type": "Organization", name: "Qurbanku" },
           mainEntityOfPage: { "@type": "WebPage", "@id": "https://qurban-q.lovable.app/donasi" },
@@ -82,7 +82,7 @@ const Donasi = () => {
       </button>
 
       <div>
-        <h1 className="text-xl font-bold text-foreground">Qurbani Donation</h1>
+        <h1 className="text-xl font-bold text-foreground">Donasi Qurban</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
           Berqurban dari mana saja, didistribusikan di Indonesia
         </p>
@@ -97,7 +97,7 @@ const Donasi = () => {
             <div>
               <h2 className="font-semibold text-foreground">Mengapa Berqurban Online?</h2>
               <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                Qurbani donation memudahkan Anda yang tinggal di luar negeri atau memiliki waktu
+                Donasi qurban memudahkan Anda yang tinggal di luar negeri atau memiliki waktu
                 terbatas untuk tetap menunaikan ibadah qurban dengan amanah. Hewan dipilih,
                 disembelih, dan didistribusikan sesuai syariat oleh mitra Qurbanku.
               </p>
@@ -153,7 +153,7 @@ const Donasi = () => {
         <div className="mb-3 flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
           <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Tanya Jawab Qurbani Donation
+            Tanya Jawab Donasi Qurban
           </h2>
         </div>
         <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
@@ -175,7 +175,7 @@ const Donasi = () => {
       </div>
 
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 text-center space-y-3">
-        <h3 className="font-semibold text-foreground">Siap Melakukan Qurbani Donation?</h3>
+        <h3 className="font-semibold text-foreground">Siap Melakukan Donasi Qurban?</h3>
         <p className="text-sm text-muted-foreground">
           Hubungi tim Qurbanku untuk konsultasi program, harga, dan pemilihan hewan qurban.
         </p>
@@ -185,7 +185,7 @@ const Donasi = () => {
           onClick={() =>
             window.open(
               generateWhatsAppLink(
-                "Assalamualaikum, saya ingin melakukan qurbani donation. Mohon informasi program dan harga.",
+                "Assalamualaikum, saya ingin melakukan donasi qurban. Mohon informasi program dan harga.",
                 "donasi:cta"
               ),
               "_blank"
