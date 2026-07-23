@@ -244,18 +244,6 @@ const Pengingat = () => {
         </div>
       </div>
 
-      {/* CTA */}
-      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center space-y-2">
-        <p className="text-sm text-muted-foreground">Siap berqurban? Pesan sekarang!</p>
-        <Button
-          size="sm"
-          className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
-          onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin memesan hewan qurban. Mohon info ketersediaan.", "pengingat:cta"), "_blank")}
-        >
-          <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
-        </Button>
-      </div>
-
       {/* #25/#26 Backup/Restore semua data lokal (patungan, tabungan, checklist, dsb.) */}
       <div className="rounded-xl border bg-card p-4 space-y-3">
         <div>
@@ -294,6 +282,18 @@ const Pengingat = () => {
             <Upload className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} /> Import
           </Button>
         </div>
+      </div>
+
+      {/* CTA */}
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center space-y-2">
+        <p className="text-sm text-muted-foreground">Siap berqurban? Pesan sekarang!</p>
+        <Button
+          size="sm"
+          className="bg-[hsl(var(--wa-green))] hover:bg-[hsl(var(--wa-green))]/90 text-white"
+          onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin memesan hewan qurban. Mohon info ketersediaan.", "pengingat:cta"), "_blank")}
+        >
+          <MessageCircle className="mr-2 h-4 w-4" strokeWidth={1.8} /> Pesan via WhatsApp
+        </Button>
       </div>
     </div>
   );
