@@ -97,7 +97,7 @@ const Donasi = () => {
             <div>
               <h2 className="font-semibold text-foreground">Mengapa Berqurban Online?</h2>
               <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                Qurbani donation memudahkan Anda yang tinggal di luar negeri atau memiliki waktu
+                Donasi qurban memudahkan Anda yang tinggal di luar negeri atau memiliki waktu
                 terbatas untuk tetap menunaikan ibadah qurban dengan amanah. Hewan dipilih,
                 disembelih, dan didistribusikan sesuai syariat oleh mitra Qurbanku.
               </p>
