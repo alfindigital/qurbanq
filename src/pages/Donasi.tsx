@@ -82,7 +82,7 @@ const Donasi = () => {
       </button>
 
       <div>
-        <h1 className="text-xl font-bold text-foreground">Qurbani Donation</h1>
+        <h1 className="text-xl font-bold text-foreground">Donasi Qurban</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
           Berqurban dari mana saja, didistribusikan di Indonesia
         </p>
