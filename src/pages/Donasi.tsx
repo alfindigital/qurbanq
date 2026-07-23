@@ -185,7 +185,7 @@ const Donasi = () => {
           onClick={() =>
             window.open(
               generateWhatsAppLink(
-                "Assalamualaikum, saya ingin melakukan qurbani donation. Mohon informasi program dan harga.",
+                "Assalamualaikum, saya ingin melakukan donasi qurban. Mohon informasi program dan harga.",
                 "donasi:cta"
               ),
               "_blank"
