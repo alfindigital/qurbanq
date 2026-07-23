@@ -153,7 +153,7 @@ const Donasi = () => {
         <div className="mb-3 flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
           <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Tanya Jawab Qurbani Donation
+            Tanya Jawab Donasi Qurban
           </h2>
         </div>
         <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
