@@ -135,12 +135,14 @@ const Edukasi = () => {
           <div className="rounded-xl border bg-card p-5">
             <h2 className="text-lg font-bold mb-4">{article.title}</h2>
             <div className="space-y-2">
-              {article.content.split("\n").map((line, i) => {
+              {article.content.split("\n").map((rawLine, i) => {
+                const isHeading = rawLine.startsWith("**") && rawLine.endsWith("**");
+                const line = rawLine.replace(/\*\*/g, "");
                 if (line.startsWith("> ")) return <blockquote key={i} className="border-l-2 border-primary/30 pl-3 italic text-sm text-muted-foreground my-2">{line.slice(2)}</blockquote>;
-                if (line.startsWith("**") && line.endsWith("**")) return <h3 key={i} className="font-semibold text-sm text-foreground mt-4 mb-1">{line.replace(/\*\*/g, "")}</h3>;
+                if (isHeading) return <h3 key={i} className="font-semibold text-sm text-foreground mt-4 mb-1">{line}</h3>;
                 if (line.startsWith("- ")) return <li key={i} className="ml-4 text-sm text-muted-foreground">{line.slice(2)}</li>;
                 if (/^\d+\./.test(line)) return <p key={i} className="text-sm text-muted-foreground ml-4">{line}</p>;
-                return line.trim() ? <p key={i} className="text-sm text-muted-foreground leading-relaxed">{line.replace(/\*\*(.*?)\*\*/g, "$1")}</p> : null;
+                return line.trim() ? <p key={i} className="text-sm text-muted-foreground leading-relaxed">{line}</p> : null;
               })}
             </div>
 
