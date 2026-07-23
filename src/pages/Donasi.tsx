@@ -10,7 +10,7 @@ const donationSteps = [
   {
     icon: Globe,
     title: "Pilih Program",
-    desc: "Pilih qurbani donation untuk Indonesia. Tersedia kambing, domba, sapi, atau unta dengan harga transparan.",
+    desc: "Pilih program donasi qurban untuk Indonesia. Tersedia kambing, domba, sapi, atau unta dengan harga transparan.",
   },
   {
     icon: Users,
