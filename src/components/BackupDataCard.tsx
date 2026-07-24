@@ -6,27 +6,32 @@ import { downloadBackup, importAllData, pickBackupFile } from "@/lib/storage";
 // Blok Backup/Restore data lokal. Ditampilkan konsisten di setiap page tepat sebelum CTA WhatsApp.
 const BackupDataCard = () => {
   return (
-    <div className="rounded-xl border bg-card p-4 space-y-3">
-      <div>
+    <section
+      aria-label="Backup data lokal"
+      className="rounded-xl border bg-card p-4 sm:p-5 space-y-3"
+    >
+      <div className="space-y-1">
         <p className="text-sm font-semibold text-foreground">Backup Data</p>
-        <p className="mt-0.5 text-[11px] text-muted-foreground leading-relaxed">
-          Ekspor daftar patungan, tabungan, dan checklist ke file JSON. Import kembali kalau ganti device atau install ulang.
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          Simpan patungan, tabungan & checklist ke file JSON. Import kembali kalau ganti device.
         </p>
       </div>
       <div className="grid grid-cols-2 gap-2">
         <Button
           size="sm"
           variant="outline"
+          className="h-10 text-sm"
           onClick={() => {
             downloadBackup();
             toast.success("Backup diunduh", { description: "Simpan file JSON-nya di tempat aman." });
           }}
         >
-          <Download className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} /> Ekspor
+          <Download className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Ekspor
         </Button>
         <Button
           size="sm"
           variant="outline"
+          className="h-10 text-sm"
           onClick={async () => {
             try {
               const text = await pickBackupFile();
@@ -40,10 +45,10 @@ const BackupDataCard = () => {
             }
           }}
         >
-          <Upload className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} /> Import
+          <Upload className="mr-1.5 h-4 w-4" strokeWidth={1.8} /> Import
         </Button>
       </div>
-    </div>
+    </section>
   );
 };
 
