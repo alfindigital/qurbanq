@@ -5,6 +5,7 @@ import { Heart, Globe, ShieldCheck, Truck, Users, MessageCircle, ArrowLeft, Hand
 import { useNavigate } from "react-router-dom";
 import { generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
+import BackupDataCard from "@/components/BackupDataCard";
 
 const donationSteps = [
   {

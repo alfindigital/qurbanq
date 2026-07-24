@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import { PiggyBank, BookOpen, Bell, MessageCircle, ChevronRight, UserPlus, X, Share2, Download, Heart, HandHeart, Utensils, CheckCircle2, Sparkles, HelpCircle, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
+import BackupDataCard from "@/components/BackupDataCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
