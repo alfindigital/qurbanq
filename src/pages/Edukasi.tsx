@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookOpen, Scale, Users, Star, MessageCircle, HelpCircle, ArrowLeft, Heart, ArrowRight } from "lucide-react";
 import { educationArticles, faqItems, generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
+import BackupDataCard from "@/components/BackupDataCard";
 import KajianSection from "@/components/KajianSection";
 
 const iconMap: Record<string, React.ElementType> = { Scale, BookOpen, Users, Star };
@@ -98,6 +99,8 @@ const Edukasi = () => {
 
           <KajianSection />
 
+
+          <BackupDataCard />
 
           {/* CTA */}
           <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center space-y-2">

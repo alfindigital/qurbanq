@@ -5,6 +5,7 @@ import { Heart, Globe, ShieldCheck, Truck, Users, MessageCircle, ArrowLeft, Hand
 import { useNavigate } from "react-router-dom";
 import { generateWhatsAppLink } from "@/lib/qurban-data";
 import SEO from "@/components/SEO";
+import BackupDataCard from "@/components/BackupDataCard";
 
 const donationSteps = [
   {
@@ -173,6 +174,8 @@ const Donasi = () => {
           ))}
         </Accordion>
       </div>
+
+      <BackupDataCard />
 
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 text-center space-y-3">
         <h3 className="font-semibold text-foreground">Siap Melakukan Donasi Qurban?</h3>

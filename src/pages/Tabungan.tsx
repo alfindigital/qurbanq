@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Check, Flame, MessageCircle, Pencil, PiggyBank, Plus, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
+import BackupDataCard from "@/components/BackupDataCard";
 import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha } from "@/lib/qurban-data";
 import ReverseCalculator from "@/components/ReverseCalculator";
 import { calcStreak } from "@/lib/streak";
@@ -406,6 +407,8 @@ const Tabungan = () => {
       )}
 
       <ReverseCalculator />
+
+      <BackupDataCard />
 
     </div>
   );
