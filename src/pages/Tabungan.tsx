@@ -407,6 +407,8 @@ const Tabungan = () => {
 
       <ReverseCalculator />
 
+      <BackupDataCard />
+
     </div>
   );
 };

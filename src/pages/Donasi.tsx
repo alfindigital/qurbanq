@@ -174,6 +174,8 @@ const Donasi = () => {
         </Accordion>
       </div>
 
+      <BackupDataCard />
+
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 text-center space-y-3">
         <h3 className="font-semibold text-foreground">Siap Melakukan Donasi Qurban?</h3>
         <p className="text-sm text-muted-foreground">

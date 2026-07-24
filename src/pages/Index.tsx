@@ -562,6 +562,8 @@ const Index = () => {
         </div>
       </section>
 
+      <BackupDataCard />
+
       {/* CTA WhatsApp */}
       <section className="rounded-[1.75rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
         <div className="flex items-start gap-4">

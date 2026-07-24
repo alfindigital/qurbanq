@@ -99,6 +99,8 @@ const Edukasi = () => {
           <KajianSection />
 
 
+          <BackupDataCard />
+
           {/* CTA */}
           <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center space-y-2">
             <p className="text-sm text-muted-foreground">Butuh bantuan memilih hewan qurban?</p>
