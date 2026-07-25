@@ -42,9 +42,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Qurbanku" />
     <meta property="og:locale" content="id_ID" />
-    <!-- og:title, og:description, twitter:title, twitter:description sengaja dikelola per-route oleh SEO.tsx (Helmet) untuk menghindari duplikasi. -->
+    <!-- og:title & og:description statis sebagai fallback untuk crawler non-JS (LinkedIn, Slack, Facebook). Helmet (SEO.tsx) meng-override per-route saat JS crawler menjalankan. -->
+    <meta property="og:title" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
+    <meta property="og:description" content="Rencanakan qurban Idul Adha dengan mudah: kalkulator patungan sapi & kambing, tabungan qurban, edukasi fiqih, dan pengingat hari raya." />
     <!-- Twitter Card: summary_large_image untuk preview besar. twitter:image sengaja tidak diset manual - diinject otomatis oleh hosting Lovable pada saat serve. -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
+    <meta name="twitter:description" content="Rencanakan qurban Idul Adha dengan mudah: kalkulator patungan sapi & kambing, tabungan qurban, edukasi fiqih, dan pengingat hari raya." />
 
     <script type="application/ld+json">
       {
