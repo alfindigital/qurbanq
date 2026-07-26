@@ -45,10 +45,18 @@
     <!-- og:title & og:description statis sebagai fallback untuk crawler non-JS (LinkedIn, Slack, Facebook). Helmet (SEO.tsx) meng-override per-route saat JS crawler menjalankan. -->
     <meta property="og:title" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
     <meta property="og:description" content="Rencanakan qurban Idul Adha dengan mudah: kalkulator patungan sapi & kambing, tabungan qurban, edukasi fiqih, dan pengingat hari raya." />
+    <!-- Varian utama 1200x630 (summary_large_image) diikuti fallback 600x315 untuk platform yang memilih ukuran lebih kecil. -->
     <meta property="og:image" content="https://qurban-q.lovable.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
+    <meta property="og:image" content="https://qurban-q.lovable.app/og-image-600x315.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="315" />
+    <meta property="og:image:alt" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
+
     <!-- Twitter Card: summary_large_image untuk preview besar (1200x630). -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Qurbanku — Kalkulator Patungan & Tabungan Qurban" />
