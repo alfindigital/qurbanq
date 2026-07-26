@@ -18,12 +18,16 @@ interface SEOProps {
  * Helmet marks its tags with data-rh="true"; we remove any matching tag
  * without that marker.
  */
+const OG_IMAGE = `${SITE}/og-image.jpg`;
+
 const STATIC_SELECTORS = [
   'meta[name="description"]',
   'meta[property="og:title"]',
   'meta[property="og:description"]',
+  'meta[property="og:image"]',
   'meta[name="twitter:title"]',
   'meta[name="twitter:description"]',
+  'meta[name="twitter:image"]',
 ];
 
 const stripStaticDuplicates = () => {
@@ -52,8 +56,10 @@ const SEO = ({ title, description, path, jsonLd }: SEOProps) => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
+      <meta property="og:image" content={OG_IMAGE} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={OG_IMAGE} />
       {blocks.map((b, i) => (
         <script key={i} type="application/ld+json">{JSON.stringify(b)}</script>
       ))}
