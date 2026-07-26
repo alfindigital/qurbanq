@@ -5,7 +5,7 @@ import { test, expect, type Page } from "@playwright/test";
  * antara / dan /kalkulator, tag berikut tetap benar dan tidak menumpuk:
  * - <link rel="canonical"> self-reference route saat ini (tepat 1)
  * - <meta property="og:url"> efektif = canonical
- * - og:image & twitter:image (jika ada) tetap maks 1 dan absolut https
+ * - og:image = 2 varian ukuran (URL unik) & twitter:image maks 1, semua absolut https
  *
  * Navigasi dilakukan lewat klik pada elemen bernavigasi (BottomNav / link)
  * agar benar-benar client-side (BrowserRouter push), bukan page.goto().
@@ -42,16 +42,19 @@ async function assertRouteMeta(page: Page, route: "/" | "/kalkulator") {
   const ogUrl = await lastAttr(page, 'meta[property="og:url"]', "content");
   expect(ogUrl, `og:url efektif di ${route}`).toBe(expectedUrl);
 
-  // og:image & twitter:image maks 1 (dev: 0, prod: 1) & absolut https jika ada
+  // og:image multi-size (2 varian, URL unik) & twitter:image tunggal
   const ogImgCount = await count(page, 'meta[property="og:image"]');
   const twImgCount = await count(page, 'meta[name="twitter:image"]');
-  expect(ogImgCount, `og:image maks 1 di ${route}`).toBeLessThanOrEqual(1);
+  expect(ogImgCount, `og:image = 2 varian ukuran di ${route}`).toBe(2);
   expect(twImgCount, `twitter:image maks 1 di ${route}`).toBeLessThanOrEqual(1);
 
-  if (ogImgCount === 1) {
-    const v = await lastAttr(page, 'meta[property="og:image"]', "content");
-    expect(v, `og:image absolut https di ${route}`).toMatch(/^https:\/\/[^\s]+$/i);
-  }
+  const ogImgUrls = await page
+    .locator('head >> meta[property="og:image"]')
+    .evaluateAll((els) => els.map((el) => el.getAttribute("content") ?? ""));
+  expect(new Set(ogImgUrls).size, `URL og:image unik di ${route}`).toBe(ogImgUrls.length);
+  ogImgUrls.forEach((v, i) => {
+    expect(v, `og:image[${i}] absolut https di ${route}`).toMatch(/^https:\/\/[^\s]+$/i);
+  });
   if (twImgCount === 1) {
     const v = await lastAttr(page, 'meta[name="twitter:image"]', "content");
     expect(v, `twitter:image absolut https di ${route}`).toMatch(/^https:\/\/[^\s]+$/i);

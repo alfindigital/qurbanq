@@ -15,8 +15,8 @@ const BASE = "http://localhost:8080";
 const ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;
 
 // Semua kunci og:* dan twitter:* yang mungkin muncul di project ini.
-// og:image dan twitter:image sengaja di-inject oleh hosting saat serve,
-// tapi tetap kita cek: kalau ada, tidak boleh dobel.
+// og:image sengaja multi-size (1200x630 + 600x315), jadi dicek terpisah:
+// URL-nya harus unik, bukan maksimal 1. twitter:image tetap tunggal.
 const OG_PROPERTIES = [
   "og:title",
   "og:description",
@@ -24,7 +24,6 @@ const OG_PROPERTIES = [
   "og:type",
   "og:site_name",
   "og:locale",
-  "og:image",
 ] as const;
 
 const TWITTER_NAMES = [
@@ -58,6 +57,15 @@ test.describe("Tidak ada duplikat tag og:* dan twitter:* per rute publik", () =>
           `meta[name="${name}"] di ${path} tidak boleh dobel (ditemukan ${count})`,
         ).toBeLessThanOrEqual(1);
       }
+
+      // og:image multi-size: 2 varian dengan URL unik (bukan duplikat).
+      const ogImages = page.locator('head >> meta[property="og:image"]');
+      const ogImageCount = await ogImages.count();
+      expect(ogImageCount, `og:image di ${path} harus 2 varian ukuran`).toBe(2);
+      const urls = await ogImages.evaluateAll((els) =>
+        els.map((el) => el.getAttribute("content") ?? ""),
+      );
+      expect(new Set(urls).size, `URL og:image di ${path} tidak boleh duplikat`).toBe(urls.length);
 
       // description dan canonical juga rentan duplikasi dengan pola yang sama.
       const descCount = await page.locator('head >> meta[name="description"]').count();

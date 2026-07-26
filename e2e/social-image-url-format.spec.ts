@@ -44,10 +44,11 @@ test.describe("Social image URL format (https + ekstensi valid + no dup)", () =>
       const ogs = await collect(page, 'meta[property="og:image"]');
       const tws = await collect(page, 'meta[name="twitter:image"]');
 
-      expect(ogs.length, `og:image maks 1 di ${route}`).toBeLessThanOrEqual(1);
+      expect(ogs.length, `og:image = 2 varian ukuran di ${route}`).toBe(2);
+      expect(new Set(ogs).size, `URL og:image unik di ${route}`).toBe(ogs.length);
       expect(tws.length, `twitter:image maks 1 di ${route}`).toBeLessThanOrEqual(1);
 
-      if (ogs.length === 1) assertValidImageUrl(ogs[0], `og:image (${route})`);
+      ogs.forEach((u, i) => assertValidImageUrl(u, `og:image[${i}] (${route})`));
       if (tws.length === 1) assertValidImageUrl(tws[0], `twitter:image (${route})`);
     });
   }
@@ -70,10 +71,10 @@ test.describe("Social image URL format (https + ekstensi valid + no dup)", () =>
       const ogMatches = [...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi)];
       const twMatches = [...html.matchAll(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/gi)];
 
-      expect(ogMatches.length, `og:image tepat 1 di prod (${route})`).toBe(1);
+      expect(ogMatches.length, `og:image = 2 varian di prod (${route})`).toBe(2);
       expect(twMatches.length, `twitter:image maks 1 di prod (${route})`).toBeLessThanOrEqual(1);
 
-      assertValidImageUrl(ogMatches[0][1], `og:image prod (${route})`);
+      ogMatches.forEach((m, i) => assertValidImageUrl(m[1], `og:image[${i}] prod (${route})`));
       if (twMatches.length === 1) {
         assertValidImageUrl(twMatches[0][1], `twitter:image prod (${route})`);
       }

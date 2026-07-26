@@ -42,10 +42,11 @@ test.describe("Social preview image injection", () => {
       const og = await countAndCollect(page, 'meta[property="og:image"]');
       const tw = await countAndCollect(page, 'meta[name="twitter:image"]');
 
-      expect(og.count, `og:image maksimal 1 (dev: 0, prod: 1)`).toBeLessThanOrEqual(1);
-      expect(tw.count, `twitter:image maksimal 1 (dev: 0, prod: 1)`).toBeLessThanOrEqual(1);
+      expect(og.count, `og:image = 2 varian ukuran di ${route}`).toBe(2);
+      expect(new Set(og.contents).size, `URL og:image unik di ${route}`).toBe(og.count);
+      expect(tw.count, `twitter:image tepat 1 di ${route}`).toBe(1);
 
-      if (og.count === 1) assertAbsoluteHttps(og.contents[0], `og:image (${route})`);
+      og.contents.forEach((u, i) => assertAbsoluteHttps(u, `og:image[${i}] (${route})`));
       if (tw.count === 1) assertAbsoluteHttps(tw.contents[0], `twitter:image (${route})`);
     });
   }
@@ -68,10 +69,11 @@ test.describe("Social preview image injection", () => {
       const ogMatches = [...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi)];
       const twMatches = [...html.matchAll(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/gi)];
 
-      expect(ogMatches.length, `og:image di prod tepat 1 untuk ${route}`).toBe(1);
-      expect(twMatches.length, `twitter:image di prod tepat 1 untuk ${route}`).toBeLessThanOrEqual(1);
+      expect(ogMatches.length, `og:image di prod = 2 varian untuk ${route}`).toBe(2);
+      expect(new Set(ogMatches.map((m) => m[1])).size, `URL og:image prod unik (${route})`).toBe(2);
+      expect(twMatches.length, `twitter:image di prod maks 1 untuk ${route}`).toBeLessThanOrEqual(1);
 
-      assertAbsoluteHttps(ogMatches[0][1], `og:image (${route})`);
+      ogMatches.forEach((m, i) => assertAbsoluteHttps(m[1], `og:image[${i}] (${route})`));
       if (twMatches.length === 1) {
         assertAbsoluteHttps(twMatches[0][1], `twitter:image (${route})`);
       }

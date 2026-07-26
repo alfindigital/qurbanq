@@ -5,8 +5,8 @@ import { test, expect } from "@playwright/test";
  * secara manual di source, dan tidak ada duplikasi tag setelah hard reload.
  *
  * Kontrak:
- * - Tidak boleh ada <meta property="og:image"> atau <meta name="twitter:image">
- *   di dalam index.html yang di-build (dibiarkan diinject otomatis oleh hosting).
+ * - index.html memuat og:image multi-size (1200x630 + 600x315) sebagai fallback
+ *   crawler non-JS, dan tepat satu twitter:image (varian 1200x630).
  * - twitter:card harus "summary_large_image".
  * - og:title, og:description, og:url, og:type, twitter:title, twitter:description
  *   masing-masing hadir tepat satu kali (tidak ada duplikasi).
@@ -17,16 +17,34 @@ import { test, expect } from "@playwright/test";
 const BASE = "http://localhost:8080";
 
 test.describe("Social preview metadata", () => {
-  test("index.html tidak memiliki og:image atau twitter:image manual", async ({ request }) => {
+  test("index.html memuat og:image multi-size dan satu twitter:image", async ({ request }) => {
     const res = await request.get(`${BASE}/`);
     const html = await res.text();
 
-    // Hitung kemunculan tag yang seharusnya tidak ada di source.
-    const ogImageMatches = html.match(/<meta[^>]+property=["']og:image["']/gi) ?? [];
-    const twImageMatches = html.match(/<meta[^>]+name=["']twitter:image["']/gi) ?? [];
+    const ogImageMatches = [
+      ...html.matchAll(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/gi),
+    ];
+    const twImageMatches = [
+      ...html.matchAll(/<meta[^>]+name=["']twitter:image["'][^>]*content=["']([^"']+)["']/gi),
+    ];
 
-    expect(ogImageMatches.length, "og:image tidak boleh diset manual di index.html").toBe(0);
-    expect(twImageMatches.length, "twitter:image tidak boleh diset manual di index.html").toBe(0);
+    expect(ogImageMatches.length, "index.html harus punya 2 varian og:image").toBe(2);
+    expect(twImageMatches.length, "index.html harus punya tepat 1 twitter:image").toBe(1);
+
+    const ogUrls = ogImageMatches.map((m) => m[1]);
+    expect(new Set(ogUrls).size, "URL og:image di index.html tidak boleh duplikat").toBe(2);
+    expect(ogUrls[0]).toMatch(/og-image\.jpg$/);
+    expect(ogUrls[1]).toMatch(/og-image-600x315\.jpg$/);
+
+    // Deklarasi ukuran harus lengkap untuk kedua varian.
+    const widths = [...html.matchAll(/property=["']og:image:width["'][^>]*content=["'](\d+)["']/gi)].map(
+      (m) => Number(m[1]),
+    );
+    const heights = [...html.matchAll(/property=["']og:image:height["'][^>]*content=["'](\d+)["']/gi)].map(
+      (m) => Number(m[1]),
+    );
+    expect(widths).toEqual([1200, 600]);
+    expect(heights).toEqual([630, 315]);
   });
 
   test("twitter:card = summary_large_image dan tag preview tidak duplikat", async ({ page }) => {
@@ -59,8 +77,8 @@ test.describe("Social preview metadata", () => {
     // Hosting bisa menyuntik satu saat serve; kalau begitu maksimal 1, tidak duplikat.
     const ogImage = await countMeta('meta[property="og:image"]');
     const twImage = await countMeta('meta[name="twitter:image"]');
-    expect(ogImage, "og:image maksimal 1 (0 di dev, 1 setelah hosting inject)").toBeLessThanOrEqual(1);
-    expect(twImage, "twitter:image maksimal 1 (0 di dev, 1 setelah hosting inject)").toBeLessThanOrEqual(1);
+    expect(ogImage, "og:image = 2 varian ukuran").toBe(2);
+    expect(twImage, "twitter:image tepat 1").toBe(1);
   });
 
   test("hard reload tidak menambahkan duplikat meta preview", async ({ page }) => {
@@ -86,9 +104,10 @@ test.describe("Social preview metadata", () => {
 
     expect(after).toEqual(before);
 
-    // Sanity: tidak ada tag preview yang jumlahnya > 1
+    // Sanity: tag tunggal tetap 1; og:image sengaja 2 varian ukuran.
     for (const [k, v] of Object.entries(after)) {
-      expect(v, `${k} tidak boleh duplikat (found ${v})`).toBeLessThanOrEqual(1);
+      const expected = k === "ogImage" ? 2 : 1;
+      expect(v, `${k} harus ${expected} (found ${v})`).toBe(expected);
     }
   });
 });
