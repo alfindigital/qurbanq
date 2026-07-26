@@ -104,9 +104,10 @@ test.describe("Social preview metadata", () => {
 
     expect(after).toEqual(before);
 
-    // Sanity: tidak ada tag preview yang jumlahnya > 1
+    // Sanity: tag tunggal tetap 1; og:image sengaja 2 varian ukuran.
     for (const [k, v] of Object.entries(after)) {
-      expect(v, `${k} tidak boleh duplikat (found ${v})`).toBeLessThanOrEqual(1);
+      const expected = k === "ogImage" ? 2 : 1;
+      expect(v, `${k} harus ${expected} (found ${v})`).toBe(expected);
     }
   });
 });
