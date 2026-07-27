@@ -1,8 +1,32 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { execFileSync } from "child_process";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
+
+/**
+ * Validasi saat build: setiap file og-image-* harus cocok dengan
+ * og:image:width/height/type yang dideklarasikan (index.html + SEO.tsx).
+ * Build gagal bila tidak cocok.
+ */
+const validateOgImages = (): Plugin => ({
+  name: "validate-og-images",
+  apply: "build",
+  buildStart() {
+    try {
+      const out = execFileSync(
+        process.execPath,
+        [path.resolve(__dirname, "scripts/validate-og-images.mjs")],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+      );
+      this.info(out.trim());
+    } catch (err) {
+      const e = err as { stdout?: string; stderr?: string };
+      this.error(`og:image validation failed\n${e.stderr ?? ""}${e.stdout ?? ""}`);
+    }
+  },
+});
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -15,7 +39,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    validateOgImages(),
     mode === "development" && componentTagger(),
+
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: null, // we register manually in main.tsx with guards
