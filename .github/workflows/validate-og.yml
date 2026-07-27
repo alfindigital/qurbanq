@@ -45,7 +45,10 @@ jobs:
         run: npm run build
 
       - name: Run social meta e2e tests
+        env:
+          E2E_BASE_URL: http://127.0.0.1:4173
         run: npm run test:e2e:social
+
 
       - name: Upload Playwright report
         if: always()
