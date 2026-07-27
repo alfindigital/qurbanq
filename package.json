@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e:social": "playwright test --config=playwright.ci.config.ts social twitter-card-client-nav"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
