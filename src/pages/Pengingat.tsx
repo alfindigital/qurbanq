@@ -121,7 +121,7 @@ const Pengingat = () => {
       </div>
 
       {/* Countdown */}
-      <div className="rounded-2xl bg-primary px-5 py-5 text-primary-foreground">
+      <div className="rounded-2xl bg-secondary px-5 py-5 text-secondary-foreground shadow-soft">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="h-4 w-4" strokeWidth={1.8} />
           <p className="text-sm font-semibold">Idul Adha {hijriYear} H</p>
@@ -133,9 +133,9 @@ const Pengingat = () => {
             { label: "Mnt", value: countdown.minutes },
             { label: "Dtk", value: countdown.seconds },
           ].map((item) => (
-            <div key={item.label} className="flex flex-1 flex-col items-center rounded-xl bg-white/10 py-2.5">
+            <div key={item.label} className="flex flex-1 flex-col items-center rounded-xl bg-background/15 py-2.5">
               <span className="text-lg font-bold">{String(item.value).padStart(2, "0")}</span>
-              <span className="text-[10px] opacity-60">{item.label}</span>
+              <span className="text-[10px] opacity-75">{item.label}</span>
             </div>
           ))}
         </div>
