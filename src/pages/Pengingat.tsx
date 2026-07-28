@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Clock, MessageCircle, CheckCircle2, Bell, BellOff, BellRing, Download, Upload } from "lucide-react";
 import SEO from "@/components/SEO";
-import { getNextIdulAdha, getNextIdulAdhaInfo, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
+import { getDaysUntilIdulAdha, getNextIdulAdhaInfo, preparationChecklist, generateWhatsAppLink } from "@/lib/qurban-data";
 import { downloadBackup, importAllData, pickBackupFile } from "@/lib/storage";
 import {
   loadReminders,
@@ -35,15 +35,23 @@ const Pengingat = () => {
     const update = () => {
       const now = new Date();
       let target = targetDate;
-      if (now >= target) {
+      // Hari raya (H+0) tetap ditampilkan; setelah hari itu lewat, target
+      // otomatis pindah ke Idul Adha tahun berikutnya.
+      const endOfTargetDay = new Date(
+        target.getFullYear(), target.getMonth(), target.getDate(), 23, 59, 59, 999
+      ).getTime();
+      if (now.getTime() > endOfTargetDay) {
         const next = getNextIdulAdhaInfo();
         setTargetInfo(next);
         target = next.date;
       }
       const diff = target.getTime() - now.getTime();
-      if (diff <= 0) return;
+      if (diff <= 0) {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
       setCountdown({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        days: getDaysUntilIdulAdha(),
         hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((diff / (1000 * 60)) % 60),
         seconds: Math.floor((diff / 1000) % 60),
