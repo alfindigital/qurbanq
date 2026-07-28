@@ -36,7 +36,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-lg items-center justify-between px-5">
           <div className="flex items-center gap-2.5">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm dark:from-[hsl(var(--forest))] dark:to-secondary">
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[hsl(var(--forest))] shadow-warm dark:from-primary dark:to-secondary">
               {/* Qurban mark: mosque dome + crescent */}
               <svg viewBox="0 0 32 32" className="h-6 w-6 text-primary-foreground dark:text-foreground" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 {/* crescent moon top-left */}
