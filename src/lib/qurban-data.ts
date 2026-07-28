@@ -87,15 +87,39 @@ const IDUL_ADHA_SCHEDULE: { date: Date; hijriYear: number }[] = [
   { date: new Date(2030, 3, 14), hijriYear: 1451 },
 ];
 
+// Hari raya masih "berlaku" sepanjang tanggal 10 Dzulhijjah (H+0).
+// Baru setelah hari itu berakhir, target pindah ke tahun berikutnya.
+const endOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999);
+
+// Di luar jadwal (setelah 2030): kalender Hijriah ± 11 hari lebih cepat
+// dari kalender Masehi, jadi tanggal berikutnya = tanggal terakhir + 354 hari.
+const HIJRI_YEAR_DAYS = 365 - 11;
+
 export const getNextIdulAdhaInfo = (): { date: Date; hijriYear: number } => {
   const now = new Date();
-  return (
-    IDUL_ADHA_SCHEDULE.find((d) => now < d.date) ??
-    IDUL_ADHA_SCHEDULE[IDUL_ADHA_SCHEDULE.length - 1]
-  );
+  const scheduled = IDUL_ADHA_SCHEDULE.find((d) => now <= endOfDay(d.date));
+  if (scheduled) return scheduled;
+
+  let { date, hijriYear } = IDUL_ADHA_SCHEDULE[IDUL_ADHA_SCHEDULE.length - 1];
+  // Guard: maksimal 50 iterasi supaya tidak pernah infinite loop.
+  for (let i = 0; i < 50 && now > endOfDay(date); i++) {
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + HIJRI_YEAR_DAYS);
+    hijriYear += 1;
+  }
+  return { date, hijriYear };
 };
 
 export const getNextIdulAdha = (): Date => getNextIdulAdhaInfo().date;
+
+// Sisa hari kalender menuju Idul Adha. H-1 = 1, hari-H (H+0) = 0.
+export const getDaysUntilIdulAdha = (): number => {
+  const now = new Date();
+  const target = getNextIdulAdha();
+  const startNow = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const startTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate()).getTime();
+  return Math.max(0, Math.round((startTarget - startNow) / (1000 * 60 * 60 * 24)));
+};
+
 
 
 export const educationArticles = [
