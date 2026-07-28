@@ -73,7 +73,7 @@
     /* Emerald medium: aman sebagai blok besar (teks gelap 6.2:1) sekaligus
        sebagai teks kecil di atas card (5.1:1). Tidak lagi neon. */
     --primary: 147 45% 45%;
-    --primary-foreground: 42 30% 96%;
+    --primary-foreground: 150 30% 6%;   /* teks gelap di atas emerald: 6.4:1 */
 
     --secondary: 148 40% 22%;            /* forest dalam, ivory di atasnya 8:1 */
     --secondary-foreground: 42 30% 96%;
@@ -99,7 +99,7 @@
     --sidebar-background: 150 22% 6%;
     --sidebar-foreground: 42 30% 96%;
     --sidebar-primary: 147 45% 45%;
-    --sidebar-primary-foreground: 42 30% 96%;
+    --sidebar-primary-foreground: 150 30% 6%;
     --sidebar-accent: 150 8% 19%;
     --sidebar-accent-foreground: 42 30% 96%;
     --sidebar-border: 150 12% 30%;

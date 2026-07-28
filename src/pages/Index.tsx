@@ -240,7 +240,7 @@ const Index = () => {
         const perDay = Math.ceil(cheapest.price / daysLeft);
         return (
           <section className="relative overflow-hidden rounded-[2rem] bg-secondary p-6 text-secondary-foreground shadow-soft">
-            <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-forest/25" aria-hidden />
+            <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-primary/20" aria-hidden />
             <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
             <div className="relative z-10 space-y-4">
               <h1 className="font-display text-2xl font-bold leading-tight">

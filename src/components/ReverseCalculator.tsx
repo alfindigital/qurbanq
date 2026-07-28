@@ -66,7 +66,7 @@ const ReverseCalculator = () => {
       </div>
 
       {/* TOTAL — hero card */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-forest to-forest/85 p-4 text-primary-foreground">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-secondary to-secondary/85 p-4 text-secondary-foreground">
         <div className="flex items-center gap-1.5">
           <TrendingUp className="h-3.5 w-3.5 opacity-80" strokeWidth={2} />
           <p className="text-[10px] font-bold uppercase tracking-wider opacity-80">Total sampai Idul Adha</p>
