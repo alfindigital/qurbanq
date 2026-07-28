@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MessageCircle, ChevronRight, UserPlus, X, Share2, Download, Check, Copy } from "lucide-react";
 import SEO from "@/components/SEO";
-import { animalOptions, formatCurrency, generateWhatsAppLink, getNextIdulAdha, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, formatCurrency, generateWhatsAppLink, getDaysUntilIdulAdha, type AnimalType } from "@/lib/qurban-data";
 import { pushOrderHistory } from "@/lib/order-history";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
@@ -83,10 +83,9 @@ const Kalkulator = () => {
 
 
   // #16 Cicilan menuju Idul Adha berikutnya
-  const idulAdha = getNextIdulAdha();
-  const msUntil = Math.max(0, idulAdha.getTime() - Date.now());
-  const weeksLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 7)));
-  const monthsLeft = Math.max(1, Math.ceil(msUntil / (1000 * 60 * 60 * 24 * 30)));
+  const daysUntilAdha = getDaysUntilIdulAdha();
+  const weeksLeft = Math.max(1, Math.ceil(daysUntilAdha / 7));
+  const monthsLeft = Math.max(1, Math.ceil(daysUntilAdha / 30));
   const perWeek = animal ? Math.ceil(costPerPerson / weeksLeft) : 0;
   const perMonth = animal ? Math.ceil(costPerPerson / monthsLeft) : 0;
 

@@ -2,16 +2,13 @@ import { useMemo, useState } from "react";
 import { Sparkles, TrendingUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { animalOptions, formatCurrency, getNextIdulAdha } from "@/lib/qurban-data";
+import { animalOptions, formatCurrency, getDaysUntilIdulAdha } from "@/lib/qurban-data";
 
 // #21 Reverse calculator — "kalau nabung Rp X/hari, hewan apa yang muat?"
 const ReverseCalculator = () => {
   const [perDay, setPerDay] = useState<number>(20000);
 
-  const daysLeft = useMemo(() => {
-    const diff = getNextIdulAdha().getTime() - Date.now();
-    return Math.max(30, Math.floor(diff / (1000 * 60 * 60 * 24)));
-  }, []);
+  const daysLeft = useMemo(() => Math.max(1, getDaysUntilIdulAdha()), []);
 
   const budget = perDay * daysLeft;
   const affordable = animalOptions.filter((a) => a.price <= budget).sort((a, b) => b.price - a.price);

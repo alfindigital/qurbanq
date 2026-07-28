@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getNextIdulAdhaInfo, type AnimalType } from "@/lib/qurban-data";
+import { animalOptions, faqItems, formatCurrency, generateWhatsAppLink, getDaysUntilIdulAdha, getNextIdulAdhaInfo, type AnimalType } from "@/lib/qurban-data";
 import { animalIconMap } from "@/components/AnimalIcons";
 import { buildShareUrl, readIncomingShare } from "@/lib/share-state";
 import { pushOrderHistory } from "@/lib/order-history";
@@ -83,10 +83,8 @@ const Index = () => {
   useEffect(() => {
     const update = () => {
       const info = getNextIdulAdhaInfo();
-      const diff = info.date.getTime() - Date.now();
       setHijriYear(info.hijriYear);
-      if (diff <= 0) return;
-      setCountdown({ days: Math.floor(diff / (1000 * 60 * 60 * 24)) });
+      setCountdown({ days: getDaysUntilIdulAdha() });
     };
     update();
     const interval = setInterval(update, 60000);

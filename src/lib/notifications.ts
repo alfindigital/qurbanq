@@ -1,4 +1,4 @@
-import { getNextIdulAdha } from "./qurban-data";
+import { getDaysUntilIdulAdha } from "./qurban-data";
 
 const REMINDER_STORAGE_KEY = "qurbanku-reminders";
 
@@ -60,10 +60,7 @@ export const sendBrowserNotification = (title: string, body: string, icon?: stri
 };
 
 export const checkAndTriggerReminders = (reminders: ReminderSetting[]) => {
-  const target = getNextIdulAdha();
-  const now = new Date();
-  const diffMs = target.getTime() - now.getTime();
-  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  const diffDays = getDaysUntilIdulAdha();
 
   const triggered: ReminderSetting[] = [];
 
