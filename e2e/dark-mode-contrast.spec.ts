@@ -7,7 +7,7 @@ import { test, expect } from "@playwright/test";
  * semi-transparan ke background efektifnya, lalu menghitung rasio kontras.
  */
 
-const ROUTES = ["/", "/kalkulator", "/tabungan", "/pengingat", "/edukasi", "/donasi"];
+const ROUTES = ["/", "/kalkulator", "/tabungan", "/pengingat", "/edukasi", "/donasi", "/metodologi"];
 
 const SCAN = `() => {
   const parse = (v) => {
