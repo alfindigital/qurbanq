@@ -24,24 +24,30 @@ const SCAN = `() => {
     const [hi, lo] = l1 >= l2 ? [l1, l2] : [l2, l1];
     return (hi + 0.05) / (lo + 0.05);
   };
-  const blend = (fg, bg) => ({
-    r: fg.r * fg.a + bg.r * (1 - fg.a),
-    g: fg.g * fg.a + bg.g * (1 - fg.a),
-    b: fg.b * fg.a + bg.b * (1 - fg.a),
-    a: 1,
-  });
+  /** Source-over compositing: fg di atas bg, alpha diperhitungkan dengan benar. */
+  const blend = (fg, bg) => {
+    const a = fg.a + bg.a * (1 - fg.a);
+    if (a === 0) return { r: 0, g: 0, b: 0, a: 0 };
+    const ch = (f, b) => (f * fg.a + b * bg.a * (1 - fg.a)) / a;
+    return { r: ch(fg.r, bg.r), g: ch(fg.g, bg.g), b: ch(fg.b, bg.b), a };
+  };
+  /** Background efektif + apakah ada gradien/gambar (tidak bisa dinilai otomatis). */
   const effectiveBg = (el) => {
     let node = el;
-    let acc = null;
+    let acc = { r: 0, g: 0, b: 0, a: 0 };
+    let hasImage = false;
     while (node) {
-      const c = parse(getComputedStyle(node).backgroundColor);
-      if (c && c.a > 0) acc = acc ? blend(acc, c) : c;
-      if (acc && acc.a >= 0.999) return acc;
+      const cs = getComputedStyle(node);
+      if (cs.backgroundImage && cs.backgroundImage !== "none") hasImage = true;
+      const c = parse(cs.backgroundColor);
+      if (c && c.a > 0) acc = blend(acc, c);
+      if (acc.a >= 0.999) return { color: acc, hasImage };
       node = node.parentElement;
     }
     const base = { r: 255, g: 255, b: 255, a: 1 };
-    return acc ? blend(acc, base) : base;
+    return { color: blend(acc, base), hasImage };
   };
+
 
   const failures = [];
   const els = Array.from(document.querySelectorAll("body *"));
