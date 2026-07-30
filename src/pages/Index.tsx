@@ -322,7 +322,7 @@ const Index = () => {
           </div>
 
           <div className="rounded-2xl bg-card p-4">
-            <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-forest">
               Jumlah Peserta (maks {animal!.maxPersons})
             </Label>
             <div className="mt-2 flex items-center gap-3">
@@ -341,7 +341,7 @@ const Index = () => {
 
           <div className="rounded-2xl bg-card p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-forest">Daftar Peserta</Label>
               <span className="text-xs text-muted-foreground">{validParticipants.length}/{animal!.maxPersons} orang · {paidParticipants.filter((n) => validParticipants.includes(n)).length} lunas</span>
             </div>
             <div className="space-y-1.5">
@@ -399,7 +399,7 @@ const Index = () => {
             <>
               <div className="flex items-end justify-between border-t border-accent/30 pt-4">
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-forest">
                     Per Orang
                   </p>
                   <p className="font-display text-2xl font-bold text-primary leading-tight">
@@ -418,7 +418,7 @@ const Index = () => {
       {/* Result summary */}
       {animal && validParticipants.length > 0 && (
         <section ref={summaryRef} className="rounded-2xl border border-border bg-card p-5 space-y-3" aria-labelledby="daftar-peserta-heading">
-          <h2 id="daftar-peserta-heading" className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Daftar Peserta</h2>
+          <h2 id="daftar-peserta-heading" className="text-[10px] font-bold uppercase tracking-wider text-forest">Daftar Peserta</h2>
           <div className="space-y-1.5">
             {validParticipants.map((name, i) => (
               <div key={i} className="flex items-center justify-between text-sm">

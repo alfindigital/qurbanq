@@ -35,7 +35,7 @@ const SupplierInfo = () => {
           </div>
 
           <div className="rounded-xl bg-muted/60 p-3 space-y-1.5">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Rekening Resmi</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-forest">Rekening Resmi</p>
             <p className="text-xs text-muted-foreground">{s.bankName}</p>
             <div className="flex items-center justify-between gap-2">
               <p className="font-mono text-base font-bold text-forest">{s.bankAccount}</p>
@@ -52,19 +52,19 @@ const SupplierInfo = () => {
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="rounded-xl bg-muted/60 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">DP Kambing/Domba</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-forest">DP Kambing/Domba</p>
               <p className="mt-1 font-semibold text-forest">{formatCurrency(s.dpKambing)}<span className="text-[10px] font-normal text-muted-foreground"> / ekor</span></p>
               <p className="text-[10px] text-muted-foreground">Pelunasan H-2 pengiriman</p>
             </div>
             <div className="rounded-xl bg-muted/60 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">DP Sapi</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-forest">DP Sapi</p>
               <p className="mt-1 font-semibold text-forest">{formatCurrency(s.dpSapi)}<span className="text-[10px] font-normal text-muted-foreground"> / ekor</span></p>
               <p className="text-[10px] text-muted-foreground">Pelunasan H-5 Idul Adha</p>
             </div>
           </div>
 
           <div className="rounded-xl border border-dashed border-border p-3 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-forest/70">Jadwal & Area Pengiriman</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-forest">Jadwal & Area Pengiriman</p>
             <p className="text-xs text-muted-foreground">{s.deliveryAreas}</p>
             <p className="text-[11px] text-muted-foreground">{s.deliveryNote}</p>
           </div>
