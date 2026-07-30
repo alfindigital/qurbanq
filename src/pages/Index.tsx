@@ -316,7 +316,7 @@ const Index = () => {
         <section className="rounded-[1.75rem] border border-accent/30 bg-peach-soft p-5 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-base font-bold text-primary">Simulasi Qurban</h2>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-secondary">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
               {animal!.label}
             </span>
           </div>
@@ -451,7 +451,7 @@ const Index = () => {
           {quickLinks.map((link, i) => {
             const tones = [
               { bg: "bg-terracotta-soft", fg: "text-primary" },
-              { bg: "bg-sage-soft", fg: "text-secondary" },
+              { bg: "bg-sage-soft", fg: "text-primary" },
               { bg: "bg-peach-soft", fg: "text-accent-foreground" },
             ];
             const tone = tones[i % tones.length];
@@ -475,7 +475,7 @@ const Index = () => {
       {/* Hadits / motivasi */}
       <section className="relative overflow-hidden rounded-[1.75rem] border border-accent/30 bg-peach-soft p-6" aria-labelledby="motivasi-qurban-heading">
         <Sparkles className="absolute right-4 top-4 h-5 w-5 text-accent" strokeWidth={1.6} aria-hidden />
-        <h2 id="motivasi-qurban-heading" className="text-[10px] font-bold uppercase tracking-wider text-secondary">Motivasi Qurban</h2>
+        <h2 id="motivasi-qurban-heading" className="text-[10px] font-bold uppercase tracking-wider text-primary">Motivasi Qurban</h2>
         <blockquote className="mt-3 font-brand text-lg leading-snug text-forest">
           "Tidak ada amalan anak Adam di hari Nahr yang lebih dicintai Allah daripada mengalirkan darah (berqurban)."
         </blockquote>
@@ -488,7 +488,7 @@ const Index = () => {
         <div className="grid grid-cols-3 gap-2.5">
           {[
             { icon: Utensils, label: "Keluarga", desc: "⅓ untuk dimakan sendiri", tone: "bg-terracotta-soft text-primary" },
-            { icon: HandHeart, label: "Fakir Miskin", desc: "⅓ untuk disedekahkan", tone: "bg-sage-soft text-secondary" },
+            { icon: HandHeart, label: "Fakir Miskin", desc: "⅓ untuk disedekahkan", tone: "bg-sage-soft text-primary" },
             { icon: Heart, label: "Kerabat", desc: "⅓ untuk dihadiahkan", tone: "bg-peach-soft text-accent-foreground" },
           ].map((item) => (
             <div key={item.label} className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-card p-3 text-center">
@@ -542,7 +542,7 @@ const Index = () => {
       {/* FAQ singkat */}
       <section>
         <div className="mb-3 flex items-center gap-2">
-          <HelpCircle className="h-4 w-4 text-secondary" strokeWidth={2} />
+          <HelpCircle className="h-4 w-4 text-primary" strokeWidth={2} />
           <h2 className="font-display text-base font-bold text-forest">Pertanyaan Umum</h2>
         </div>
         <div className="rounded-2xl border border-border bg-card px-4">

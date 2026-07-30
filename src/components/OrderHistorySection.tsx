@@ -21,7 +21,7 @@ const OrderHistorySection = () => {
     <section>
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <History className="h-4 w-4 text-secondary" strokeWidth={2} />
+          <History className="h-4 w-4 text-primary" strokeWidth={2} />
           <h2 className="font-display text-base font-bold text-forest">Riwayat Pesanan</h2>
         </div>
         <Button
