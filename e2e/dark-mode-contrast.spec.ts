@@ -62,13 +62,15 @@ const SCAN = `() => {
     if (cs.visibility === "hidden" || cs.display === "none" || +cs.opacity < 0.15) continue;
     const fgRaw = parse(cs.color);
     if (!fgRaw || fgRaw.a === 0) continue;
-    const bg = effectiveBg(el);
+    const { color: bg, hasImage } = effectiveBg(el);
+    if (hasImage) continue; // gradien/gambar: warna latar tidak bisa dinilai otomatis
     const fg = blend({ ...fgRaw, a: fgRaw.a * Math.min(1, +cs.opacity || 1) }, bg);
     const size = parseFloat(cs.fontSize);
     const weight = parseInt(cs.fontWeight, 10) || 400;
     const isLarge = size >= 24 || (size >= 18.66 && weight >= 700);
     const min = isLarge ? 3 : 4.5;
     const r = ratio(fg, bg);
+
     if (r + 0.01 < min) {
       failures.push({
         text: (el.textContent || "").trim().slice(0, 45),
