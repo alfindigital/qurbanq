@@ -66,4 +66,14 @@ describe.each(THEMES)("Kontras WCAG token tema $name", ({ name, selector }) => {
       `[${name}] --${fg} di atas --${bg} = ${ratio.toFixed(2)}:1, minimal ${min}:1`,
     ).toBeGreaterThanOrEqual(min);
   });
+
+  it("CTA WhatsApp (teks putih di atas --wa-green) lolos AA", () => {
+    const waGreen = vars["wa-green"] ?? extractCssVars(css, ":root")["wa-green"];
+    const ratio = contrastRatio(hslTokenToRgb(WHITE), hslTokenToRgb(waGreen));
+    expect(
+      Number(ratio.toFixed(2)),
+      `[${name}] putih di atas --wa-green = ${ratio.toFixed(2)}:1`,
+    ).toBeGreaterThanOrEqual(AA.text);
+  });
 });
+
