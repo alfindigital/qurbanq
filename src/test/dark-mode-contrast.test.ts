@@ -41,6 +41,10 @@ const PAIRS: Array<{ fg: string; bg: string; min: number; note: string }> = [
   { fg: "sidebar-accent-foreground", bg: "sidebar-accent", min: AA.text, note: "teks accent sidebar" },
 ];
 
+/** CTA WhatsApp selalu memakai teks putih di atas --wa-green. */
+const WHITE = "0 0% 100%";
+
+
 const THEMES: Array<{ name: string; selector: string }> = [
   { name: "dark", selector: ".dark" },
   { name: "light", selector: ":root" },
