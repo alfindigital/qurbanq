@@ -19,7 +19,7 @@ const slides = [
     icon: PiggyBank,
     title: "Nabung Terarah Tiap Bulan",
     body: "Tentukan hewan target dan jangka waktu, Qurbanku hitung setoran per bulan/minggu/hari plus progress menabungmu.",
-    tone: "bg-sage-soft text-secondary",
+    tone: "bg-sage-soft text-primary",
   },
   {
     icon: Bell,

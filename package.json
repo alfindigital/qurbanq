@@ -12,7 +12,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e:social": "playwright test --config=playwright.ci.config.ts social twitter-card-client-nav"
+    "test:e2e:social": "playwright test --config=playwright.ci.config.ts social twitter-card-client-nav",
+    "test:contrast": "vitest run src/test/dark-mode-contrast.test.ts",
+    "test:e2e:contrast": "playwright test --config=playwright.ci.config.ts dark-mode-contrast"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -29,12 +29,12 @@ const AqiqahCard = () => {
 
       <div className="grid grid-cols-2 gap-2">
         <button onClick={() => chat("laki-laki", laki)} className="rounded-xl bg-card p-3 text-left transition-all active:scale-[0.98]">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-secondary">Anak Laki-laki</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Anak Laki-laki</p>
           <p className="text-[11px] text-muted-foreground">2 ekor kambing</p>
           <p className="mt-1 font-display text-sm font-bold text-primary">{formatCurrency(laki)}</p>
         </button>
         <button onClick={() => chat("perempuan", perempuan)} className="rounded-xl bg-card p-3 text-left transition-all active:scale-[0.98]">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-secondary">Anak Perempuan</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Anak Perempuan</p>
           <p className="text-[11px] text-muted-foreground">1 ekor kambing</p>
           <p className="mt-1 font-display text-sm font-bold text-primary">{formatCurrency(perempuan)}</p>
         </button>
@@ -43,7 +43,7 @@ const AqiqahCard = () => {
       <Button
         size="sm"
         variant="outline"
-        className="w-full border-secondary/40 text-secondary hover:bg-secondary/10"
+        className="w-full border-primary/40 text-primary hover:bg-primary/10"
         onClick={() => window.open(generateWhatsAppLink("Assalamualaikum, saya ingin konsultasi paket aqiqah.", "aqiqah:konsultasi"), "_blank")}
       >
         <MessageCircle className="mr-1.5 h-4 w-4" strokeWidth={2} /> Konsultasi Aqiqah

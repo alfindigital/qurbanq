@@ -32,7 +32,7 @@ const ReverseCalculator = () => {
       </div>
 
       <div className="rounded-xl bg-card p-4 space-y-3">
-        <Label htmlFor="reverse-perday" className="text-[10px] font-bold uppercase tracking-wider text-forest/70">
+        <Label htmlFor="reverse-perday" className="text-[10px] font-bold uppercase tracking-wider text-forest">
           Kalau nabung per hari
         </Label>
         <div className="flex items-center gap-2 rounded-lg border border-border/60 bg-background px-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
