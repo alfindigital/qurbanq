@@ -60,8 +60,11 @@ export function contrastRatio(a: RGB, b: RGB): number {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/** Ambang WCAG AA: 4.5 teks kecil, 3 teks besar / elemen UI & border. */
-export const AA = { text: 4.5, large: 3, ui: 3 } as const;
+/**
+ * Ambang WCAG AA: 4.5 teks kecil, 3 teks besar / komponen UI & indikator fokus.
+ * `decorative` bukan ambang WCAG — hanya jaminan garis pemisah tetap terlihat.
+ */
+export const AA = { text: 4.5, large: 3, ui: 3, decorative: 1.2 } as const;
 
 /** Ambil semua custom property dari sebuah blok selector di file CSS. */
 export function extractCssVars(css: string, selector: string): Record<string, string> {

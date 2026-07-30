@@ -89,8 +89,8 @@
     --terracotta-soft: 147 30% 22%;      /* state aktif */
     --sage-soft: 150 10% 17%;
 
-    --destructive: 0 62% 58%;
-    --destructive-foreground: 42 30% 96%;
+    --destructive: 0 70% 66%;            /* teks error di atas card: 4.9:1 */
+    --destructive-foreground: 0 40% 10%; /* teks di atas blok destructive: 5.7:1 */
 
     --border: 150 12% 30%;               /* outline terbaca tanpa menusuk */
     --input: 150 12% 34%;
