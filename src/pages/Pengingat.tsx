@@ -135,7 +135,7 @@ const Pengingat = () => {
           ].map((item) => (
             <div key={item.label} className="flex flex-1 flex-col items-center rounded-xl bg-background/15 py-2.5">
               <span className="text-lg font-bold">{String(item.value).padStart(2, "0")}</span>
-              <span className="text-[10px] opacity-75">{item.label}</span>
+              <span className="text-[10px] opacity-90">{item.label}</span>
             </div>
           ))}
         </div>
