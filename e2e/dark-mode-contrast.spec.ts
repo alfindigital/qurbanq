@@ -92,7 +92,10 @@ for (const route of ROUTES) {
     await expect(page.locator("html.dark")).toHaveCount(1);
     await page.waitForTimeout(400); // tunggu animasi framer-motion selesai
 
-    const failures = await page.evaluate(SCAN);
+    // SCAN adalah string arrow function; harus dipanggil sebagai IIFE agar hasilnya terserialisasi.
+    const failures = (await page.evaluate(`(${SCAN})()`)) as Array<{
+      text: string; tag: string; cls: string; ratio: number; min: number; size: number;
+    }>;
     expect(
       failures,
       `Kontras di bawah ambang WCAG AA pada ${route}:\n` +

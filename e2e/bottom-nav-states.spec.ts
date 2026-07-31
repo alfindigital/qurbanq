@@ -97,6 +97,9 @@ test.describe("BottomNav hover/active/selected consistency", () => {
         "aria-current",
         "page"
       );
+      // Jauhkan kursor supaya warna yang diukur adalah state terpilih, bukan hover.
+      await page.mouse.move(0, 0);
+      await page.waitForTimeout(150);
       const newSelected = await getColors(page, ariaLabels[0]);
       expect(newSelected!.color).toBe(selected!.color);
     });
