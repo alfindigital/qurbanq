@@ -57,6 +57,7 @@ test.describe("Outline icons always use strokeWidth 1.8", () => {
     await page.setViewportSize({ width: 390, height: 780 });
     await page.goto("/kalkulator");
 
+    await expect(page.locator('button[aria-pressed] svg[role="img"]')).toHaveCount(4);
     const labels = await page
       .locator('button[aria-pressed] svg[role="img"]')
       .evaluateAll((svgs) =>
