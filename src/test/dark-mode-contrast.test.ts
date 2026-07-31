@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   AA,
+  blend,
   contrastRatio,
   extractCssVars,
   hslTokenToRgb,
