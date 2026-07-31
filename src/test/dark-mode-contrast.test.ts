@@ -70,6 +70,28 @@ describe.each(THEMES)("Kontras WCAG token tema $name", ({ name, selector }) => {
     ).toBeGreaterThanOrEqual(min);
   });
 
+  /**
+   * State hover/aktif komponen (tombol, badge) memakai warna semi-transparan
+   * (mis. `hover:bg-primary/90`) yang dikomposit ke permukaan di bawahnya.
+   */
+  const HOVER: Array<{ fg: string; layer: string; alpha: number; under: string; note: string }> = [
+    { fg: "primary-foreground", layer: "primary", alpha: 0.9, under: "background", note: "tombol primary hover" },
+    { fg: "primary-foreground", layer: "primary", alpha: 0.8, under: "card", note: "badge primary hover" },
+    { fg: "secondary-foreground", layer: "secondary", alpha: 0.8, under: "card", note: "tombol secondary hover" },
+    { fg: "destructive-foreground", layer: "destructive", alpha: 0.9, under: "card", note: "tombol destructive hover" },
+    { fg: "accent-foreground", layer: "accent", alpha: 1, under: "card", note: "hover ghost/outline (accent)" },
+    { fg: "muted-foreground", layer: "muted", alpha: 1, under: "card", note: "tombol cancel toast" },
+  ];
+
+  it.each(HOVER)("$note lolos AA", ({ fg, layer, alpha, under }) => {
+    const bg = blend({ ...hslTokenToRgb(vars[layer]), a: alpha }, hslTokenToRgb(vars[under]));
+    const ratio = contrastRatio(hslTokenToRgb(vars[fg]), bg);
+    expect(
+      Number(ratio.toFixed(2)),
+      `[${name}] --${fg} di atas --${layer}/${alpha * 100} (di atas --${under}) = ${ratio.toFixed(2)}:1`,
+    ).toBeGreaterThanOrEqual(AA.text);
+  });
+
   it("CTA WhatsApp (teks putih di atas --wa-green) lolos AA", () => {
     const waGreen = vars["wa-green"] ?? extractCssVars(css, ":root")["wa-green"];
     const ratio = contrastRatio(hslTokenToRgb(WHITE), hslTokenToRgb(waGreen));
@@ -78,5 +100,6 @@ describe.each(THEMES)("Kontras WCAG token tema $name", ({ name, selector }) => {
       `[${name}] putih di atas --wa-green = ${ratio.toFixed(2)}:1`,
     ).toBeGreaterThanOrEqual(AA.text);
   });
+
 });
 
