@@ -21,6 +21,23 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
+      // `try {} catch {}` kosong dipakai sengaja untuk akses localStorage yang boleh gagal.
+      "no-empty": ["error", { allowEmptyCatch: true }],
+    },
+  },
+  {
+    // Komponen shadcn/ui adalah kode vendor yang sengaja tidak dimodifikasi.
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+      "react-refresh/only-export-components": "off",
+    },
+  },
+  {
+    // File konfigurasi Node boleh memakai require().
+    files: ["*.config.ts", "*.config.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 );
