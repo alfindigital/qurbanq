@@ -101,13 +101,15 @@ const Kalkulator = () => {
   const focusSummary = (location.state as { focusSummary?: boolean } | null)?.focusSummary;
   useEffect(() => {
     if (!focusSummary) return;
+    // Tunggu ScrollToTop selesai supaya smooth scroll tidak dibatalkan.
     const t = window.setTimeout(() => {
       summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 120);
-    // Bersihkan state supaya refresh/back tidak scroll lagi.
-    navigate(".", { replace: true, state: null });
+      // Bersihkan state (tanpa navigasi ulang) supaya refresh/back tidak scroll lagi.
+      window.history.replaceState({}, "");
+    }, 250);
     return () => window.clearTimeout(t);
-  }, [focusSummary, navigate]);
+  }, [focusSummary]);
+
 
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
