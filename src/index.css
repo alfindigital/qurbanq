@@ -37,7 +37,7 @@
     --destructive-foreground: 0 0% 100%;
 
     --border: 40 18% 88%;
-    --input: 40 18% 88%;
+    --input: 140 14% 52%;            /* border input: 3.3:1 vs kartu (WCAG 1.4.11) */
     --ring: 140 38% 17%;
 
     --radius: 1rem;
@@ -93,7 +93,7 @@
     --destructive-foreground: 0 40% 10%; /* teks di atas blok destructive: 5.7:1 */
 
     --border: 150 12% 30%;               /* outline terbaca tanpa menusuk */
-    --input: 150 12% 34%;
+    --input: 150 12% 44%;                /* border input: 3.5:1 vs kartu (WCAG 1.4.11) */
     --ring: 147 55% 55%;
 
     --sidebar-background: 150 22% 6%;
