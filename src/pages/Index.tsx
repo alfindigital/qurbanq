@@ -49,6 +49,7 @@ const loadPaid = (): string[] => {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [countdown, setCountdown] = useState({ days: 0 });
   const [hijriYear, setHijriYear] = useState<number>(() => getNextIdulAdhaInfo().hijriYear);
   const saved = loadSaved();
