@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 
@@ -56,6 +57,8 @@ const validatePersons = (value: string, max: number): string | undefined => {
 };
 
 const Kalkulator = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const saved = loadSaved();
   // Default: domba/kambing termurah (Domba Tanduk Bronze) supaya kalkulator langsung menampilkan hasil.
   const cheapestAnimal = animalOptions
