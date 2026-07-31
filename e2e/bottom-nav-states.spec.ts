@@ -60,17 +60,22 @@ test.describe("BottomNav hover/active/selected consistency", () => {
         "page"
       );
 
-      // Hover — force :hover pseudo, background must gain a fill
-      await hitung.hover();
-      const hovered = await page.evaluate((lbl) => {
-        const el = document.querySelector(`a[aria-label="${lbl}"]`) as HTMLElement;
-        return {
-          bg: getComputedStyle(el).backgroundColor,
-          color: getComputedStyle(el).color,
-        };
-      }, ariaLabels[1]);
+      // Hover — force :hover pseudo, background must gain a fill.
+      // Di-hover ulang di tiap polling karena layout bisa bergeser saat konten
+      // lazy selesai mount, sehingga kursor "lepas" dari elemen.
+      const readHover = async () => {
+        await hitung.hover();
+        return page.evaluate((lbl) => {
+          const el = document.querySelector(`a[aria-label="${lbl}"]`) as HTMLElement;
+          return {
+            bg: getComputedStyle(el).backgroundColor,
+            color: getComputedStyle(el).color,
+          };
+        }, ariaLabels[1]);
+      };
       // Hovered background should not be fully transparent
-      expect(hovered.bg).not.toBe("rgba(0, 0, 0, 0)");
+      await expect.poll(async () => (await readHover()).bg).not.toBe("rgba(0, 0, 0, 0)");
+      const hovered = await readHover();
       // Hover color should differ from idle
       expect(hovered.color).not.toBe(idle!.color);
 
@@ -97,6 +102,9 @@ test.describe("BottomNav hover/active/selected consistency", () => {
         "aria-current",
         "page"
       );
+      // Jauhkan kursor supaya warna yang diukur adalah state terpilih, bukan hover.
+      await page.mouse.move(0, 0);
+      await page.waitForTimeout(150);
       const newSelected = await getColors(page, ariaLabels[0]);
       expect(newSelected!.color).toBe(selected!.color);
     });

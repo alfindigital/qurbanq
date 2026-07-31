@@ -24,10 +24,18 @@ test.describe("BottomNav — routing & scroll-to-top", () => {
   });
 
   test("scrolls to top after route change", async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 780 });
-    await page.goto("/edukasi");
-    await page.evaluate(() => window.scrollTo(0, 800));
-    await page.waitForFunction(() => window.scrollY > 100);
+    // Viewport mobile memastikan konten /edukasi lebih tinggi dari layar
+    // sehingga halaman benar-benar bisa di-scroll.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/edukasi", { waitUntil: "networkidle" });
+    // Scroll setelah konten selesai render; retry karena tinggi dokumen bisa
+    // bertambah saat komponen lazy selesai mount.
+    await expect
+      .poll(async () => {
+        await page.evaluate(() => window.scrollTo(0, 800));
+        return page.evaluate(() => window.scrollY);
+      })
+      .toBeGreaterThan(100);
 
     await nav(page).getByRole("link", { name: "Kalkulator qurban" }).click();
     await expect(page).toHaveURL(/\/kalkulator$/);

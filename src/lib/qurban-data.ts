@@ -71,6 +71,7 @@ export const formatCurrency = (amount: number): string => {
 // mendukung query param tambahan).
 export const generateWhatsAppLink = (message: string, source?: string): string => {
   // Normalize control chars & CRLF supaya wa.me tidak truncate pesan
+  // eslint-disable-next-line no-control-regex -- sengaja menyaring control char
   const clean = message.replace(/\r/g, "").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
   const suffix = source ? `\n\n_(via qurbanku • ${source})_` : "";
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(clean + suffix)}`;

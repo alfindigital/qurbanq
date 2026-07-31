@@ -13,7 +13,7 @@ test("Kalkulator & Tabungan state survives repeated BottomNav switches", async (
   await page.locator("button:has-text('Rp')").first().click();
   await page.getByPlaceholder("Nama peserta...").fill("Budi");
   await page.getByRole("button", { name: "Tambah peserta" }).click();
-  await expect(page.getByText("Budi", { exact: false })).toBeVisible();
+  await expect(page.getByText("Budi", { exact: true }).first()).toBeVisible();
 
   // Seed Tabungan: pick animal, months=9, saved=500000
   await page.goto("/tabungan");
@@ -42,5 +42,5 @@ test("Kalkulator & Tabungan state survives repeated BottomNav switches", async (
   // Kalkulator retained with participant
   await nav(page).getByRole("link", { name: "Kalkulator qurban" }).click();
   await expect(page.getByText("Daftar Peserta")).toBeVisible();
-  await expect(page.getByText("Budi", { exact: false })).toBeVisible();
+  await expect(page.getByText("Budi", { exact: true }).first()).toBeVisible();
 });

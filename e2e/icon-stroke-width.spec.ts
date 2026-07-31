@@ -35,6 +35,8 @@ test.describe("Outline icons always use strokeWidth 1.8", () => {
       await page.goto("/kalkulator");
 
       // 4 animal buttons in step 1 — each hosts one custom outline svg.
+      // Tunggu semua tombol ter-render sebelum membaca atribut.
+      await expect(page.locator('button[aria-pressed] svg[role="img"]')).toHaveCount(4);
       const svgs = await readStrokes(page, 'button[aria-pressed] svg[role="img"]');
       expect(svgs.length).toBe(4);
       for (const s of svgs) expect(s.attr).toBe("1.8");
@@ -44,6 +46,7 @@ test.describe("Outline icons always use strokeWidth 1.8", () => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto("/");
 
+      await expect(page.locator('button[aria-pressed] svg[role="img"]')).toHaveCount(4);
       const svgs = await readStrokes(page, 'button[aria-pressed] svg[role="img"]');
       expect(svgs.length).toBe(4);
       for (const s of svgs) expect(s.attr).toBe("1.8");
@@ -54,6 +57,7 @@ test.describe("Outline icons always use strokeWidth 1.8", () => {
     await page.setViewportSize({ width: 390, height: 780 });
     await page.goto("/kalkulator");
 
+    await expect(page.locator('button[aria-pressed] svg[role="img"]')).toHaveCount(4);
     const labels = await page
       .locator('button[aria-pressed] svg[role="img"]')
       .evaluateAll((svgs) =>

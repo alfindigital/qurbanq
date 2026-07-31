@@ -14,7 +14,7 @@ test("Kalkulator & Tabungan survive a hard reload", async ({ page }) => {
   await page.locator("button:has-text('Rp')").first().click();
   await page.getByPlaceholder("Nama peserta...").fill("Fatimah");
   await page.getByRole("button", { name: "Tambah peserta" }).click();
-  await expect(page.getByText("Fatimah", { exact: false })).toBeVisible();
+  await expect(page.getByText("Fatimah", { exact: true }).first()).toBeVisible();
 
   // ── Seed Tabungan ──────────────────────────────────────────────────
   await page.goto("/tabungan");
@@ -34,12 +34,12 @@ test("Kalkulator & Tabungan survive a hard reload", async ({ page }) => {
   await nav(page).getByRole("link", { name: "Kalkulator qurban" }).click();
   await expect(page).toHaveURL(/\/kalkulator$/);
   await expect(page.getByText("Daftar Peserta")).toBeVisible();
-  await expect(page.getByText("Fatimah", { exact: false })).toBeVisible();
+  await expect(page.getByText("Fatimah", { exact: true }).first()).toBeVisible();
 
   // Second hard reload on Kalkulator itself
   await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.getByText("Daftar Peserta")).toBeVisible();
-  await expect(page.getByText("Fatimah", { exact: false })).toBeVisible();
+  await expect(page.getByText("Fatimah", { exact: true }).first()).toBeVisible();
 
   // And Tabungan is still intact when we come back
   await nav(page).getByRole("link", { name: "Rencana tabungan qurban" }).click();
