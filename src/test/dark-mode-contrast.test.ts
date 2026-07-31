@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   AA,
+  blend,
   contrastRatio,
   extractCssVars,
   hslTokenToRgb,
@@ -30,12 +31,15 @@ const PAIRS: Array<{ fg: string; bg: string; min: number; note: string }> = [
   { fg: "primary", bg: "card", min: AA.text, note: "teks/ikon primary di atas kartu" },
   { fg: "primary", bg: "background", min: AA.text, note: "teks/ikon primary di atas background" },
   { fg: "destructive", bg: "card", min: AA.text, note: "pesan error di atas kartu" },
-  // Elemen non-teks. Border/input murni dekoratif (bukan satu-satunya penanda
-  // komponen), jadi hanya dijaga tetap terlihat. Focus ring wajib 3:1 (WCAG 2.4.11).
+  // Elemen non-teks. Border murni dekoratif (bukan satu-satunya penanda komponen),
+  // jadi hanya dijaga tetap terlihat. Border input adalah satu-satunya penanda batas
+  // field, jadi wajib 3:1 (WCAG 1.4.11). Focus ring wajib 3:1 (WCAG 2.4.11).
   { fg: "border", bg: "background", min: AA.decorative, note: "border di atas background" },
   { fg: "border", bg: "card", min: AA.decorative, note: "border di atas kartu" },
-  { fg: "input", bg: "background", min: AA.decorative, note: "outline input" },
+  { fg: "input", bg: "background", min: AA.ui, note: "border input di atas background" },
+  { fg: "input", bg: "card", min: AA.ui, note: "border input di atas kartu" },
   { fg: "ring", bg: "background", min: AA.ui, note: "focus ring" },
+
   { fg: "sidebar-foreground", bg: "sidebar-background", min: AA.text, note: "teks sidebar" },
   { fg: "sidebar-primary-foreground", bg: "sidebar-primary", min: AA.text, note: "teks aktif sidebar" },
   { fg: "sidebar-accent-foreground", bg: "sidebar-accent", min: AA.text, note: "teks accent sidebar" },
@@ -67,6 +71,28 @@ describe.each(THEMES)("Kontras WCAG token tema $name", ({ name, selector }) => {
     ).toBeGreaterThanOrEqual(min);
   });
 
+  /**
+   * State hover/aktif komponen (tombol, badge) memakai warna semi-transparan
+   * (mis. `hover:bg-primary/90`) yang dikomposit ke permukaan di bawahnya.
+   */
+  const HOVER: Array<{ fg: string; layer: string; alpha: number; under: string; note: string }> = [
+    { fg: "primary-foreground", layer: "primary", alpha: 0.9, under: "background", note: "tombol primary hover" },
+    { fg: "primary-foreground", layer: "primary", alpha: 0.8, under: "card", note: "badge primary hover" },
+    { fg: "secondary-foreground", layer: "secondary", alpha: 0.8, under: "card", note: "tombol secondary hover" },
+    { fg: "destructive-foreground", layer: "destructive", alpha: 0.9, under: "card", note: "tombol destructive hover" },
+    { fg: "accent-foreground", layer: "accent", alpha: 1, under: "card", note: "hover ghost/outline (accent)" },
+    { fg: "muted-foreground", layer: "muted", alpha: 1, under: "card", note: "tombol cancel toast" },
+  ];
+
+  it.each(HOVER)("$note lolos AA", ({ fg, layer, alpha, under }) => {
+    const bg = blend({ ...hslTokenToRgb(vars[layer]), a: alpha }, hslTokenToRgb(vars[under]));
+    const ratio = contrastRatio(hslTokenToRgb(vars[fg]), bg);
+    expect(
+      Number(ratio.toFixed(2)),
+      `[${name}] --${fg} di atas --${layer}/${alpha * 100} (di atas --${under}) = ${ratio.toFixed(2)}:1`,
+    ).toBeGreaterThanOrEqual(AA.text);
+  });
+
   it("CTA WhatsApp (teks putih di atas --wa-green) lolos AA", () => {
     const waGreen = vars["wa-green"] ?? extractCssVars(css, ":root")["wa-green"];
     const ratio = contrastRatio(hslTokenToRgb(WHITE), hslTokenToRgb(waGreen));
@@ -75,5 +101,6 @@ describe.each(THEMES)("Kontras WCAG token tema $name", ({ name, selector }) => {
       `[${name}] putih di atas --wa-green = ${ratio.toFixed(2)}:1`,
     ).toBeGreaterThanOrEqual(AA.text);
   });
+
 });
 
