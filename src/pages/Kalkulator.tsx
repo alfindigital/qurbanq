@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 
@@ -56,6 +57,8 @@ const validatePersons = (value: string, max: number): string | undefined => {
 };
 
 const Kalkulator = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const saved = loadSaved();
   // Default: domba/kambing termurah (Domba Tanduk Bronze) supaya kalkulator langsung menampilkan hasil.
   const cheapestAnimal = animalOptions
@@ -94,6 +97,20 @@ const Kalkulator = () => {
   const karkasKg = avgWeight * 0.55;
   const meatPerPerson = animal ? karkasKg / activePersons : 0;
 
+  // Datang dari kartu hewan di Beranda: langsung arahkan ke ringkasan hasil.
+  const focusSummary = (location.state as { focusSummary?: boolean } | null)?.focusSummary;
+  useEffect(() => {
+    if (!focusSummary) return;
+    // Tunggu ScrollToTop selesai supaya smooth scroll tidak dibatalkan.
+    const t = window.setTimeout(() => {
+      summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Bersihkan state (tanpa navigasi ulang) supaya refresh/back tidak scroll lagi.
+      window.history.replaceState({}, "");
+    }, 250);
+    return () => window.clearTimeout(t);
+  }, [focusSummary]);
+
+
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
     const incoming = readIncomingShare();
@@ -107,6 +124,7 @@ const Kalkulator = () => {
     if (incoming.participants?.length) setParticipants(incoming.participants);
     toast.success("Konfigurasi qurban dimuat dari link");
   }, []);
+
 
   // Persist data kalkulator
   useEffect(() => {

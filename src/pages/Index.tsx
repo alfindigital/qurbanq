@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
@@ -49,6 +49,7 @@ const loadPaid = (): string[] => {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [countdown, setCountdown] = useState({ days: 0 });
   const [hijriYear, setHijriYear] = useState<number>(() => getNextIdulAdhaInfo().hijriYear);
   const saved = loadSaved();
@@ -115,12 +116,28 @@ const Index = () => {
     setNewName("");
   };
 
+  // Pilih hewan di beranda = langsung lompat ke tab Hitung dengan hasil sudah terisi.
   const changeAnimal = (id: string) => {
     const a = animalOptions.find((x) => x.id === id);
     if (!a) return;
+    const nextParticipants =
+      validParticipants.length > a.maxPersons ? validParticipants.slice(0, a.maxPersons) : validParticipants;
+    const nextPersons = Math.min(persons, a.maxPersons);
     setSelectedAnimal(id);
-    if (validParticipants.length > a.maxPersons) setParticipants(validParticipants.slice(0, a.maxPersons));
+    setSelectedType(a.type);
+    setPersons(nextPersons);
+    if (nextParticipants.length !== validParticipants.length) setParticipants(nextParticipants);
+
+    // Tulis dulu supaya Kalkulator membaca pilihan terbaru saat mount (efek persist berjalan setelah navigasi).
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ type: a.type, animal: id, persons: nextPersons, participants: nextParticipants }),
+      );
+    } catch {}
+    navigate("/kalkulator", { state: { focusSummary: true } });
   };
+
 
   const togglePaid = (name: string) => {
     setPaidParticipants((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]));
