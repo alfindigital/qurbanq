@@ -1,4 +1,5 @@
-import { test, expect, devices } from "../playwright-fixture";
+import { test, expect } from "../playwright-fixture";
+import { devices } from "@playwright/test";
 
 // Focus order must remain stable when the device rotates (portrait ↔ landscape)
 // on iPhone (notch) and Android (gesture bar) form factors.
