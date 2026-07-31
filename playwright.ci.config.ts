@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { onboardingDismissedState } from "./e2e/storage-state";
 
 /**
  * Konfigurasi Playwright khusus CI (GitHub Actions).
@@ -17,6 +18,8 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL,
+    // Lewati modal onboarding supaya klik navigasi tidak terhalang overlay.
+    storageState: onboardingDismissedState,
     trace: "on-first-retry",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
