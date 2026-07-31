@@ -81,6 +81,31 @@
         "url": "https://qurban-q.lovable.app/"
       }
     </script>
+    <!-- WebPage statis untuk crawler non-JS. Halaman utama disuplai di sini karena
+         SPA mengirim index.html yang sama untuk setiap rute; blok per-route lain
+         diinject oleh Helmet (SEO.tsx) saat JS berjalan. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Qurbanku — Kalkulator & Tabungan Qurban",
+        "description": "Hitung biaya qurban Idul Adha per orang, atur daftar peserta, dan kirim pesanan via WhatsApp langsung dari beranda Qurbanku.",
+        "url": "https://qurban-q.lovable.app/",
+        "inLanguage": "id-ID",
+        "isPartOf": { "@type": "WebSite", "url": "https://qurban-q.lovable.app/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Kalkulator Qurban — Hitung Biaya per Orang",
+        "description": "Pilih jenis hewan qurban dan hitung biaya per orang. Estimasi harga sapi, kambing, domba, dan unta untuk Idul Adha.",
+        "url": "https://qurban-q.lovable.app/kalkulator",
+        "inLanguage": "id-ID",
+        "isPartOf": { "@type": "WebSite", "url": "https://qurban-q.lovable.app/" }
+      }
+    </script>
   </head>
 
   <body>
