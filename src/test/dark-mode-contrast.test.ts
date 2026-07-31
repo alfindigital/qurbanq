@@ -30,12 +30,15 @@ const PAIRS: Array<{ fg: string; bg: string; min: number; note: string }> = [
   { fg: "primary", bg: "card", min: AA.text, note: "teks/ikon primary di atas kartu" },
   { fg: "primary", bg: "background", min: AA.text, note: "teks/ikon primary di atas background" },
   { fg: "destructive", bg: "card", min: AA.text, note: "pesan error di atas kartu" },
-  // Elemen non-teks. Border/input murni dekoratif (bukan satu-satunya penanda
-  // komponen), jadi hanya dijaga tetap terlihat. Focus ring wajib 3:1 (WCAG 2.4.11).
+  // Elemen non-teks. Border murni dekoratif (bukan satu-satunya penanda komponen),
+  // jadi hanya dijaga tetap terlihat. Border input adalah satu-satunya penanda batas
+  // field, jadi wajib 3:1 (WCAG 1.4.11). Focus ring wajib 3:1 (WCAG 2.4.11).
   { fg: "border", bg: "background", min: AA.decorative, note: "border di atas background" },
   { fg: "border", bg: "card", min: AA.decorative, note: "border di atas kartu" },
-  { fg: "input", bg: "background", min: AA.decorative, note: "outline input" },
+  { fg: "input", bg: "background", min: AA.ui, note: "border input di atas background" },
+  { fg: "input", bg: "card", min: AA.ui, note: "border input di atas kartu" },
   { fg: "ring", bg: "background", min: AA.ui, note: "focus ring" },
+
   { fg: "sidebar-foreground", bg: "sidebar-background", min: AA.text, note: "teks sidebar" },
   { fg: "sidebar-primary-foreground", bg: "sidebar-primary", min: AA.text, note: "teks aktif sidebar" },
   { fg: "sidebar-accent-foreground", bg: "sidebar-accent", min: AA.text, note: "teks accent sidebar" },
