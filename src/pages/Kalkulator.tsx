@@ -94,6 +94,18 @@ const Kalkulator = () => {
   const karkasKg = avgWeight * 0.55;
   const meatPerPerson = animal ? karkasKg / activePersons : 0;
 
+  // Datang dari kartu hewan di Beranda: langsung arahkan ke ringkasan hasil.
+  const focusSummary = (location.state as { focusSummary?: boolean } | null)?.focusSummary;
+  useEffect(() => {
+    if (!focusSummary) return;
+    const t = window.setTimeout(() => {
+      summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+    // Bersihkan state supaya refresh/back tidak scroll lagi.
+    navigate(".", { replace: true, state: null });
+    return () => window.clearTimeout(t);
+  }, [focusSummary, navigate]);
+
   // Baca share link `?p=<base64>` sekali di mount (#44 viral loop).
   useEffect(() => {
     const incoming = readIncomingShare();
@@ -107,6 +119,7 @@ const Kalkulator = () => {
     if (incoming.participants?.length) setParticipants(incoming.participants);
     toast.success("Konfigurasi qurban dimuat dari link");
   }, []);
+
 
   // Persist data kalkulator
   useEffect(() => {
