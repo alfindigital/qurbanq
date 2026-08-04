@@ -36,6 +36,7 @@ const MANAGED_ATTR = "data-og-images";
 
 const STATIC_SELECTORS = [
   'meta[name="description"]',
+  'meta[property="og:type"]',
   'meta[property="og:title"]',
   'meta[property="og:description"]',
   'meta[property="og:image"]',
