@@ -111,8 +111,8 @@ const Pengingat = () => {
   return (
     <div className="space-y-5">
       <SEO
-        title="Pengingat Qurban — Countdown Idul Adha & Checklist | Qurbanku"
-        description="Countdown menuju Idul Adha, notifikasi pengingat 30/7/3/1 hari, dan checklist persiapan qurban lengkap."
+        title="Pengingat Qurban — Countdown & Checklist | Qurbanku"
+        description="Countdown menuju Idul Adha, notifikasi pengingat H-30 & H-7, dan checklist persiapan qurban lengkap."
         path="/pengingat"
       />
       <div>
@@ -124,7 +124,7 @@ const Pengingat = () => {
       <div className="rounded-2xl bg-secondary px-5 py-5 text-secondary-foreground shadow-soft">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="h-4 w-4" strokeWidth={1.8} />
-          <p className="text-sm font-semibold">Idul Adha {hijriYear} H</p>
+          <h2 className="text-sm font-semibold">Idul Adha {hijriYear} H</h2>
         </div>
         <div className="flex gap-2">
           {[
@@ -146,7 +146,7 @@ const Pengingat = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <BellRing className="h-4 w-4 text-primary" strokeWidth={1.8} />
-            <p className="text-sm font-semibold">Pengingat Notifikasi</p>
+            <h2 className="text-sm font-semibold">Pengingat Notifikasi</h2>
           </div>
           {activeReminders > 0 && (
             <span className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded-full">
@@ -255,7 +255,7 @@ const Pengingat = () => {
       {/* #25/#26 Backup/Restore semua data lokal (patungan, tabungan, checklist, dsb.) */}
       <div className="rounded-xl border bg-card p-4 space-y-3">
         <div>
-          <p className="text-sm font-semibold text-foreground">Backup Data</p>
+          <h2 className="text-sm font-semibold text-foreground">Backup Data</h2>
           <p className="mt-0.5 text-[11px] text-muted-foreground leading-relaxed">
             Ekspor daftar patungan, tabungan, dan checklist ke file JSON. Import kembali kalau ganti device atau install ulang.
           </p>

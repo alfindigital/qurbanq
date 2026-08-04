@@ -236,7 +236,7 @@ const Tabungan = () => {
           {/* Progress with milestone ticks */}
           <div>
             <div className="flex justify-between text-xs mb-1.5">
-              <span className="text-muted-foreground">Progress</span>
+              <h2 className="text-muted-foreground font-normal">Progress</h2>
               <span className="font-semibold text-primary">{progress.toFixed(0)}%</span>
             </div>
             <div className="relative">
@@ -268,6 +268,7 @@ const Tabungan = () => {
           </div>
 
           {/* Breakdown */}
+          <h2 className="sr-only">Rincian Setoran</h2>
           <div className="grid grid-cols-3 gap-2">
             {[
               { label: "Per Bulan", value: perMonth },
@@ -283,7 +284,7 @@ const Tabungan = () => {
 
           {/* #32 Quick-add + custom input */}
           <div className="rounded-xl bg-background p-4 space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Catat Setoran</p>
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Catat Setoran</h2>
             <div className="grid grid-cols-3 gap-2">
               {[50000, 100000, 500000].map((amt) => (
                 <Button key={amt} size="sm" variant="outline" onClick={() => addDeposit(amt)} className="text-xs">
@@ -310,7 +311,7 @@ const Tabungan = () => {
           {ledger.length > 0 && (
             <div className="rounded-xl bg-background p-4 space-y-2">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Riwayat Setoran</p>
+                <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Riwayat Setoran</h2>
                 {streak > 0 ? (
                   <span className="flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold text-primary">
                     <Flame className="h-3 w-3" strokeWidth={2} /> {streak} minggu

@@ -59,9 +59,10 @@ const Donasi = () => {
   return (
     <div className="space-y-5">
       <SEO
-        title="Donasi Qurban Online — Titip Qurban & Berbagi Berkah | Qurbanku"
+        title="Donasi Qurban Online — Titip Qurban | Qurbanku"
         description="Titip donasi qurban Anda secara online lewat Qurbanku. Harga transparan, hewan sesuai syariat, dan distribusi ke yang membutuhkan di Indonesia."
         path="/donasi"
+        ogType="article"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",

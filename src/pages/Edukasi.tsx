@@ -122,6 +122,7 @@ const Edukasi = () => {
             title={`${article.title} — Edukasi Qurban | Qurbanku`}
             description={article.content.slice(0, 155).replace(/[*>\n]/g, " ").trim()}
             path="/edukasi"
+            ogType="article"
             jsonLd={{
               "@context": "https://schema.org",
               "@type": "Article",

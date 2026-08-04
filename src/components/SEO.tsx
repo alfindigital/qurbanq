@@ -7,6 +7,8 @@ interface SEOProps {
   title: string;
   description: string;
   path: string;
+  /** Open Graph type; gunakan "article" untuk halaman editorial. Default "website". */
+  ogType?: "website" | "article";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -34,6 +36,7 @@ const MANAGED_ATTR = "data-og-images";
 
 const STATIC_SELECTORS = [
   'meta[name="description"]',
+  'meta[property="og:type"]',
   'meta[property="og:title"]',
   'meta[property="og:description"]',
   'meta[property="og:image"]',
@@ -91,7 +94,7 @@ const syncImageTags = () => {
   document.head.appendChild(twAlt);
 };
 
-const SEO = ({ title, description, path, jsonLd }: SEOProps) => {
+const SEO = ({ title, description, path, ogType = "website", jsonLd }: SEOProps) => {
   const url = `${SITE}${path}`;
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
@@ -102,13 +105,14 @@ const SEO = ({ title, description, path, jsonLd }: SEOProps) => {
       syncImageTags();
     }, 0);
     return () => window.clearTimeout(id);
-  }, [title, description, path]);
+  }, [title, description, path, ogType]);
 
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
+      <meta property="og:type" content={ogType} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
