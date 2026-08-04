@@ -7,6 +7,8 @@ interface SEOProps {
   title: string;
   description: string;
   path: string;
+  /** Open Graph type; gunakan "article" untuk halaman editorial. Default "website". */
+  ogType?: "website" | "article";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
