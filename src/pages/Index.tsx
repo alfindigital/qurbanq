@@ -261,8 +261,11 @@ const Index = () => {
             <div className="absolute right-4 top-4 h-12 w-12 rounded-full bg-background/15" aria-hidden />
             <div className="relative z-10 space-y-4">
               <h1 className="font-display text-2xl font-bold leading-tight">
-                {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
+                Qurbanku — Kalkulator & Tabungan Qurban
               </h1>
+              <h2 className="text-lg font-semibold leading-snug">
+                {countdown.days} Hari Menuju Hari Raya Idul Adha {hijriYear} H
+              </h2>
               <p className="text-xs opacity-90">
                 Nabung <span className="font-bold">{formatCurrency(perDay)}/hari</span> sudah cukup buat 1 kambing/domba. Yuk Qurban!
               </p>
