@@ -1,26 +1,57 @@
-# .QURBAN
+# Qurbanku — Kalkulator Patungan & Tabungan Qurban
 
-buat aplikasi kalkulator qurban dan ide fitur2 aplikasi terkait kurban (edukasi, tabungan qurban, perhitungan qurban dll) dan diselipkan promosi pesan qurban secara tersirat ke wa 089619093961
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-18-61dafb?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)](https://typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite)](https://vitejs.dev)
 
-This project was built with [Lovable](https://lovable.dev).
+Aplikasi web PWA untuk merencanakan ibadah qurban Idul Adha: kalkulator patungan sapi & kambing, tabungan qurban, edukasi fiqih, dan pengingat hari raya. Gratis, tanpa iklan, berjalan di browser.
 
-**Live app**: https://qurban-q.lovable.app
+**Live:** https://qurban-q.lovable.app
 
-## Build with Lovable
+---
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a2beae78-4e90-4b1c-a783-101f3f60154f).
+## Fitur
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- 🐄 **Kalkulator Patungan** — Hitung patungan sapi (7 orang) & kambing per kepala
+- 💰 **Tabungan Qurban** — Rencanakan menabung dari sekarang
+- 📚 **Edukasi Fiqih** — Syarat, nishab, dan tata cara qurban sesuai syariat
+- 🔔 **Pengingat** — Countdown Idul Adha
+- 📲 **PWA Installable** — Pasang di HP layaknya aplikasi native
+- 🌙 **Dark mode** — Tema gelap/terang
 
-## Development
+---
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Quick Start
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+```bash
+git clone https://github.com/alfindigital/qurbanq.git
+cd qurbanq
+npm install
+npm run dev     # http://localhost:8080
+npm test        # unit tests
+npm run build   # production build
 ```
+
+---
+
+## Stack
+
+- React 18 + TypeScript 5 + Vite 5
+- Tailwind CSS + shadcn/ui + Framer Motion
+- PWA (vite-plugin-pwa + Workbox)
+- Vitest + Testing Library
+
+---
+
+## Kontribusi
+
+Lihat [CONTRIBUTING.md](CONTRIBUTING.md). Fork → branch → PR.
+
+## Keamanan
+
+Lihat [SECURITY.md](SECURITY.md).
+
+## Lisensi
+
+[MIT](LICENSE) — bebas digunakan dan dimodifikasi.
