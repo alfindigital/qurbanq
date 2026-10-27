@@ -13,7 +13,7 @@ import { test, expect, type Page } from "@playwright/test";
  * - Di produksi, hosting menginject 1 tag; assertion berjalan penuh.
  */
 
-const DEV = "http://localhost:8080";
+const DEV = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const PROD = "https://qurban-q.lovable.app";
 
 const ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;

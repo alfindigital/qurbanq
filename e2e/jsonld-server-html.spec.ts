@@ -14,7 +14,7 @@ import { test, expect } from "@playwright/test";
  *   @context = "https://schema.org".
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 type JsonLd = Record<string, unknown> & {

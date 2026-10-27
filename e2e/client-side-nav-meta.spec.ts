@@ -11,7 +11,7 @@ import { test, expect, type Page } from "@playwright/test";
  * agar benar-benar client-side (BrowserRouter push), bukan page.goto().
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 async function lastAttr(

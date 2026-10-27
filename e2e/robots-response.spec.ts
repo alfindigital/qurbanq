@@ -8,7 +8,7 @@ import { test, expect } from "@playwright/test";
  * - memuat aturan Sitemap: yang valid dan mengarah ke sitemap.xml
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const PROJECT_ORIGIN = "https://qurban-q.lovable.app";
 
 test.describe("robots.txt: response dan konten sitemap", () => {

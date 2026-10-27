@@ -10,7 +10,7 @@ import { test, expect } from "@playwright/test";
  * akan menghasilkan dua tag dengan property/name yang sama.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 const ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;
 

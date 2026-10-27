@@ -10,7 +10,7 @@ import { test, expect, type Page } from "@playwright/test";
  * ditangani oleh BrowserRouter (client-side), bukan full page load.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 async function assertTwitterCard(page: Page, route: string) {
   const loc = page.locator('head >> meta[name="twitter:card"]');

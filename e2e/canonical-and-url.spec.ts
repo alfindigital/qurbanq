@@ -16,7 +16,7 @@ import { test, expect, type Page } from "@playwright/test";
  *   ada mismatch antara Open Graph dan Twitter Card.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 const ROUTES: Array<{ path: string; label: string }> = [

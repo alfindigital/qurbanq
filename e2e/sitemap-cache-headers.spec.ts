@@ -5,7 +5,7 @@ import { test, expect } from "@playwright/test";
  * (ETag atau Last-Modified) dan nilainya konsisten saat hard reload.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 test.describe("sitemap.xml: cache headers dan konsistensi hard reload", () => {
   test("sitemap.xml mengirim ETag atau Last-Modified", async ({ request }) => {

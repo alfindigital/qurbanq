@@ -15,7 +15,7 @@ import { test, expect } from "@playwright/test";
  *   Diuji baik di HTML server maupun setelah hydrate.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 const ROUTES: Array<{ path: string; canonical: string; label: string }> = [

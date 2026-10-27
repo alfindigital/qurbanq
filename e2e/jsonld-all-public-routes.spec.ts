@@ -13,7 +13,7 @@ import { test, expect } from "@playwright/test";
  * - Terdapat minimal satu blok bertipe WebSite dan satu blok bertipe WebPage
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 const PUBLIC_ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;
 

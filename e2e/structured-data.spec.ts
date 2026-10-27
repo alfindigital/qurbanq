@@ -12,7 +12,7 @@ import { test, expect } from "@playwright/test";
  * - Semua blok JSON-LD valid JSON dan memiliki @context = https://schema.org.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 type Json = Record<string, unknown>;
 

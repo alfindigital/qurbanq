@@ -10,7 +10,7 @@ import { test, expect, type Page } from "@playwright/test";
  * mengatribusikan preview ke URL yang salah.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 async function readCanonical(page: Page): Promise<string> {

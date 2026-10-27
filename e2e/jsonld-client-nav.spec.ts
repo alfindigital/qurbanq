@@ -16,7 +16,7 @@ import { test, expect, type Page } from "@playwright/test";
  *   (WebApplication, BreadcrumbList).
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 type JsonLd = Record<string, unknown> & { "@type"?: string | string[]; "@context"?: string };
 

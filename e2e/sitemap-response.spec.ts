@@ -8,7 +8,7 @@ import { test, expect } from "@playwright/test";
  * - Tidak mengandung duplikasi URL pada <loc>
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 test.describe("sitemap.xml direct access: status, content-type, no duplicates", () => {
   test("merespon 200 dengan Content-Type XML yang valid", async ({ request }) => {

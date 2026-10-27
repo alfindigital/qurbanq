@@ -15,7 +15,7 @@ import { test, expect } from "@playwright/test";
  * perilaku ini identik antara dev dan hosting.
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITE = "https://qurban-q.lovable.app";
 
 test.describe("Sitemap URLs: 200 tanpa redirect chain", () => {

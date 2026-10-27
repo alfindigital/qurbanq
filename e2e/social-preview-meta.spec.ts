@@ -14,7 +14,7 @@ import { test, expect } from "@playwright/test";
  *   menambah duplikat).
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 
 test.describe("Social preview metadata", () => {
   test("index.html memuat og:image multi-size dan satu twitter:image", async ({ request }) => {

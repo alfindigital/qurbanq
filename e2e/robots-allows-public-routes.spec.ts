@@ -12,7 +12,7 @@ import { test, expect } from "@playwright/test";
  *   (Googlebot, Bingbot, Twitterbot, facebookexternalhit)
  */
 
-const BASE = "http://localhost:8080";
+const BASE = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const SITEMAP_URL = "https://qurban-q.lovable.app/sitemap.xml";
 
 const PUBLIC_ROUTES = ["/", "/kalkulator", "/tabungan", "/edukasi", "/pengingat"] as const;

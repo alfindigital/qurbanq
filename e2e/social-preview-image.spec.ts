@@ -11,7 +11,7 @@ import { test, expect } from "@playwright/test";
  *   pastikan URL-nya absolut https dan tidak duplikat.
  */
 
-const DEV = "http://localhost:8080";
+const DEV = process.env.E2E_BASE_URL ?? "http://localhost:8080";
 const PROD = "https://qurban-q.lovable.app";
 
 const ROUTES = ["/", "/kalkulator"] as const;
